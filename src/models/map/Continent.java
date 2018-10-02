@@ -1,5 +1,14 @@
 package models.map;
 
-public class Continent {
+import java.util.ArrayList;
 
+import models.game.*;
+
+public class Continent {
+	private String name;
+	
+	private ArrayList<Country> countryList = new ArrayList<Country>();
+	
+	
+	
 }
