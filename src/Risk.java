@@ -1,5 +1,5 @@
 
-import views.BasicView;
+import views.game.BasicView;
 
 
 public class Risk {
