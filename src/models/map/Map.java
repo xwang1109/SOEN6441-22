@@ -53,7 +53,7 @@ public class Map {
 	public ArrayList<Country> getCountryList() {
 		return countryList;
 	}
-	public void setCountry(ArrayList<Country> countryList) {
+	public void setCountryList(ArrayList<Country> countryList) {
 		this.countryList = countryList;
 	}
 	
