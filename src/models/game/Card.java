@@ -3,7 +3,7 @@ package models.game;
 public class Card {
 	private Player player;
 	private CardType cardType;
-	private enum CardType {
+	public enum CardType {
 		INFANTRY,CAVALRY,ARTILLERY
 	}
 	public Player getPlayer() {

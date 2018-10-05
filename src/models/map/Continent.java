@@ -9,7 +9,7 @@ import models.game.*;
 public class Continent {
 	private String name;
 	private ArrayList<Country> countryList = new ArrayList<Country>();
-	private int value;
+	private int controlValue;
 	private Player owner;
 	public String getName() {
 		return name;
@@ -23,11 +23,11 @@ public class Continent {
 	public void setCountryList(ArrayList<Country> countryList) {
 		this.countryList = countryList;
 	}
-	public int getValue() {
-		return value;
+	public int getControlValue() {
+		return controlValue;
 	}
-	public void setValue(int value) {
-		this.value = value;
+	public void setControlValue(int value) {
+		this.controlValue = value;
 	}
 	public Player getOwner() {
 		return owner;
