@@ -4,12 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import views.map.*;
 
+import models.map.Map;
+
 public class MapEditorController implements ActionListener {
+	
+	private Map map;
+	
+	public MapEditorController(Map map) {
+		this.map = map;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
 		String actionCommand = e.getActionCommand();
 		switch(actionCommand) {
 		case "Add Country":
@@ -33,6 +40,7 @@ public class MapEditorController implements ActionListener {
 	
 	public void addCountry() {
 		
+
 	}
 	
 	

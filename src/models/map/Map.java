@@ -5,11 +5,17 @@ import java.util.ArrayList;
 
 public class Map {
 
+	public Map() {
+		loaded = false;
+	}
+
+
 	private String author;
 	private String image;
 	private boolean wrap = false;
 	private boolean scroll = false;
 	private boolean warn = false;
+	private boolean loaded = false;
 	
 	private ArrayList<Continent> continentList = new ArrayList<Continent>();
 	private ArrayList<Country> countryList = new ArrayList<Country>();
@@ -58,7 +64,11 @@ public class Map {
 		this.countryList = countryList;
 	}
 	
+	public boolean isLoaded() {
+		return loaded;
+	}
 	
+
 	public boolean loadMapFromFile(File mapFile) {
 		return true;
 	}
