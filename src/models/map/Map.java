@@ -1,5 +1,6 @@
 package models.map;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Map {
@@ -58,8 +59,8 @@ public class Map {
 	}
 	
 	
-	public void loadMapFromFile() {
-		// to do
+	public boolean loadMapFromFile(File mapFile) {
+		return true;
 	}
 	
 	
