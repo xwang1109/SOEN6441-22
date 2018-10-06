@@ -21,7 +21,7 @@ public class BasicView extends JFrame {
 		controlPanel.add(newGameButton);
 		
 		JButton openMapEditorButton = new JButton("Open Map Editor");
-		openMapEditorButton.addActionListener(new MapEditorController());
+		openMapEditorButton.addActionListener(new MapEditorStartController());
 		controlPanel.add(openMapEditorButton);
 	}
 	
