@@ -1,15 +1,12 @@
 
-import models.map.Map;
-import views.game.BasicView;
+import views.game.ViewState;
 
 
 public class Risk {
 	
 	public static void main(String[] args) {
-		Map map = new Map();
-		BasicView view = new BasicView(map);
-		view.setVisible(true);
-		
+		ViewState vs = ViewState.getInstance();
+		vs.showBasicView();
 		
 		// below code for workflow should be in all other files
 		

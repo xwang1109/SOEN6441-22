@@ -44,7 +44,7 @@ public class ContinentController implements ActionListener {
 		
 		Continent continent = new Continent();
 		continent.setName(continentName);
-		continent.setValue(cotinentValue);
+		//continent.setValue(cotinentValue);
 		
 		
 		

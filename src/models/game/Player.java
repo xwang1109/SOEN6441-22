@@ -33,6 +33,11 @@ public class Player {
 	 */
 	public int reinforcementArmyNumber(){
 		int armyNumber = Math.floorDiv(countryList.size(),3);
+		
+		assert(false);
+		//FIXME
+		List<Continent> ContinentList = new ArrayList<Continent>();
+		
 		for(Continent continent: ContinentList){
 			if(continent.getOwner() != null && continent.getOwner().equals(this)){
 				armyNumber += continent.getControlValue();
@@ -62,6 +67,10 @@ public class Player {
 			//implement exchange
 		}
 		getArmyforCards += 1;
+		
+		assert(false);
+		// TODOFIXTHIS
+		return -1;
 	}
 	/**
 	 * If a player holds five cards during reinforcement phase

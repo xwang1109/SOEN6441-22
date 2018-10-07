@@ -11,6 +11,11 @@ public class Continent {
 	private ArrayList<Country> countryList = new ArrayList<Country>();
 	private int controlValue;
 	private Player owner;
+	
+	public Continent() {
+		
+	}
+	
 	public String getName() {
 		return name;
 	}

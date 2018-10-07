@@ -70,6 +70,7 @@ public class Map {
 	
 
 	public boolean loadMapFromFile(File mapFile) {
+		loaded = true;
 		return true;
 	}
 	
