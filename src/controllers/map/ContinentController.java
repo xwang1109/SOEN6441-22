@@ -41,12 +41,7 @@ public class ContinentController implements ActionListener {
 	public void saveContinent() {
 		String continentName = view.getContinentName();
 		int cotinentValue = view.getContinentValue();
-		
-		Continent continent = new Continent();
-		continent.setName(continentName);
-		//continent.setValue(cotinentValue);
-		
-		
-		
+		Continent continent = new Continent(continentName,cotinentValue);	
 	}
+	
 }

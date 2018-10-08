@@ -12,8 +12,9 @@ public class Continent {
 	private int controlValue;
 	private Player owner;
 	
-	public Continent() {
-		
+	public Continent(String name, int controlValue) {
+		this.name = name;
+		this.controlValue = controlValue;
 	}
 	
 	public String getName() {
