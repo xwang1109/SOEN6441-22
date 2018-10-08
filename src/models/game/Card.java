@@ -4,7 +4,16 @@ public class Card {
 	private Player player;
 	private CardType cardType;
 	public enum CardType {
-		INFANTRY,CAVALRY,ARTILLERY
+		INFANTRY(0),
+		CAVALRY(1),
+		ARTILLERY(2);
+	    private final int cardTypeCode;
+	    private CardType(int cardTypeCode) {
+	        this.cardTypeCode = cardTypeCode;
+	    }
+	    public int getCardTypeCode(){
+	    	return cardTypeCode;
+	    }
 	}
 	public Player getPlayer() {
 		return player;

@@ -43,41 +43,71 @@ public class Player {
 				armyNumber += continent.getControlValue();
 			}
 		}
-		armyNumber += numberofArmyforCard();
+		assert(false);
+		//Need to be fixed
+		if(enforceExchangeCard()) {
+			exchangeCardforArmy();
+			armyNumber += numberofArmyforCard();
+		}		
 		armyNumber = Math.max(armyNumber, 3);
 		return armyNumber;
 	}
+	/**
+	 * This method
+	 * @return the number of army given to player in exchange for cards
+	 */
 	public int numberofArmyforCard(){
-		int infantryNumber = 0;
-		int cavalryNumber = 0;
-		int artilleryYNumber = 0;
-		for(Card card: cardList){
-			switch(card.getCardType().toString()){
-			case "INFANTRY":
-				infantryNumber += 1;
-				break;
-			case "CAVALRY":
-				cavalryNumber += 1;
-				break;				
-			case "ARTILLERY":
-				artilleryYNumber += 1;
-			}
-		}	
-		if (inforceExchangeCard()){
-			//implement exchange
-		}
-		getArmyforCards += 1;
-		
-		assert(false);
-		// TODOFIXTHIS
-		return -1;
+		return (getArmyforCards += 1) * 5;
 	}
 	/**
-	 * If a player holds five cards during reinforcement phase
-	 * they must exchange three of them for armies
-	 * @return true if player holds five cards during reinforcement phase
+	 * This method
+	 * @return true if player has to exchange card for army
 	 */
-	public boolean inforceExchangeCard() {
+	public boolean enforceExchangeCard() {
 		return (cardList.size()>=5);
+	}
+	/**
+	 * This method
+	 * @return true if player has to exchange card for army
+	 */
+	public boolean isPossibleExchangeCard() {
+		int[] cardTypeNumber = cardTypeNumber();
+		return (Math.max(cardTypeNumber[0], Math.max(cardTypeNumber[1], cardTypeNumber[2])) >= 3)
+				|| (Math.min(cardTypeNumber[0], Math.min(cardTypeNumber[1], cardTypeNumber[2])) >= 1);
+	}
+	/**
+	 * This method
+	 * @return number of each card type
+	 */
+	public int[] cardTypeNumber() {
+		int[] cardTypeNumber = {0,0,0};
+		for(Card card: cardList){
+			cardTypeNumber[card.getCardType().getCardTypeCode()] += 1;
+		}
+		return cardTypeNumber;
+	}
+	/**
+	 * This method exchange 3 cards for army
+	 */
+	public void exchangeCardforArmy() {
+		int[] cardTypeNumber = cardTypeNumber();
+		for (int counter=0; counter<3; counter++) {
+			if (cardTypeNumber[counter]>=3)
+			{
+				for (int i=1; i<3; i++)
+					removeCard(counter);
+				return;
+			}
+		}
+		removeCard(0);removeCard(1);removeCard(2);
+	}
+	/**
+	 * This method remove a card from cardList of player
+	 */
+	public void removeCard(int cardTypeCode) {
+		for(Card card: cardList){
+			if (card.getCardType().getCardTypeCode() == cardTypeCode)
+				cardList.remove(card);			
+		}
 	}
 }
