@@ -26,9 +26,7 @@ public class Player {
 		}
 		return newArmyList;
 	}
-<<<<<<< HEAD
-	
-=======
+
 	/**
 	 * This method is to calculate and give a number of armies 
 	 * to the player at the beginning of reinforcements phase
@@ -113,5 +111,5 @@ public class Player {
 				cardList.remove(card);			
 		}
 	}
->>>>>>> 58584c81a7f5ee2f7bb3d7cb09ffbdf3740b0a27
+
 }

@@ -12,6 +12,7 @@ public class ViewState extends JFrame {
 	 * Contains function for switching between different views.
 	 */
 	private JPanel controlPanel = new JPanel();
+	//private JPanel mapPanel = new JPanel();
 	
 	private ViewState() {
 		controlPanel = new JPanel();
@@ -31,11 +32,12 @@ public class ViewState extends JFrame {
 	
 	public void showBasicView() {
 		clear();
-		new BasicView(controlPanel);
+		new BasicView(controlPanel, this);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		//getContentPane().add(mapPanel, BorderLayout.SOUTH);
 		setVisible(true);
 	}
-	
+
 	public void showPlayerView() {
 		clear();
 		new PlayerSetupView(controlPanel);
