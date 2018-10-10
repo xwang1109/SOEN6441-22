@@ -13,7 +13,6 @@ public class Country {
 	private ArrayList<Country> adjacentCountryList = new ArrayList<Country>();
 	
 	public Country(String name) {
-		super();
 		this.name = name;
 	}
 	
@@ -58,6 +57,10 @@ public class Country {
 	}
 	public void setAdjacentCountryList(ArrayList<Country> adjacentCountryList) {
 		this.adjacentCountryList = adjacentCountryList;
+	}
+	
+	public void addAdjacentCountry(Country country) {
+		this.adjacentCountryList.add(country);
 	}
 	
 	

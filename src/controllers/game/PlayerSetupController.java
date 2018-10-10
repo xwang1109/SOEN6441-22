@@ -3,13 +3,10 @@ package controllers.game;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import models.map.GameState;
-import models.map.Map;
 import views.game.ViewState;
 
-public class GameStartController implements ActionListener {
-	
-	public GameStartController() {
+public class PlayerSetupController implements ActionListener{
+	public PlayerSetupController() {
 	}
 
 	@Override
@@ -18,14 +15,12 @@ public class GameStartController implements ActionListener {
 		
 		if ( true ) { // TODO need a map... GameState.getInstance().isMapLoaded() ) {
 			// Do something about players
-			ViewState.getInstance().showReinforcementView();
+			ViewState.getInstance().showPlayerView();
 		} else {
 			// TODO do a popup
 			System.out.println("Issue with parsing the map");
 		}
 	}
 	
-	
-	
-	
+
 }
