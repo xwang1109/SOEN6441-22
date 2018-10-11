@@ -9,10 +9,22 @@ import models.map.Country;
 public class Player {
 	private int id;
 	private List<Country> countryList = new ArrayList<Country>();
+	public List<Country> getCountryList() {
+		return countryList;
+	}
+	public void setCountryList(List<Country> countryList) {
+		this.countryList = countryList;
+	}
 	private List<Card> cardList = new ArrayList<Card>();
 	private List<Army> armyList = new ArrayList<Army>();
 	private int getArmyforCards = 0;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public boolean attack(Country attacker,Country defender) {
 		//to do check connections between countries, roll dice,determine winner
 		//reassign country and armies

@@ -1,6 +1,7 @@
 package views.game;
 
 import java.awt.BorderLayout;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -32,22 +33,22 @@ public class ViewState extends JFrame {
 	
 	public void showBasicView() {
 		clear();
-		new BasicView(controlPanel, this);
+		new BasicView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		//getContentPane().add(mapPanel, BorderLayout.SOUTH);
 		setVisible(true);
 	}
 
-	public void showPlayerView() {
+	public void showPlayerView(File selectedFile) {
 		clear();
-		new PlayerSetupView(controlPanel);
+		new PlayerSetupView(controlPanel,selectedFile,this);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
 	}
 
-	public void showReinforcementView() {
+	public void showReinforcementView(File selectedFile) {
 		clear();
-		new ReinforcementView(controlPanel);
+		new ReinforcementView(controlPanel,selectedFile,this);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
 	}

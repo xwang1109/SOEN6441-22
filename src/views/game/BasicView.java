@@ -19,13 +19,13 @@ import controllers.map.MapEditorStartController;
 
 public class BasicView {
 
-	public BasicView(JPanel controlPanel, JFrame frame) {
+	public BasicView(JPanel controlPanel) {
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
 		fl_controlPanel.setAlignment(FlowLayout.LEADING);
 		
 		JButton newGameButton = new JButton("New Game");
-		newGameButton.addActionListener(new PlayerSetupController(frame));
+		newGameButton.addActionListener(new PlayerSetupController());
 		
 		controlPanel.add(newGameButton);
 		
