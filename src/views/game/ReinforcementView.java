@@ -8,12 +8,13 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controllers.game.AttackController;
 import controllers.game.GameStartController;
 import controllers.map.MapEditorStartController;
 
 public class ReinforcementView {
 
-	public ReinforcementView(JPanel controlPanel,File selectedFile,JFrame frame) {
+	public ReinforcementView(JPanel controlPanel) {
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
 		fl_controlPanel.setAlignment(FlowLayout.LEADING);
@@ -24,14 +25,16 @@ public class ReinforcementView {
 			numberOfPlayer.addItem(i);
 		}
 		
-		JButton newGameButton = new JButton("RE");
-		newGameButton.addActionListener(new GameStartController(numberOfPlayer,selectedFile,frame));
-		controlPanel.add(newGameButton);
+		//TODO below 3 lines to be modified by Mehrnaz when reinforcement is done
+		JButton fortificationButton = new JButton("REINFORCEMENT");
+		fortificationButton.addActionListener(new AttackController(numberOfPlayer));
+		controlPanel.add(fortificationButton);
 		
-		JButton openMapEditorButton = new JButton("REINFORCEME");
-		openMapEditorButton.addActionListener(new MapEditorStartController());
+		//click to enter FORTIFICATION phase
+		JButton newGameButton = new JButton("FORTIFICATION");
+		newGameButton.addActionListener(new AttackController(numberOfPlayer));
+		controlPanel.add(newGameButton);
 
-		controlPanel.add(openMapEditorButton);
 	}
 
 }
