@@ -22,13 +22,33 @@ import models.map.GameState;
 import models.map.Map;
 import views.game.ViewState;
 
+
+/**
+ * The Class GameStartController.
+ * @author Bingyang Yu
+ * @version 1.0
+ */
 public class GameStartController implements ActionListener {
 	
+	/** The number of player. */
 	private JComboBox numberOfPlayer;
+	
+	/** The selected file. */
 	private File selectedFile;
+	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The map. */
 	private Map map;
 	
+	/**
+	 * Instantiates a new game start controller. Load map into the controller. Display the map on the frame. If map is not valid, show an error message.
+	 *
+	 * @param numberOfPlayer a JComboBox to choose the number of players
+	 * @param selectedFile player selected map file. Format: .map
+	 * @param frame the frame of the entire program.
+	 */
 	public GameStartController(JComboBox numberOfPlayer,File selectedFile,JFrame frame) {
 		
            this.numberOfPlayer = numberOfPlayer;
@@ -70,6 +90,10 @@ public class GameStartController implements ActionListener {
    		
 	}
     
+	/**
+	 * this method is triggered by "Start" button. Players are created and countries are randomly assigned.
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -94,7 +118,7 @@ public class GameStartController implements ActionListener {
 		}
 		
 		
-		System.out.println(num);
+		//System.out.println(num);
 
 		
 		/*if ( true ) { // TODO need a map... GameState.getInstance().isMapLoaded() ) {

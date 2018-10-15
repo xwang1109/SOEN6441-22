@@ -116,6 +116,8 @@ public class Player {
 	}
 	/**
 	 * This method remove a card from cardList of player
+	 * @param cardTypeCode NEED to add more info
+	 *
 	 */
 	public void removeCard(int cardTypeCode) {
 		for(Card card: cardList){
