@@ -2,9 +2,14 @@ package views.game;
 
 import java.awt.BorderLayout;
 import java.io.File;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import models.game.Player;
+import models.map.Country;
 
 public class ViewState extends JFrame {
 	private static final long serialVersionUID = 7243006502142830314L;
@@ -46,9 +51,16 @@ public class ViewState extends JFrame {
 		setVisible(true);
 	}
 
-	public void showReinforcementView(File selectedFile) {
+	public void showStarUpView(File selectedFile, List<Player> playerList, List<Country> countryList) {
 		clear();
-		new ReinforcementView(controlPanel,selectedFile,this);
+		new StartUpView(controlPanel, selectedFile, this, playerList, countryList);
+		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		setVisible(true);
+	}
+	
+	public void showReinforcementView(File selectedFile, List<Player> playerList, List<Country> countryList) {
+		clear();
+		new ReinforcementView(controlPanel,selectedFile,this, playerList, countryList);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
 	}

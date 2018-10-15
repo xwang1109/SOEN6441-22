@@ -21,5 +21,10 @@ public class GameState {
 	}
 	public boolean isMapLoaded() {
 		return map.isLoaded();
+	}	
+	public int getInitialArmyNumber(){
+		assert(false);
+		//Need to be fixed
+		return map.getCountryList().size();
 	}
 }

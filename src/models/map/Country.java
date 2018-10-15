@@ -2,6 +2,7 @@ package models.map;
 
 import models.game.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Country {
 	private String name;
@@ -11,9 +12,11 @@ public class Country {
 	private int locationX;
 	private int locationY;
 	private ArrayList<Country> adjacentCountryList = new ArrayList<Country>();
+	private List<Army> armyList;
 	
 	public Country(String name) {
 		this.name = name;
+		numOfArmies =0;
 	}
 	
 	public String getName() {
@@ -63,6 +66,16 @@ public class Country {
 		this.adjacentCountryList.add(country);
 	}
 	
+	public void AddArmy() {
+		for (Army army:owner.getArmyList()) {
+			if(army.getCountry().equals(null)) {
+				army.setCountry(this);
+				armyList.add(army);
+				break;
+			}
+		}
+		numOfArmies++;
+	}	
 	
 	
 }

@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import models.game.Army;
 import models.game.Player;
 import models.map.Country;
 import models.map.GameState;
@@ -91,11 +92,24 @@ public class GameStartController implements ActionListener {
 			Country c = countryList.get(i);                // loop for get each country of the map
 			Player p = playerList.get(i%num);              // find the corresponding player by the order of the player
 			p.getCountryList().add(c);                     // assign country to each player
+			c.setOwner(p);
 		}
 		
-		
-		System.out.println(num);
+//		System.out.println(num);
 
+		
+		/**
+		 * Allocate a number of initial armies to players
+		 */
+		int initialArmy = Math.round(countryList.size() / playerList.size()) + playerList.size();
+		for (Player player:playerList) {
+			for (int i=0; i<initialArmy; i++) {
+				Army army = new Army(player);
+				player.getArmyList().add(army);				
+			}
+		}
+		
+		ViewState.getInstance().showStarUpView(selectedFile, playerList, countryList);
 		
 		/*if ( true ) { // TODO need a map... GameState.getInstance().isMapLoaded() ) {
 			// Do something about players
