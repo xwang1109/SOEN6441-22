@@ -8,9 +8,21 @@ import javax.swing.JTextField;
 import models.map.GameState;
 import views.game.ViewState;
 
+/**
+ * class FortificationController to receive player action and call methods from model
+ * @author Lin Li
+ * @see ViewState.getInstance(), GameState.getInstance()
+ */
 public class FortificationController implements ActionListener {
 	
 	private JTextField from, to, quantity;
+	
+	/**
+	 * Constructor of class FortificationController
+	 * @param from
+	 * @param to
+	 * @param quantity
+	 */
 	public FortificationController(JTextField from, JTextField to, JTextField quantity) {
 		this.from = from;
 		this.to = to;
@@ -18,6 +30,10 @@ public class FortificationController implements ActionListener {
 	}
 	
 	@Override
+	/**
+	 * Perform Fortification if player click on button
+	 * @param ActionEvent e
+	 */
 	public void actionPerformed(ActionEvent e) {
 		String fromStr = from.getText();
 		String toStr = to.getText();
