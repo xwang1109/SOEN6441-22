@@ -1,14 +1,16 @@
 package models.map;
 
 import java.io.File;
+import java.util.ArrayList;
 
+import models.game.Player;
 import views.game.ViewState;
 
 public class GameState {
 
-	private File selectedFile;
+	//private File selectedFile;
 	private Map map;
-	
+	private ArrayList<Player> playerList = new ArrayList<Player>();
 	// hold players
 	// hold phase to switch between map info and current state
 	enum Phase

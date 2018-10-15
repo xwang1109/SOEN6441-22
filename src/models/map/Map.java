@@ -4,7 +4,7 @@ package models.map;
 import java.util.*;
 import java.io.*;
 
-public class Map {
+public class Map extends Observable {
 
 	public Map() {
 		loaded = false;
@@ -233,6 +233,9 @@ public class Map {
 		catch (Exception e) {
 			return false;
 		}
+		setChanged();
+		notifyObservers();
+		
 		return true;
 	}
 	
