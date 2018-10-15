@@ -62,7 +62,7 @@ public class StartUpView{
 		playerCounter = counter;
 	}
 
-	//MapCountryPanel mapPanel;
+	MapCountryPanel mapPanel;
 	JButton addArmyButton;
 	JComboBox<String> comboBox;
 	JLabel playerLabel;
@@ -70,9 +70,8 @@ public class StartUpView{
 	public StartUpView (JPanel controlPanel) {
 		gameState = GameState.getInstance();
 		playerList = gameState.getPlayerList();
-		//countryList = gameState.getMap().getCountryList();
+		mapPanel = new MapCountryPanel();
 		
-//		mapPanel = new MapCountryPanel();
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
 		fl_controlPanel.setAlignment(FlowLayout.LEADING);
 		
@@ -83,7 +82,6 @@ public class StartUpView{
 		comboBox = new JComboBox<String>();
 		comboBox.addActionListener((ActionListener) new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-//            	if (event.getActionCommand().equals("comboBoxChanged")) {
             	if(isActionListenerActive) {
                     JComboBox comboBox = (JComboBox) event.getSource();
                     String selected = (String)comboBox.getSelectedItem();
@@ -104,8 +102,7 @@ public class StartUpView{
 		controlPanel.add(addArmyButton);
 		controlPanel.add(comboBox);
 		
-//		this.add(controlPanel);
-//		this.add(mapPanel);		
+		controlPanel.add(mapPanel);		
 
 		playerCounter = 0;
 		player = playerList.get(playerCounter);		
@@ -115,18 +112,22 @@ public class StartUpView{
 	
 	public void showLeftArmies() {
 		leftArmyLabel.setText(Integer.toString(leftArmies));
+		mapPanel.addCountryTableForReinforcement(player);
 	}
 	public void showPlayer() {
 		player = playerList.get(playerCounter);
 		countryList = player.getCountryList();
 		playerLabel.setText(Integer.toString(player.getId()));
-		//mapPanel.addCountryTableForReinforcement(player);
+		mapPanel.addCountryTableForReinforcement(player);
 		leftArmyLabel.setText(Integer.toString(leftArmies));
 		
 		isActionListenerActive = false;
+		comboBox.removeAllItems();
 		for (Country country:countryList) {
 			comboBox.addItem(country.getName());
 		}
+		comboBox.revalidate();
+		comboBox.repaint();
 		isActionListenerActive = true;
 		comboBox.setSelectedIndex(0);
 	}
