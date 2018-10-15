@@ -9,15 +9,9 @@ import models.map.Country;
 public class Player {
 	private int id;
 	private List<Country> countryList = new ArrayList<Country>();
-	public List<Country> getCountryList() {
-		return countryList;
-	}
-	public void setCountryList(List<Country> countryList) {
-		this.countryList = countryList;
-	}
 	private List<Card> cardList = new ArrayList<Card>();
 	private List<Army> armyList = new ArrayList<Army>();
-	private int getArmyforCards = 0;
+	private int getArmyforCards = 0; //number of times player is given army for cards
 	
 	public int getId() {
 		return id;
@@ -25,14 +19,28 @@ public class Player {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public List<Army> getArmyList() {
+		return armyList;
+	}
+	public void setCountryList(List<Country> countryList) {
+		this.countryList = countryList;
+	}
+	public List<Country> getCountryList() {
+		return countryList;
+	}
+	public List<Card> getCardList() {
+		return cardList;
+	}
+	
+	
 	public boolean attack(Country attacker,Country defender) {
 		//to do check connections between countries, roll dice,determine winner
 		//reassign country and armies
 		return false;
 	}
-	public List<Army> getNewArmy() {
+	public List<Army> addReinforcementArmy(boolean requestToChangeCard) {
 		List<Army> newArmyList = new ArrayList<Army>();
-		for(int counter=0; counter<reinforcementArmyNumber(); counter++) {
+		for(int i=0; i<reinforcementArmyNumber(requestToChangeCard); i++) {
 			Army army = new Army(this);
 			newArmyList.add(army);
 		}
@@ -44,7 +52,7 @@ public class Player {
 	 * to the player at the beginning of reinforcements phase
 	 * @return the number of armies given to player
 	 */
-	public int reinforcementArmyNumber(){
+	public int reinforcementArmyNumber(boolean requestToChangeCard){
 		int armyNumber = Math.floorDiv(countryList.size(),3);
 		
 		assert(false);
@@ -56,9 +64,8 @@ public class Player {
 				armyNumber += continent.getControlValue();
 			}
 		}
-		assert(false);
-		//Need to be fixed
-		if(enforceExchangeCard()) {
+
+		if(enforceExchangeCard() || (requestToChangeCard && isPossibleExchangeCard())) {
 			exchangeCardforArmy();
 			armyNumber += numberofArmyforCard();
 		}		
@@ -107,7 +114,7 @@ public class Player {
 		for (int counter=0; counter<3; counter++) {
 			if (cardTypeNumber[counter]>=3)
 			{
-				for (int i=1; i<3; i++)
+				for (int i=0; i<3; i++)
 					removeCard(counter);
 				return;
 			}

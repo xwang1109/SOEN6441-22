@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 
 public class PlayerSetupView {
 
-	public PlayerSetupView(JPanel controlPanel, File selectedFile,JFrame frame) {
+	public PlayerSetupView(JPanel controlPanel) {
 		// feed the beast
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
@@ -26,7 +26,7 @@ public class PlayerSetupView {
 		}
 		
 		JButton newGameButton = new JButton("STARTTHEGAME");
-		newGameButton.addActionListener(new GameStartController(numberOfPlayer,selectedFile,frame));
+		newGameButton.addActionListener(new GameStartController(numberOfPlayer));
 		controlPanel.add(numberOfPlayer);
 		controlPanel.add(newGameButton);
 		

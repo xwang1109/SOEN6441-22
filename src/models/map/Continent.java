@@ -45,5 +45,7 @@ public class Continent {
 		this.countryList.add(country);
 	}
 
-	
+	public Player checkOwnership() {
+		return null;
+	}
 }
