@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileSystemView;
 
+import models.map.GameState;
 import models.map.Map;
 import views.game.ViewState;
 
@@ -37,9 +38,10 @@ public class PlayerSetupController implements ActionListener{
 
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = jfc.getSelectedFile();
+			GameState.getInstance().setSelectedFile(selectedFile);
 			System.out.println(selectedFile.getAbsolutePath());
 			
-			ViewState.getInstance().showPlayerView(selectedFile);
+			ViewState.getInstance().showPlayerView();
 		}
 
 		/*

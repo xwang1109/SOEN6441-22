@@ -40,13 +40,12 @@ public class ViewState extends JFrame {
 		clear();
 		new BasicView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
-		//getContentPane().add(mapPanel, BorderLayout.SOUTH);
 		setVisible(true);
 	}
 
-	public void showPlayerView(File selectedFile) {
+	public void showPlayerView() {
 		clear();
-		new PlayerSetupView(controlPanel,selectedFile,this);
+		new PlayerSetupView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
 	}
@@ -58,13 +57,19 @@ public class ViewState extends JFrame {
 		setVisible(true);
 	}
 	
-	public void showReinforcementView(File selectedFile, List<Player> playerList, List<Country> countryList) {
+//	public void showReinforcementView(File selectedFile, List<Player> playerList, List<Country> countryList) {
+//		new ReinforcementView(controlPanel,selectedFile,this, playerList, countryList);
+	public void showReinforcementView() {
 		clear();
-		new ReinforcementView(controlPanel,selectedFile,this, playerList, countryList);
+		new ReinforcementView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
 	}
-
 	
-	
+	public void showFortificationView() {
+		clear();
+		new FortificationView(controlPanel);
+		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		setVisible(true);
+	}
 }

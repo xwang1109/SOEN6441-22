@@ -90,6 +90,7 @@ public class Map {
 	
 
 	public boolean loadMapFromFile(File mapFile) {
+		// TODO this can't be set true if the map didn't load
 		loaded = true;
 		boolean continentBegin = false;
 		boolean countryBegin = false;
@@ -233,6 +234,16 @@ public class Map {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Execute the fortification move
+	 * return true if the fortification order was executed
+	 * false in case of error
+	 */
+	public boolean fortify(String from, String to, int qt) {
+		// TODO
+		return false;
 	}
 	
 	

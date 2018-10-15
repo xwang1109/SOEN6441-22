@@ -10,7 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
 import controllers.game.FinshAttackController;
+import controllers.game.AttackController;
 import controllers.game.GameStartController;
 import controllers.game.ReinforcementController;
 import controllers.map.MapEditorStartController;
@@ -33,14 +35,17 @@ public class ReinforcementView {
     JLabel playerLabel;
     JLabel armyNumberLable;
 
-    public ReinforcementView(JPanel controlPanel,File selectedFile,JFrame frame, Player player, List<Army> reinforcementArmy) {
+
+//    public ReinforcementView(JPanel controlPanel,File selectedFile,JFrame frame, Player player, List<Army> reinforcementArmy) {
+
+	public ReinforcementView(JPanel controlPanel) {
+		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
 		fl_controlPanel.setAlignment(FlowLayout.LEADING);
 		
+/*
 		JButton finishAttackButton = new JButton("Finish Attach");
 		finishAttackButton.addActionListener(new FinshAttackController());
-
-		
 		controlPanel.add(playerLabel);
 		controlPanel.add(finishAttackButton);
 				
@@ -48,7 +53,18 @@ public class ReinforcementView {
 		armyNumber = armyLeft = reinforcementArmy.size();
         playerLabel.setText(Integer.toString(player.getId()));
         armyNumberLable.setText(Integer.toString(armyLeft));
+*/			
+
+		//TODO below 3 lines to be modified by Mehrnaz when reinforcement is done
+		JButton fortificationButton = new JButton("REINFORCEMENT");
+		fortificationButton.addActionListener(new AttackController(numberOfPlayer));
+		controlPanel.add(fortificationButton);
 		
+		//click to enter FORTIFICATION phase
+		JButton newGameButton = new JButton("FORTIFICATION");
+		newGameButton.addActionListener(new AttackController(numberOfPlayer));
+		controlPanel.add(newGameButton);
+
 	}
     
 }
