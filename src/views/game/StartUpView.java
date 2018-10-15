@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 import controllers.game.GameStartController;
 import controllers.game.PlayerSetupController;
-import controllers.game.StarUpController;
+import controllers.game.StartUpController;
 import controllers.map.MapEditorStartController;
 import models.game.Player;
 import models.map.Country;
@@ -24,11 +24,7 @@ import views.map.MapCountryPanel;
 
 import javax.swing.JTextPane;
 
-public class StartUpView extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class StartUpView{
 	private ArrayList<Player> playerList;
 	private ArrayList<Country> countryList;
 	private Player player;
@@ -36,6 +32,7 @@ public class StartUpView extends JFrame {
 	private GameState gameState;
 	private int leftArmies;
 	private Country selectedCountry;
+	private boolean isActionListenerActive;
 	public Player getPlayer() {
 		return player;
 	}
@@ -65,7 +62,7 @@ public class StartUpView extends JFrame {
 		playerCounter = counter;
 	}
 
-	MapCountryPanel mapPanel;
+	//MapCountryPanel mapPanel;
 	JButton addArmyButton;
 	JComboBox<String> comboBox;
 	JLabel playerLabel;
@@ -73,26 +70,31 @@ public class StartUpView extends JFrame {
 	public StartUpView (JPanel controlPanel) {
 		gameState = GameState.getInstance();
 		playerList = gameState.getPlayerList();
-		countryList = gameState.getMap().getCountryList();
+		//countryList = gameState.getMap().getCountryList();
 		
-		mapPanel = new MapCountryPanel();
+//		mapPanel = new MapCountryPanel();
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
 		fl_controlPanel.setAlignment(FlowLayout.LEADING);
 		
 		addArmyButton = new JButton("Add Army");
-		addArmyButton.addActionListener(new StarUpController(this));
+		addArmyButton.addActionListener(new StartUpController(this));
+
 
 		comboBox = new JComboBox<String>();
 		comboBox.addActionListener((ActionListener) new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                JComboBox comboBox = (JComboBox) event.getSource();
-                String selected = (String)comboBox.getSelectedItem();
-                for(Country c:countryList) {
-                	if (c.getName().equals(selected))
-                		selectedCountry = c;
-                }
+//            	if (event.getActionCommand().equals("comboBoxChanged")) {
+            	if(isActionListenerActive) {
+                    JComboBox comboBox = (JComboBox) event.getSource();
+                    String selected = (String)comboBox.getSelectedItem();
+                    for(Country c:countryList) {
+                    	if (c.getName().equals(selected))
+                    		selectedCountry = c; 
+                    }           		
+            	}
             }
 		});
+		comboBox.setSelectedItem(0);
 				
 		playerLabel = new JLabel("");
 		leftArmyLabel = new JLabel("");
@@ -100,26 +102,33 @@ public class StartUpView extends JFrame {
 		controlPanel.add(playerLabel);
 		controlPanel.add(leftArmyLabel);
 		controlPanel.add(addArmyButton);
+		controlPanel.add(comboBox);
 		
-		this.add(controlPanel);
-		this.add(mapPanel);		
+//		this.add(controlPanel);
+//		this.add(mapPanel);		
 
 		playerCounter = 0;
+		player = playerList.get(playerCounter);		
 		leftArmies = player.getArmyNumber();
 		showPlayer();
 	}
 	
+	public void showLeftArmies() {
+		leftArmyLabel.setText(Integer.toString(leftArmies));
+	}
 	public void showPlayer() {
 		player = playerList.get(playerCounter);
 		countryList = player.getCountryList();
 		playerLabel.setText(Integer.toString(player.getId()));
-		mapPanel.addCountryTableForReinforcement(player);
+		//mapPanel.addCountryTableForReinforcement(player);
 		leftArmyLabel.setText(Integer.toString(leftArmies));
-
-		for (Country country:countryList) {
-			comboBox.addItem(country.toString());
-		}
 		
+		isActionListenerActive = false;
+		for (Country country:countryList) {
+			comboBox.addItem(country.getName());
+		}
+		isActionListenerActive = true;
+		comboBox.setSelectedIndex(0);
 	}
 
 }

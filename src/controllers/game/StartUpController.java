@@ -11,11 +11,11 @@ import models.game.Player;
 import models.map.Country;
 import models.map.GameState;
 
-public class StarUpController implements ActionListener {
+public class StartUpController implements ActionListener {
 
 	private StartUpView starUpView;
 	
-	public StarUpController(StartUpView view) {
+	public StartUpController(StartUpView view) {
 		starUpView = view;
 	}
 
@@ -34,6 +34,8 @@ public class StarUpController implements ActionListener {
 			else {
 				ViewState.getInstance().showReinforcementView();
 			}
+		} else {
+			starUpView.showLeftArmies();
 		}
 	}
 }
