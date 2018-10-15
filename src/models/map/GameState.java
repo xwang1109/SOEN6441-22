@@ -8,7 +8,7 @@ import views.game.ViewState;
 
 public class GameState {
 
-	//private File selectedFile;
+	private File selectedFile;
 	private Map map;
 	private ArrayList<Player> playerList = new ArrayList<Player>();
 	// hold players
@@ -58,6 +58,14 @@ public class GameState {
 		this.selectedFile = selectedFile;
 	}
 	
+	
+	
+	public ArrayList<Player> getPlayerList() {
+		return playerList;
+	}
+	public void setPlayerList(ArrayList<Player> playerList) {
+		this.playerList = playerList;
+	}
 	public boolean loadMapFromFile(File selectedFile2) {
 		return map.loadMapFromFile(selectedFile2);
 	}
