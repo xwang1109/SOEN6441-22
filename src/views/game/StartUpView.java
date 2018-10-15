@@ -2,49 +2,70 @@ package views.game;
 
 import java.awt.FlowLayout;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controllers.game.GameStartController;
+import controllers.game.PlayerSetupController;
+import controllers.game.StarUpController;
 import controllers.map.MapEditorStartController;
 import models.game.Player;
 import models.map.Country;
+import models.map.GameState;
+
 import javax.swing.JTextPane;
 
 public class StartUpView {
-	private List<Player> playerList;
+	private ArrayList<Player> playerList;
 	private List<Country> countryList;
+	private Player player;
+	private GameState gameState;
+	private int leftArmies;
+	public int getLeftArmies() {
+		return leftArmies;
+	}
 	private Country clickedCountry;
 	public Country getClickedCountry() {
 		return clickedCountry;
 	}
 
-	public StartUpView (JPanel controlPanel,File selectedFile,JFrame frame, List<Player> playerList, List<Country> countryList) {
-		this.playerList = playerList;
-		this.countryList = countryList;
+	public StartUpView (JPanel controlPanel) {
+		gameState = GameState.getInstance();
+		playerList = gameState.getPlayerList();
+		countryList = gameState.getMap().getCountryList();
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
 		fl_controlPanel.setAlignment(FlowLayout.LEADING);
 		
+		JButton newGameButton = new JButton("New Game");
+		newGameButton.addActionListener(new StarUpController(this));
+
 		JLabel playerLabel = new JLabel("");
+		JLabel leftArmyLabel = new JLabel("");
 		
 		controlPanel.add(playerLabel);
+		controlPanel.add(leftArmyLabel);
+		controlPanel.add(newGameButton);
 		
 
-		for (Player player:playerList) {
-			playerLabel.setText(Integer.toString(player.getId()));
-			int armyNumber = player.getArmyList().size();
+		player = playerList.get(0);
+		playerLabel.setText(Integer.toString(player.getId()));
+		countryList = player.getCountryList();
 
-			while (armyNumber>0) {
-			//click event
-			//armyNumber--;
-			//clickedCountry set
-			}
+		JComboBox<String> playerCountryList = new JComboBox<String>();
+		for (Country country:countryList) {
+			playerCountryList.addItem(country.toString());
 		}
+		
+		leftArmies = player.getArmyNumber();
+		leftArmyLabel.setText(Integer.toString(leftArmies));
+
 		
 		ViewState.getInstance().showReinforcementView(selectedFile, playerList, countryList);
 		

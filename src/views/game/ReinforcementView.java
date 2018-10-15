@@ -36,8 +36,6 @@ public class ReinforcementView {
     JLabel armyNumberLable;
 
 
-//    public ReinforcementView(JPanel controlPanel,File selectedFile,JFrame frame, Player player, List<Army> reinforcementArmy) {
-
 	public ReinforcementView(JPanel controlPanel) {
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();

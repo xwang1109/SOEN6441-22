@@ -69,7 +69,7 @@ public class GameStartController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 
-		List<Player> playerList = new ArrayList();
+		ArrayList<Player> playerList = new ArrayList<Player>();
 
 		int num = (Integer)numberOfPlayer.getSelectedItem();
 		for(int i = 0;i < num; i++) {
@@ -77,6 +77,7 @@ public class GameStartController implements ActionListener {
 			p.setId(i);
 			playerList.add(p);
 		}
+		GameState.getInstance().setPlayerList(playerList);
 
 		List<Country> countryList = GameState.getInstance().getMap().getCountryList();
 		Collections.shuffle(countryList);
@@ -104,9 +105,7 @@ public class GameStartController implements ActionListener {
 			}
 		}
 		
-//		ViewState.getInstance().showStarUpView(selectedFile, playerList, countryList);
-
-		ViewState.getInstance().showReinforcementView();
+		ViewState.getInstance().showStarUpView();
 
 
 		/*if ( true ) { // TODO need a map... GameState.getInstance().isMapLoaded() ) {
