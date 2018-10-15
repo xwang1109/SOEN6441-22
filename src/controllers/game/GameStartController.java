@@ -29,35 +29,9 @@ public class GameStartController implements ActionListener {
 		this.numberOfPlayer = numberOfPlayer;
 		File selectedFile = GameState.getInstance().getSelectedFile();
 		boolean result = GameState.getInstance().loadMapFromFile(selectedFile);
+
 		if(result) {
-			//get different separator from different system
-			String mapFileString = selectedFile.getParentFile().getAbsolutePath() +
-					java.nio.file.FileSystems.getDefault().getSeparator() +
-					GameState.getInstance().getMap().getImage();
-			File imageFile = new File(mapFileString);
-			Image i;
-			try {
-				i = ImageIO.read(imageFile);
-				//Image newImage = i.getScaledInstance(1000, 750,Image.SCALE_SMOOTH);
-				//ImageIcon image = new ImageIcon(newImage);
-				ImageIcon image = new ImageIcon(i);
-				JLabel imageLabel = new JLabel(image);
-				ViewState.getInstance().add(imageLabel);
-				ViewState.getInstance().setLayout(null);
 
-				imageLabel.setLocation(0, 50);
-				int width = i.getWidth(null);
-				int height = i.getHeight(null);
-				imageLabel.setSize(width, height);
-				imageLabel.setVisible(true);
-				//frame.setVisible(true);
-
-				// TODO why resizing the main window at runtime?
-				ViewState.getInstance().setSize(width, height+50);
-			} catch (IOException ex) {
-
-				ex.printStackTrace();
-			}
 		}
 		else {
 			JOptionPane.showMessageDialog(ViewState.getInstance(), "not a valid map");
@@ -105,8 +79,8 @@ public class GameStartController implements ActionListener {
 			}
 		}
 		
-		ViewState.getInstance().showStarUpView();
-
+		ViewState.getInstance().showStartUpView();
+//		ViewState.getInstance().showReinforcementView();
 
 		/*if ( true ) { // TODO need a map... GameState.getInstance().isMapLoaded() ) {
 			// Do something about players

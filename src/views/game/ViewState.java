@@ -50,7 +50,7 @@ public class ViewState extends JFrame {
 		setVisible(true);
 	}
 
-	public void showStarUpView() {
+	public void showStartUpView() {
 		clear();
 		new StartUpView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);

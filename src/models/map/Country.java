@@ -12,11 +12,12 @@ public class Country {
 	private int locationX;
 	private int locationY;
 	private ArrayList<Country> adjacentCountryList = new ArrayList<Country>();
-	private List<Army> armyList;
+	private ArrayList<Army> armyList;
 	
 	public Country(String name) {
 		this.name = name;
 		numOfArmies =0;
+		armyList = new ArrayList<Army>();
 	}
 	
 	public String getName() {
@@ -65,10 +66,9 @@ public class Country {
 	public void addAdjacentCountry(Country country) {
 		this.adjacentCountryList.add(country);
 	}
-	
 	public void AddArmy() {
 		for (Army army:owner.getArmyList()) {
-			if(army.getCountry().equals(null)) {
+			if(army.getCountry() == null) {
 				army.setCountry(this);
 				armyList.add(army);
 				break;
@@ -76,6 +76,4 @@ public class Country {
 		}
 		numOfArmies++;
 	}	
-	
-	
 }
