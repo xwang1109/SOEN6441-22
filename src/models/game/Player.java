@@ -8,9 +8,9 @@ import models.map.Country;
 
 public class Player {
 	private int id;
-	private List<Country> countryList = new ArrayList<Country>();
-	private List<Card> cardList = new ArrayList<Card>();
-	private List<Army> armyList = new ArrayList<Army>();
+	private ArrayList<Country> countryList = new ArrayList<Country>();
+	private ArrayList<Card> cardList = new ArrayList<Card>();
+	private ArrayList<Army> armyList = new ArrayList<Army>();
 	private int getArmyforCards = 0; //number of times player is given army for cards
 	
 	public int getId() {
@@ -19,19 +19,19 @@ public class Player {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public List<Army> getArmyList() {
+	public ArrayList<Army> getArmyList() {
 		return armyList;
 	}
 	public int getArmyNumber() {
 		return armyList.size();
 	}
-	public void setCountryList(List<Country> countryList) {
+	public void setCountryList(ArrayList<Country> countryList) {
 		this.countryList = countryList;
 	}
-	public List<Country> getCountryList() {
+	public ArrayList<Country> getCountryList() {
 		return countryList;
 	}
-	public List<Card> getCardList() {
+	public ArrayList<Card> getCardList() {
 		return cardList;
 	}
 	
