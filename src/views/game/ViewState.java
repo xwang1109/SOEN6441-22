@@ -67,16 +67,6 @@ public class ViewState extends JFrame {
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
 	}
-
-	/**
-	 * Show start up view
-	 */
-	public void showStartUpView() {
-		clear();
-		new StartUpView(controlPanel);
-		getContentPane().add(controlPanel, BorderLayout.NORTH);
-		setVisible(true);
-	}
 	
 	/**
 	 * Show reinforcement view

@@ -79,8 +79,7 @@ public class GameStartController implements ActionListener {
 			}
 		}
 		
-		ViewState.getInstance().showStartUpView();
-//		ViewState.getInstance().showReinforcementView();
+		ViewState.getInstance().showReinforcementView();
 
 		/*if ( true ) { // TODO need a map... GameState.getInstance().isMapLoaded() ) {
 			// Do something about players
