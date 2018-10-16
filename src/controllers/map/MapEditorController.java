@@ -53,7 +53,8 @@ public class MapEditorController implements ActionListener {
 	
 	
 	public void addCountry() {
-		
+		CountryView newCountryView = new CountryView(map);
+		newCountryView.setVisible(true);
 
 	}
 	
