@@ -67,7 +67,18 @@ public class MapEditorController implements ActionListener {
 	
 	public void deleteCountry() {
 		
-		
+		int id = this.view.getSelectedCountryID();
+		if(id == -1) {
+			JOptionPane.showMessageDialog(null, "Please select a country first!");
+		}
+		else {
+			String msg = "Are you sure that you want to delete country "+
+					map.getCountryByID(id)+"?";
+		int option = JOptionPane.showConfirmDialog(null, msg);
+		if(option == JOptionPane.YES_OPTION) {
+			map.removeCountryByID(id);	
+		}
+		}
 	}
 	
 	
