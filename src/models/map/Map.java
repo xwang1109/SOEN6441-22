@@ -73,8 +73,8 @@ public class Map extends Observable {
 	}
 	
 	public void addCountry(Country country) {
+		country.getContinent().addCountry(country);
 		this.countryList.add(country);
-		country.getContinent().addCountry(country);;
 		setChanged();
 		notifyObservers();
 	}
@@ -163,11 +163,16 @@ public class Map extends Observable {
 		for(int i=0;i<continentList.size();i++) {
 			if(continentList.get(i).getID() == id){
 				Continent continent = continentList.get(i);
-				for(int j=0;j<continent.getCountryList().size();j++) {
-					int countryID = continent.getCountryList().get(j).getID();
+				
+				while(continent.getCountryList().size()!=0) {
+					int countryID = continent.getCountryList().get(0).getID();
 					removeCountryByID(countryID);
 				}
+				
+				
 				continentList.remove(i);
+				setChanged();
+				notifyObservers();
 				return;
 			}
 		}
@@ -177,8 +182,21 @@ public class Map extends Observable {
 		for(int i=0;i<this.countryList.size();i++) {
 			if(this.countryList.get(i).getID()==id){
 				Continent continent = countryList.get(i).getContinent();
+				// remove the country from its continent's country list
 				continent.removeCountryByID(id);
+				
+				// remove the country from its adj country's adj country list
+				for(Country country:this.countryList) {
+					for(Country adjCountry:country.getAdjacentCountryList()) {
+						adjCountry.removeAdjacentCountryByID(id);
+					}
+				}
+				
+				// remove the country from the map's country list
 				countryList.remove(i);
+				
+				setChanged();
+				notifyObservers();
 				return;
 			}
 		}

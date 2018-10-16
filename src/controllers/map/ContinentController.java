@@ -44,8 +44,6 @@ public class ContinentController implements ActionListener {
 		case "Save":
 			editContinent();
 			break;
-		case "Delete":
-			break;
 		}
 	}
 	

@@ -68,6 +68,15 @@ public class Country {
 	public void addAdjacentCountry(Country country) {
 		this.adjacentCountryList.add(country);
 	}
+	public void removeAdjacentCountryByID(int countryID) {
+		for(Country country:this.adjacentCountryList) {
+			if(country.getID() == countryID) {
+				this.adjacentCountryList.remove(country);
+				return;
+			}
+		}
+	}
+	
 	public void AddArmy() {
 		for (Army army:owner.getArmyList()) {
 			if(army.getCountry() == null) {

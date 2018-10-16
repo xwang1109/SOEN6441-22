@@ -2,12 +2,13 @@ package controllers.map;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 import views.map.*;
 
-import models.map.Map;
+import models.map.*;
 
 public class MapEditorController implements ActionListener {
 	
@@ -66,11 +67,28 @@ public class MapEditorController implements ActionListener {
 	
 	public void deleteCountry() {
 		
+		
 	}
 	
 	
 	public void deleteContinent() {
-		
+		int id = this.view.getSelectedContinentID();
+		if(id == -1) {
+			JOptionPane.showMessageDialog(null, "Please select a continent first!");
+			
+		}
+		else {
+			String msg = "Are you sure that you want to delete continent "+
+						map.getContinentByID(id).getName()+
+						"? All countries in this continent will also be deleted.";
+			int option = JOptionPane.showConfirmDialog(null, msg);
+			if(option == JOptionPane.YES_OPTION) {
+				map.removeContinentByID(id);
+				
+				
+			}
+			
+		}
 	}
 	
 	
