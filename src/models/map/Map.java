@@ -186,8 +186,7 @@ public class Map extends Observable {
 	
 
 	public boolean loadMapFromFile(File mapFile) {
-		// TODO this can't be set true if the map didn't load
-		loaded = true;
+		
 		boolean continentBegin = false;
 		boolean countryBegin = false;
 		
@@ -325,25 +324,20 @@ public class Map extends Observable {
 		    		country.addAdjacentCountry(connectedCountry);
 		    	}
 		    }
+		    
+		    
 		}
 		catch (Exception e) {
 			return false;
 		}
+		
+		loaded = true;
 		setChanged();
 		notifyObservers();
 		
 		return true;
 	}
 	
-	/**
-	 * Execute the fortification move
-	 * return true if the fortification order was executed
-	 * false in case of error
-	 */
-	public boolean fortify(String from, String to, int qt) {
-		// TODO
-		return false;
-	}
 	
 	/**
 	 * check if there is a same continent name except itself in the map
