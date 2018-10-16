@@ -2,6 +2,9 @@ package controllers.map;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JOptionPane;
+
 import views.map.*;
 
 import models.map.Map;
@@ -9,16 +12,13 @@ import models.map.Map;
 public class MapEditorController implements ActionListener {
 	
 	private Map map;
-	private int id;
+	private MapEditorView view;
 	
-	public MapEditorController(Map map) {
+	public MapEditorController(Map map, MapEditorView view) {
 		this.map = map;
+		this.view = view;
 	}
 	
-	public MapEditorController(Map map, int id) {
-		this.map = map;
-		this.id = id;	
-	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -76,11 +76,18 @@ public class MapEditorController implements ActionListener {
 	
 	public void editCountry() {
 		
+		
 	}
 	
 	public void editContinent() {
-		ContinentView newContinentView = new ContinentView(map,id);
-		newContinentView.setVisible(true);
+		
+		int id = this.view.getSelectedContinentID();
+		if(id == -1) {
+			JOptionPane.showMessageDialog(null, "Please select a continent first!");
+		}
+		
+		ContinentView editContinentView = new ContinentView(map,id);
+		editContinentView.setVisible(true);
 	}
 	
 	

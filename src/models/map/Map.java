@@ -119,6 +119,17 @@ public class Map extends Observable {
 		return null;
 	}
 	
+	public void updateContinentByID(int continentID, String name, int value) {
+		for(int i=0;i<continentList.size();i++) {
+			if(continentList.get(i).getID() == continentID){
+				continentList.get(i).setName(name);
+				continentList.get(i).setControlValue(value);
+				setChanged();
+				notifyObservers();
+			}
+		}
+	}
+	
 	public int getContinentNumber() {
 		return this.continentList.size();
 	}

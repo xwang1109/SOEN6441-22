@@ -64,6 +64,8 @@ public class ContinentView extends JFrame {
 		JButton saveButton = new JButton("Save");
 		saveButton.setBounds(155, 147, 97, 25);
 		saveButton.addActionListener(new ContinentController(this,map,id));
+		getContentPane().add(saveButton);
+		
 		Continent continent = map.getContinentByID(id);
 		this.nameTextField.setText(continent.getName());
 		this.valueTextField.setText(Integer.toString(continent.getControlValue()));
