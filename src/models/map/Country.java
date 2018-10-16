@@ -8,21 +8,17 @@ public class Country {
 	private String name;
 	private Continent continent;
 	private Player owner;
-	private int numOfArmies;
 	private int locationX;
 	private int locationY;
 	private ArrayList<Country> adjacentCountryList = new ArrayList<Country>();
-	private ArrayList<Army> armyList;
+	private ArrayList<Army> armyList = new ArrayList<Army>();	
 	private int id;
 	private static int idGenerator=0;
-	
+
 	public Country(String name) {
 		this.name = name;
-		this.numOfArmies =0;
 		idGenerator++;
 		this.id = idGenerator;
-		numOfArmies =0;
-		armyList = new ArrayList<Army>();
 	}
 	
 	public int getID() {
@@ -48,10 +44,7 @@ public class Country {
 		this.owner = owner;
 	}
 	public int getNumOfArmies() {
-		return numOfArmies;
-	}
-	public void setNumOfArmies(int numOfArmies) {
-		this.numOfArmies = numOfArmies;
+		return armyList.size();
 	}
 	public int getLocationX() {
 		return locationX;
@@ -83,6 +76,5 @@ public class Country {
 				break;
 			}
 		}
-		numOfArmies++;
 	}	
 }
