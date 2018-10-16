@@ -67,6 +67,7 @@ public class MapEditorView extends JFrame implements Observer{
 		deleteCountryButton.addActionListener(new MapEditorController(map,this));
 		
 		JButton editCountryButton = new JButton("Edit Country");
+		editCountryButton.addActionListener(new MapEditorController(map,this));
 		controlPanel.add(editCountryButton);
 		controlPanel.add(deleteCountryButton);
 		controlPanel.add(addContinentButton);
@@ -132,7 +133,7 @@ public class MapEditorView extends JFrame implements Observer{
 		JTable continentTable = this.mapContinentPanel.getContinentTable();
 		int rowID = continentTable.getSelectedRow();
 		
-		// no country has been selected
+		// no continent has been selected
 		if(rowID==-1) {
 			return -1;	
 		}

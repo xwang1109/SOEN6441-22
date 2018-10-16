@@ -55,6 +55,14 @@ public class Continent {
 	public void addCountry(Country country) {
 		this.countryList.add(country);
 	}
+	public void removeCountryByID(int countryID) {
+		for(int i=0;i<this.countryList.size();i++) {
+			if(countryList.get(i).getID() == countryID) {
+				countryList.remove(i);
+				return;
+			}
+		}
+	}
 
 	public Player checkOwnership() {
 		return null;

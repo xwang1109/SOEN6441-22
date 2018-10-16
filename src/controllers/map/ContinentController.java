@@ -61,7 +61,7 @@ public class ContinentController implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Please enter a positive numvber!");
 			}
 			else {
-				if(map.checkDuplicateContinentName(continentName)) {
+				if(map.checkDuplicateContinentName(continentName,-1)) {
 					JOptionPane.showMessageDialog(null, "The cotinent's name must be unique!");
 				}
 				else {
@@ -93,8 +93,7 @@ public class ContinentController implements ActionListener {
 			else {
 				
 				// if the name exists and it is not the selected continent's name
-				if((map.getContinentByName(continentName)!=null) && 
-						(map.getContinentByName(continentName).getID()!=id)) {
+				if(map.checkDuplicateContinentName(continentName, id)) {
 					
 					JOptionPane.showMessageDialog(null, "The cotinent's name must be unique!");
 				}

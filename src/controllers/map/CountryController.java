@@ -19,6 +19,11 @@ public class CountryController implements ActionListener {
 		this.view = view;
 	}
 	
+	public CountryController(CountryView view, Map map, int id) {
+		this(view, map);
+		this.id = id;
+	}
+	
 	
 	
 	@Override
@@ -44,7 +49,7 @@ public class CountryController implements ActionListener {
 		String countryName = view.getCountryName();
 		String continentName = view.getContinentName();
 		
-		if(map.checkDuplicateCountryName(countryName)) {
+		if(map.checkDuplicateCountryName(countryName,-1)) {
 			JOptionPane.showMessageDialog(null, "The country's name must be unique!");
 		}
 		
@@ -53,16 +58,24 @@ public class CountryController implements ActionListener {
 			country.setContinent(map.getContinentByName(continentName));
 			map.addCountry(country);
 			view.setVisible(false);
-			view.dispose();
-			
+			view.dispose();	
 		}
-		
-		
 	}
 
 	
 	public void editCountry() {
+		String countryName = view.getCountryName();
+		String continentName = view.getContinentName();
 		
+		if(map.checkDuplicateCountryName(countryName,id)) {
+			JOptionPane.showMessageDialog(null, "The country's name must be unique!");
+		}
+		
+		else {
+			map.updateCountryByID(id, countryName, continentName);
+			view.setVisible(false);
+			view.dispose();	
+		}
 	}
 	
 	public void deleteCountry() {

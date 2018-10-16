@@ -75,6 +75,14 @@ public class MapEditorController implements ActionListener {
 	
 	
 	public void editCountry() {
+		int id = this.view.getSelectedCountryID();
+		if(id == -1) {
+			JOptionPane.showMessageDialog(null, "Please select a country first!");
+		}
+		else {
+			CountryView editCountryView = new CountryView(map,id);
+			editCountryView.setVisible(true);
+		}
 		
 		
 	}
@@ -84,10 +92,14 @@ public class MapEditorController implements ActionListener {
 		int id = this.view.getSelectedContinentID();
 		if(id == -1) {
 			JOptionPane.showMessageDialog(null, "Please select a continent first!");
+			
+		}
+		else {
+			ContinentView editContinentView = new ContinentView(map,id);
+			editContinentView.setVisible(true);
 		}
 		
-		ContinentView editContinentView = new ContinentView(map,id);
-		editContinentView.setVisible(true);
+		
 	}
 	
 	
