@@ -1,68 +1,220 @@
 package views.game;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
-import controllers.game.FinshAttackController;
-import controllers.game.AttackController;
 import controllers.game.GameStartController;
+import controllers.game.PlayerSetupController;
 import controllers.game.ReinforcementController;
 import controllers.map.MapEditorStartController;
-import models.game.Army;
 import models.game.Player;
+import models.game.Card;
 import models.map.Country;
+import models.map.GameState;
+import views.map.MapCountryPanel;
 
-public class ReinforcementView {
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
+
+
+public class ReinforcementView{
+	private ArrayList<Player> playerList;
+	private ArrayList<Country> countryList;
 	private Player player;
+	private int playerCounter;
+	private GameState gameState;
+	private int leftArmies;
+	private Country selectedCountry;
+	private boolean isActionListenerActive;
+	
+	JPanel thisPanel;
+	MapCountryPanel mapPanel;
+	JButton addArmyButton;
+	JButton changeCardButton;
+	JButton finishAttackButton;
+	JComboBox<String> comboBox;
+	JLabel playerLabel;
+	JLabel leftArmyLabel;
+	JLabel cardNumberLabel;
+	JLabel phaseLabel;
+	JLabel messageLable;
+	JLabel leftArmyLabelTitle;
+	JLabel cardNumberLabelTitle;
+	JPanel buttonPane;
+	
 	public Player getPlayer() {
-		return player;	
+		return player;
 	}
-	private int armyNumber;
-	private int armyLeft;
-	private Country clickedCountry;
-	public Country getClickedCountry() {
-		return clickedCountry;
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	public Country getSelectedCountry() {
+		return selectedCountry;
+	}
+	public void setSelectedCountry(Country country) {
+		this.selectedCountry = country;
+	}
+	public int getLeftArmies() {
+		return leftArmies;
+	}
+	public int decreaseLeftArmies() {
+		leftArmies--;
+		return leftArmies;
+	}
+	public void setLeftArmies(int leftArmies) {
+		this.leftArmies = leftArmies;
+	}
+	public int getPlayerCounter() {
+		return playerCounter;
+	}
+	public void setPlayerCounter(int counter) {
+		playerCounter = counter;
 	}
 	
-    JLabel playerLabel;
-    JLabel armyNumberLable;
-
-
-	public ReinforcementView(JPanel controlPanel) {
+	public ReinforcementView (JPanel controlPanel) {
+		gameState = GameState.getInstance();
+		playerList = gameState.getPlayerList();
+		mapPanel = new MapCountryPanel();
+		thisPanel = controlPanel;
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
 		fl_controlPanel.setAlignment(FlowLayout.LEADING);
 		
-/*
-		JButton finishAttackButton = new JButton("Finish Attach");
-		finishAttackButton.addActionListener(new FinshAttackController());
-		controlPanel.add(playerLabel);
-		controlPanel.add(finishAttackButton);
-				
-		this.player = player;
-		armyNumber = armyLeft = reinforcementArmy.size();
-        playerLabel.setText(Integer.toString(player.getId()));
-        armyNumberLable.setText(Integer.toString(armyLeft));
-*/			
+		addArmyButton = new JButton("Add Army");
+		addArmyButton.addActionListener(new ReinforcementController(this));
+		changeCardButton = new JButton("Change Card");
+		changeCardButton.addActionListener(new ReinforcementController(this));
+		finishAttackButton = new JButton("Finish Attack");
+		finishAttackButton.addActionListener(new ReinforcementController(this));
+		comboBox = new JComboBox<String>();
+		comboBox.addActionListener((ActionListener) new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+            	if(isActionListenerActive) {
+                    JComboBox comboBox = (JComboBox) event.getSource();
+                    String selected = (String)comboBox.getSelectedItem();
+                    for(Country c:countryList) {
+                    	if (c.getName().equals(selected))
+                    		selectedCountry = c; 
+                    }           		
+            	}
+            }
+		});
 
-		//TODO below 3 lines to be modified by Mehrnaz when reinforcement is done
-		JButton fortificationButton = new JButton("REINFORCEMENT");
-//		fortificationButton.addActionListener(new AttackController(numberOfPlayer));
-		controlPanel.add(fortificationButton);
+		JPanel labelPane = new JPanel(new GridLayout(0,1));
+		JLabel phaseLabelTitle = new JLabel("Phase:"); 
+		phaseLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLabel playerLabelTitle = new JLabel("Player ID:"); 
+		playerLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		leftArmyLabelTitle = new JLabel("Left Armies:");
+		leftArmyLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		cardNumberLabelTitle = new JLabel("Number Of Cards:");
+		cardNumberLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelPane.add(phaseLabelTitle);
+		labelPane.add(playerLabelTitle);
+		labelPane.add(leftArmyLabelTitle);
+		labelPane.add(cardNumberLabelTitle);
 		
-		//click to enter FORTIFICATION phase
-		JButton newGameButton = new JButton("FORTIFICATION");
-//		newGameButton.addActionListener(new AttackController(numberOfPlayer));
-		controlPanel.add(newGameButton);
+		JPanel labelValuePane = new JPanel(new GridLayout(0,1));
+		playerLabel = new JLabel("");
+		leftArmyLabel = new JLabel("");
+		phaseLabel = new JLabel("");
+		cardNumberLabel = new JLabel("");
+		labelValuePane.add(phaseLabel);		
+		labelValuePane.add(playerLabel);
+		labelValuePane.add(leftArmyLabel);
+		labelValuePane.add(cardNumberLabel);
 
+		JPanel mapPane = new JPanel();
+		mapPane.add(mapPanel);
+		
+		buttonPane = new JPanel(new GridLayout(0,1));
+		messageLable = new JLabel("");
+		buttonPane.add(messageLable);
+		buttonPane.add(comboBox);
+		buttonPane.add(addArmyButton);
+
+		controlPanel.add(labelPane);
+		controlPanel.add(labelValuePane);
+		controlPanel.add(buttonPane);
+		controlPanel.add(mapPane);
+		
+		///////test change cards///////
+		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
+		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
+		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
+		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
+		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
+		//////////////////////////////////////
+		
+		playerCounter = 0;
+		player = playerList.get(playerCounter);		
+		leftArmies = player.getArmyNumber();
+		showPlayer();
 	}
-    
+	
+	public void showLeftArmies() {
+		leftArmyLabel.setText(Integer.toString(leftArmies));
+		mapPanel.addCountryTableForReinforcement(player);
+	}
+	public void changeToReinforcement() {
+		if (player.enforceExchangeCard()) {
+			leftArmies += player.addArmyForCard();
+			messageLable.setText("Your cards have exchanged with armies");
+		} else if (player.isPossibleExchangeCard()) {
+			buttonPane.add(changeCardButton);				
+		}
+		updateLabels();
+	}
+	public void changeToAttack() {
+		buttonPane.add(finishAttackButton);
+		addArmyButton.setVisible(false);
+		leftArmyLabelTitle.setVisible(false);;
+		cardNumberLabelTitle.setVisible(false);
+		leftArmyLabel.setVisible(false);;
+		cardNumberLabel.setVisible(false);
+		comboBox.setVisible(false);
+		updateLabels();
+	}
+	public void changedCard() {
+		changeCardButton.setVisible(false);;				
+		updateLabels();
+	}
+	public void updateLabels() {
+		playerLabel.setText(Integer.toString(player.getId()));
+		leftArmyLabel.setText(Integer.toString(leftArmies));
+		cardNumberLabel.setText(Integer.toString(player.getCardList().size()));
+		phaseLabel.setText(GameState.getInstance().getPhase().toString());
+		leftArmyLabel.setText(Integer.toString(leftArmies));
+		cardNumberLabel.setText(Integer.toString(player.getCardList().size()));
+	}
+	public void showPlayer() {
+		player = playerList.get(playerCounter);
+		countryList = player.getCountryList();
+		mapPanel.addCountryTableForReinforcement(player);
+		updateLabels();
+		
+		isActionListenerActive = false;
+		comboBox.removeAllItems();
+		for (Country country:countryList) {
+			comboBox.addItem(country.getName());
+		}
+		comboBox.revalidate();
+		comboBox.repaint();
+		isActionListenerActive = true;
+		comboBox.setSelectedIndex(0);
+	}
+
 }
