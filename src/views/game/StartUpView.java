@@ -2,6 +2,7 @@ package views.game;
 
 import java.awt.FlowLayout;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -16,8 +17,8 @@ import models.map.Country;
 import javax.swing.JTextPane;
 
 public class StartUpView {
-	private List<Player> playerList;
-	private List<Country> countryList;
+	private ArrayList<Player> playerList;
+	private ArrayList<Country> countryList;
 	private Country clickedCountry;
 	public Country getClickedCountry() {
 		return clickedCountry;

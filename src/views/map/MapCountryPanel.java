@@ -15,10 +15,15 @@ public class MapCountryPanel extends JScrollPane {
 	 * 
 	 */
 	private static final long serialVersionUID = 827155075130092035L;
-	
+	private JTable countryTable;
 	public MapCountryPanel() {
 		super();
 		 	
+	}
+	
+	
+	public JTable getCountryTable() {
+		return this.countryTable;
 	}
 	
 	public void addCountryTableForMapEditor(Map map) {
@@ -41,7 +46,10 @@ public class MapCountryPanel extends JScrollPane {
         
         JTable mapTable = new JTable(mapData,columnNames);
         mapTable.setBounds(30, 40, 200, 300); 
-        this.getViewport().add(mapTable);   
+        this.countryTable = mapTable;
+        this.getViewport().add(countryTable);
+        countryTable.setDefaultEditor(Object.class, null);
+
 	}
 	
 	public void addCountryTableForReinforcement(Player player) {
@@ -65,7 +73,9 @@ public class MapCountryPanel extends JScrollPane {
         
         JTable mapTable = new JTable(mapData,columnNames);
         mapTable.setBounds(30, 40, 200, 300); 
-        this.getViewport().add(mapTable); 
+        this.countryTable = mapTable;
+        this.getViewport().add(countryTable); 
+        countryTable.setDefaultEditor(Object.class, null);
 	}
 	
 	

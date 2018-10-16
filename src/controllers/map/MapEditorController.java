@@ -9,11 +9,17 @@ import models.map.Map;
 public class MapEditorController implements ActionListener {
 	
 	private Map map;
+	private int id;
 	
 	public MapEditorController(Map map) {
 		this.map = map;
 	}
-
+	
+	public MapEditorController(Map map, int id) {
+		this.map = map;
+		this.id = id;	
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -34,6 +40,14 @@ public class MapEditorController implements ActionListener {
 		case "Delete Continent":
 			deleteContinent();
 			break;
+		
+		case "Edit Country":
+			editCountry();
+			break;
+			
+		case "Edit Continent":
+			editContinent();
+			break;
 		}	
 	}
 	
@@ -43,9 +57,8 @@ public class MapEditorController implements ActionListener {
 
 	}
 	
-	
 	public void addContinent() {
-		NewContinentView newContinentView = new NewContinentView();
+		ContinentView newContinentView = new ContinentView(map);
 		newContinentView.setVisible(true);
 	}
 	
@@ -57,6 +70,16 @@ public class MapEditorController implements ActionListener {
 	
 	public void deleteContinent() {
 		
+	}
+	
+	
+	public void editCountry() {
+		
+	}
+	
+	public void editContinent() {
+		ContinentView newContinentView = new ContinentView(map,id);
+		newContinentView.setVisible(true);
 	}
 	
 	

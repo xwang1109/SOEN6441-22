@@ -12,11 +12,19 @@ public class Country {
 	private int locationX;
 	private int locationY;
 	private ArrayList<Country> adjacentCountryList = new ArrayList<Country>();
-	private List<Army> armyList;
+	private ArrayList<Army> armyList;
+	private int id;
+	private static int idGenerator=0;
 	
 	public Country(String name) {
 		this.name = name;
-		numOfArmies =0;
+		this.numOfArmies =0;
+		idGenerator++;
+		this.id = idGenerator;
+	}
+	
+	public int getID() {
+		return this.id;
 	}
 	
 	public String getName() {
