@@ -66,6 +66,17 @@ public class Map extends Observable {
 		this.countryList = countryList;
 	}
 	
+	public void addContinent(Continent continent) {
+		this.continentList.add(continent);
+		setChanged();
+		notifyObservers();
+	}
+	
+	public void addCountry(Country country) {
+		this.countryList.add(country);
+	}
+	
+	
 	public boolean isLoaded() {
 		return loaded;
 	}
@@ -73,6 +84,15 @@ public class Map extends Observable {
 	public Continent getContinentByName(String continentName) {
 		for(int i=0;i<continentList.size();i++) {
 			if(continentList.get(i).getName().equals(continentName)){
+				return continentList.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public Continent getContinentByID(int continentID) {
+		for(int i=0;i<continentList.size();i++) {
+			if(continentList.get(i).getID() == continentID){
 				return continentList.get(i);
 			}
 		}
@@ -87,6 +107,16 @@ public class Map extends Observable {
 		}
 		return null;
 	}
+	
+	public Country getCountryByID(int countryID) {
+		for(int i=0;i<this.countryList.size();i++) {
+			if(this.countryList.get(i).getID()==countryID){
+				return this.countryList.get(i);
+			}
+		}
+		return null;
+	}
+	
 	
 
 	public boolean loadMapFromFile(File mapFile) {
@@ -246,6 +276,26 @@ public class Map extends Observable {
 	 */
 	public boolean fortify(String from, String to, int qt) {
 		// TODO
+		return false;
+	}
+	
+	public boolean checkDuplicateContinentName(String name) {
+		for(int i=0;i<this.continentList.size();i++) {
+			Continent continent = continentList.get(i);
+			if(name.equals(continent.getName())) {
+				return true;
+			}	
+		}
+		return false;
+	}
+	
+	public boolean checkDuplicateCountryName(String name) {
+		for(int i=0;i<this.countryList.size();i++) {
+			Country country = countryList.get(i);
+			if(name.equals(country.getName())) {
+				return true;
+			}	
+		}
 		return false;
 	}
 	

@@ -25,6 +25,7 @@ import views.map.MapCountryPanel;
 
 import javax.swing.JTextPane;
 
+
 public class StartUpView{
 	private ArrayList<Player> playerList;
 	private ArrayList<Country> countryList;
