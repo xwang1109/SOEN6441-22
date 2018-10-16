@@ -21,7 +21,7 @@ public class ExchangeController implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		List<Army> reinforcementArmy = player.addReinforcementArmy(requestToChangeCard);
+//		List<Army> reinforcementArmy = player.addReinforcementArmy();
 		
 	}
 }

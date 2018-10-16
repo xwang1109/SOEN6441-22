@@ -20,7 +20,7 @@ public class GameState {
 	// hold players
 	
 	// hold phase to switch between map info and current state
-	enum Phase
+	public enum Phase
 	{
 		SETUP,
 		REINFORCEMENT,
