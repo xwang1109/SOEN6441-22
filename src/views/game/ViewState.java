@@ -11,31 +11,46 @@ import javax.swing.JPanel;
 import models.game.Player;
 import models.map.Country;
 
+/**
+ * class ViewState to switching between different views of the game
+ * @author Lin Li
+ */
 public class ViewState extends JFrame {
 	private static final long serialVersionUID = 7243006502142830314L;
 
-	/*
-	 * Contains function for switching between different views.
-	 */
 	private JPanel controlPanel = new JPanel();
 	//private JPanel mapPanel = new JPanel();
 	
+	/**
+	 * Constructor of class ViewState to set the window of the game
+	 */
 	private ViewState() {
 		controlPanel = new JPanel();
 		this.setSize(1024,800);
 	}
 	
 	static private ViewState instance = new ViewState();
+	
+	/**
+	 * Get the instance of view state
+	 * @return ViewState
+	 */
 	static public ViewState getInstance() {
 		return instance;
 	}
 	
+	/**
+	 * Clear the control panel
+	 */
 	private void clear() {
 		controlPanel.removeAll();
 		controlPanel.revalidate();
 		controlPanel.repaint();
 	}
 	
+	/**
+	 * Show basic view
+	 */
 	public void showBasicView() {
 		clear();
 		new BasicView(controlPanel);
@@ -43,6 +58,9 @@ public class ViewState extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Show player view
+	 */
 	public void showPlayerView() {
 		clear();
 		new PlayerSetupView(controlPanel);
@@ -50,15 +68,19 @@ public class ViewState extends JFrame {
 		setVisible(true);
 	}
 
-	public void showStarUpView(File selectedFile, List<Player> playerList, List<Country> countryList) {
+	/**
+	 * Show start up view
+	 */
+	public void showStartUpView() {
 		clear();
-		new StartUpView(controlPanel, selectedFile, this, playerList, countryList);
+		new StartUpView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
 	}
 	
-//	public void showReinforcementView(File selectedFile, List<Player> playerList, List<Country> countryList) {
-//		new ReinforcementView(controlPanel,selectedFile,this, playerList, countryList);
+	/**
+	 * Show reinforcement view
+	 */
 	public void showReinforcementView() {
 		clear();
 		new ReinforcementView(controlPanel);
@@ -66,6 +88,9 @@ public class ViewState extends JFrame {
 		setVisible(true);
 	}
 	
+	/**
+	 * Show fortification view
+	 */
 	public void showFortificationView() {
 		clear();
 		new FortificationView(controlPanel);

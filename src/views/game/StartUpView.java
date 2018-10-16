@@ -1,54 +1,136 @@
 package views.game;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controllers.game.GameStartController;
+import controllers.game.PlayerSetupController;
+import controllers.game.StartUpController;
 import controllers.map.MapEditorStartController;
 import models.game.Player;
 import models.map.Country;
+import models.map.GameState;
+import views.map.MapCountryPanel;
+
 import javax.swing.JTextPane;
 
-public class StartUpView {
+
+public class StartUpView{
 	private ArrayList<Player> playerList;
 	private ArrayList<Country> countryList;
-	private Country clickedCountry;
-	public Country getClickedCountry() {
-		return clickedCountry;
+	private Player player;
+	private int playerCounter;
+	private GameState gameState;
+	private int leftArmies;
+	private Country selectedCountry;
+	private boolean isActionListenerActive;
+	public Player getPlayer() {
+		return player;
+	}
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	public Country getSelectedCountry() {
+		return selectedCountry;
+	}
+	public void setSelectedCountry(Country country) {
+		this.selectedCountry = country;
+	}
+	public int getLeftArmies() {
+		return leftArmies;
+	}
+	public int decreaseLeftArmies() {
+		leftArmies--;
+		return leftArmies;
+	}
+	public void setLeftArmies(int leftArmies) {
+		this.leftArmies = leftArmies;
+	}
+	public int getPlayerCounter() {
+		return playerCounter;
+	}
+	public void setPlayerCounter(int counter) {
+		playerCounter = counter;
 	}
 
-	public StartUpView (JPanel controlPanel,File selectedFile,JFrame frame, List<Player> playerList, List<Country> countryList) {
-		this.playerList = playerList;
-		this.countryList = countryList;
+	MapCountryPanel mapPanel;
+	JButton addArmyButton;
+	JComboBox<String> comboBox;
+	JLabel playerLabel;
+	JLabel leftArmyLabel;
+	public StartUpView (JPanel controlPanel) {
+		gameState = GameState.getInstance();
+		playerList = gameState.getPlayerList();
+		mapPanel = new MapCountryPanel();
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
 		fl_controlPanel.setAlignment(FlowLayout.LEADING);
 		
-		JLabel playerLabel = new JLabel("");
+		addArmyButton = new JButton("Add Army");
+		addArmyButton.addActionListener(new StartUpController(this));
+
+
+		comboBox = new JComboBox<String>();
+		comboBox.addActionListener((ActionListener) new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+            	if(isActionListenerActive) {
+                    JComboBox comboBox = (JComboBox) event.getSource();
+                    String selected = (String)comboBox.getSelectedItem();
+                    for(Country c:countryList) {
+                    	if (c.getName().equals(selected))
+                    		selectedCountry = c; 
+                    }           		
+            	}
+            }
+		});
+		comboBox.setSelectedItem(0);
+				
+		playerLabel = new JLabel("");
+		leftArmyLabel = new JLabel("");
 		
 		controlPanel.add(playerLabel);
+		controlPanel.add(leftArmyLabel);
+		controlPanel.add(addArmyButton);
+		controlPanel.add(comboBox);
 		
+		controlPanel.add(mapPanel);		
 
-		for (Player player:playerList) {
-			playerLabel.setText(Integer.toString(player.getId()));
-			int armyNumber = player.getArmyList().size();
-
-			while (armyNumber>0) {
-			//click event
-			//armyNumber--;
-			//clickedCountry set
-			}
+		playerCounter = 0;
+		player = playerList.get(playerCounter);		
+		leftArmies = player.getArmyNumber();
+		showPlayer();
+	}
+	
+	public void showLeftArmies() {
+		leftArmyLabel.setText(Integer.toString(leftArmies));
+		mapPanel.addCountryTableForReinforcement(player);
+	}
+	public void showPlayer() {
+		player = playerList.get(playerCounter);
+		countryList = player.getCountryList();
+		playerLabel.setText(Integer.toString(player.getId()));
+		mapPanel.addCountryTableForReinforcement(player);
+		leftArmyLabel.setText(Integer.toString(leftArmies));
+		
+		isActionListenerActive = false;
+		comboBox.removeAllItems();
+		for (Country country:countryList) {
+			comboBox.addItem(country.getName());
 		}
-		
-		ViewState.getInstance().showReinforcementView(selectedFile, playerList, countryList);
-		
+		comboBox.revalidate();
+		comboBox.repaint();
+		isActionListenerActive = true;
+		comboBox.setSelectedIndex(0);
 	}
 
 }

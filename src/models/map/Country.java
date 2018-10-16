@@ -21,6 +21,8 @@ public class Country {
 		this.numOfArmies =0;
 		idGenerator++;
 		this.id = idGenerator;
+		numOfArmies =0;
+		armyList = new ArrayList<Army>();
 	}
 	
 	public int getID() {
@@ -73,10 +75,9 @@ public class Country {
 	public void addAdjacentCountry(Country country) {
 		this.adjacentCountryList.add(country);
 	}
-	
 	public void AddArmy() {
 		for (Army army:owner.getArmyList()) {
-			if(army.getCountry().equals(null)) {
+			if(army.getCountry() == null) {
 				army.setCountry(this);
 				armyList.add(army);
 				break;
@@ -84,6 +85,4 @@ public class Country {
 		}
 		numOfArmies++;
 	}	
-	
-	
 }

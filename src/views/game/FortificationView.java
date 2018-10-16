@@ -7,8 +7,17 @@ import javax.swing.JTextField;
 
 import controllers.game.FortificationController;
 
+/**
+ * class FortificationView is the view for fortification phase
+ * @author Lin Li
+ * @see controllers.game.FortificationController
+ */
 public class FortificationView {
 
+	/**
+	 * Constructor of class FortificationView
+	 * @param JPanel controlPanel
+	 */
 	public FortificationView(JPanel controlPanel) {
 		// input for country one
 		JTextArea textFrom = new JTextArea("From Country:");

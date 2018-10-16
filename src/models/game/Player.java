@@ -22,6 +22,9 @@ public class Player {
 	public ArrayList<Army> getArmyList() {
 		return armyList;
 	}
+	public int getArmyNumber() {
+		return armyList.size();
+	}
 	public void setCountryList(ArrayList<Country> countryList) {
 		this.countryList = countryList;
 	}
