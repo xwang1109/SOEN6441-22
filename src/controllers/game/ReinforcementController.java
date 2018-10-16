@@ -30,6 +30,7 @@ public class ReinforcementController implements ActionListener {
 			changeCard();
 			break;
 		case "Finish Attack":
+			ViewState.getInstance().showFortificationView();
 		}
 	}
 	public void addArmy() {
