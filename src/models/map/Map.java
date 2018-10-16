@@ -74,6 +74,8 @@ public class Map extends Observable {
 	
 	public void addCountry(Country country) {
 		this.countryList.add(country);
+		setChanged();
+		notifyObservers();
 	}
 	
 	
@@ -117,6 +119,30 @@ public class Map extends Observable {
 		return null;
 	}
 	
+	public int getContinentNumber() {
+		return this.continentList.size();
+	}
+	
+	
+	public int getCountryNumber() {
+		return this.countryList.size();
+	}
+	
+	public void removeContinentByID(int id) {
+		for(int i=0;i<continentList.size();i++) {
+			if(continentList.get(i).getID() == id){
+				continentList.remove(i);
+			}
+		}
+	}
+	
+	public void removeCountryByID(int id) {
+		for(int i=0;i<this.countryList.size();i++) {
+			if(this.countryList.get(i).getID()==id){
+				countryList.remove(i);
+			}
+		}
+	}
 	
 
 	public boolean loadMapFromFile(File mapFile) {

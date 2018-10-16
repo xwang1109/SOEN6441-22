@@ -68,12 +68,15 @@ public class ContinentController implements ActionListener {
 					Continent continent = new Continent(continentName,continentValue);
 					map.addContinent(continent);
 					this.view.setVisible(false);
+					view.dispose();
+					
 				}	
 			}
 		}
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(null, "Please enter a integer for cotinent value!");	
 		}
+		
 	}
 	
 	

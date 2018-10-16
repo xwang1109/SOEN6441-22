@@ -44,7 +44,7 @@ public class MapEditorView extends JFrame implements Observer{
 	
 	public MapEditorView(Map map) {
 		
-		File mapFile = new File("C:\\Users\\Xinyan Wang\\Documents\\Earth.map");
+		File mapFile = new File("C:\\Users\\Xinyan Wang\\Documents\\3D Cliff.map");
 		map.loadMapFromFile(mapFile);
 		this.setSize(1024,800);
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -74,6 +74,12 @@ public class MapEditorView extends JFrame implements Observer{
 		JButton editContinentButton = new JButton("Edit Continent");
 		controlPanel.add(editContinentButton);
 		controlPanel.add(deleteContinentButton);
+		
+		JButton addConnectionButton = new JButton("Add Connection");
+		controlPanel.add(addConnectionButton);
+		
+		JButton deleteConnectionButton = new JButton("Delete Connection");
+		controlPanel.add(deleteConnectionButton);
 		addContinentButton.addActionListener(new MapEditorController(map));
 		
 		editContinentButton.addActionListener(new MapEditorController(map));

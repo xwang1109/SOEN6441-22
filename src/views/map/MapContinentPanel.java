@@ -1,5 +1,6 @@
 package views.map;
 
+import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
@@ -40,7 +41,9 @@ public class MapContinentPanel extends JScrollPane {
         String[] columnNames = {"ID" ,"Continent Name", "Value" }; 
         
         JTable mapTable = new JTable(mapData,columnNames);
-        mapTable.setBounds(30, 40, 200, 300); 
+        mapTable.setBounds(30, 40, 100, 200); 
+        mapTable.setRowHeight(40);
+        mapTable.setFont(new Font("Serif", Font.BOLD, 20));
         this.continentTable = mapTable;
         this.getViewport().add(continentTable);  
         continentTable.setDefaultEditor(Object.class, null);

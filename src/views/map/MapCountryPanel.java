@@ -1,6 +1,7 @@
 package views.map;
 
 
+import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -39,13 +40,21 @@ public class MapCountryPanel extends JScrollPane {
         	
         	for(int j=0;j<adjCountryList.size();j++) {
         		Country adjCountry = adjCountryList.get(j);
-        		mapData[i][2]+=adjCountry.getName()+" ";
+        		if(j!=adjCountryList.size()-1) {
+        			mapData[i][2]+=adjCountry.getName()+", ";
+        		}
+        		else {
+        			mapData[i][2]+=adjCountry.getName();
+        		}
+        		
         	}  	
         }
         String[] columnNames = { "Country Name", "Continent", "Adj Country" }; 
         
         JTable mapTable = new JTable(mapData,columnNames);
         mapTable.setBounds(30, 40, 200, 300); 
+        mapTable.setRowHeight(40);
+        mapTable.setFont(new Font("Serif", Font.BOLD, 20));
         this.countryTable = mapTable;
         this.getViewport().add(countryTable);
         countryTable.setDefaultEditor(Object.class, null);
@@ -65,7 +74,12 @@ public class MapCountryPanel extends JScrollPane {
         	
         	for(int j=0;j<adjCountryList.size();j++) {
         		Country adjCountry = adjCountryList.get(j);
-        		mapData[i][2]+=adjCountry.getName()+" ";
+        		if(j!=adjCountryList.size()-1) {
+        			mapData[i][2]+=adjCountry.getName()+", ";
+        		}
+        		else {
+        			mapData[i][2]+=adjCountry.getName();
+        		}
         	}
         	mapData[i][3] = Integer.toString(country.getNumOfArmies()) ;
         }
@@ -73,6 +87,8 @@ public class MapCountryPanel extends JScrollPane {
         
         JTable mapTable = new JTable(mapData,columnNames);
         mapTable.setBounds(30, 40, 200, 300); 
+        mapTable.setRowHeight(40);
+        mapTable.setFont(new Font("Serif", Font.BOLD, 20));
         this.countryTable = mapTable;
         this.getViewport().add(countryTable); 
         countryTable.setDefaultEditor(Object.class, null);
