@@ -338,6 +338,15 @@ public class Map extends Observable {
 		return true;
 	}
 	
+	/**
+	 * Execute the fortification move
+	 * return true if the fortification order was executed
+	 * false in case of error
+	 */
+	public boolean fortify(String from, String to, int qt) {
+		// TODO
+		return false;
+	}
 	
 	/**
 	 * check if there is a same continent name except itself in the map
