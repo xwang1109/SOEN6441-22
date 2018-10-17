@@ -14,7 +14,7 @@ import models.map.Continent;
 import models.map.Country;
 import models.map.GameState;
 
-public class ReinfocementArmyNumberTest {
+public class ReinfocementTests {
 
 	Player player1 = new Player();
 	Player player2 = new Player();
