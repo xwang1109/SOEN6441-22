@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import controllers.game.GameStartController;
 import controllers.game.PlayerSetupController;
 import controllers.map.MapEditorStartController;
+import views.map.MapCountryPanel;
 
 public class BasicView {
 
@@ -33,7 +34,6 @@ public class BasicView {
 		openMapEditorButton.addActionListener(new MapEditorStartController());
 
 		controlPanel.add(openMapEditorButton);
-		
 		
 		
         

@@ -43,6 +43,10 @@ public class FortificationController implements ActionListener {
 			// TODO current player ended his turn.
 			// set the gameState to next player.
 			
+			//remember to refresh the map view all the time
+			ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+
+			
 			ViewState.getInstance().showReinforcementView();			
 		} else {
 			System.out.println("Invalid reinforcement");

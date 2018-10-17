@@ -12,13 +12,16 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import models.game.Army;
 import models.game.Player;
+import models.map.Continent;
 import models.map.Country;
 import models.map.GameState;
+import models.map.Map;
 import views.game.ViewState;
 
 
@@ -28,7 +31,6 @@ import views.game.ViewState;
  * @version 1.0
  */
 public class GameStartController implements ActionListener {
-<<<<<<< HEAD
 	
 	/** The number of player. */
 	private JComboBox numberOfPlayer;
@@ -94,17 +96,13 @@ public class GameStartController implements ActionListener {
 	 * this method is triggered by "Start" button. Players are created and countries are randomly assigned.
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
-=======
-
-	private JComboBox numberOfPlayer;
-
 	public GameStartController(JComboBox numberOfPlayer) {
 		this.numberOfPlayer = numberOfPlayer;
 		File selectedFile = GameState.getInstance().getSelectedFile();
 		boolean result = GameState.getInstance().loadMapFromFile(selectedFile);
 
 		if(result) {
-
+			
 		}
 		else {
 			JOptionPane.showMessageDialog(ViewState.getInstance(), "not a valid map");
@@ -112,51 +110,20 @@ public class GameStartController implements ActionListener {
 
 	}
 
->>>>>>> 0a82335283482c1976530a7a9164cf18e20aeddc
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-
-		ArrayList<Player> playerList = new ArrayList<Player>();
-
 		int num = (Integer)numberOfPlayer.getSelectedItem();
-		for(int i = 0;i < num; i++) {
-			Player p = new Player();
-			p.setId(i);
-			playerList.add(p);
-		}
-		GameState.getInstance().setPlayerList(playerList);
-
-		List<Country> countryList = GameState.getInstance().getMap().getCountryList();
-		Collections.shuffle(countryList);
-
-		for(int i = 0; i < countryList.size(); i++)  
-		{
-			Country c = countryList.get(i);                // loop for get each country of the map
-			Player p = playerList.get(i%num);              // find the corresponding player by the order of the player
-			p.getCountryList().add(c);                     // assign country to each player
-			c.setOwner(p);
-		}
-
 		
-<<<<<<< HEAD
+		GameState.getInstance().assignInitialPlayers(num);  
 		
-		//System.out.println(num);
-=======
-//		System.out.println(num);
->>>>>>> 0a82335283482c1976530a7a9164cf18e20aeddc
+		GameState.getInstance().randomAssignCountry();
+		
+		GameState.getInstance().assignInitialArmy();
 
+		//refresh the table for map of all players
+		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 		
-		/**
-		 * Allocate a number of initial armies to players
-		 */
-		int initialArmy = Math.round(countryList.size() / playerList.size()) + playerList.size();
-		for (Player player:playerList) {
-			for (int i=0; i<initialArmy; i++) {
-				Army army = new Army(player);
-				player.getArmyList().add(army);				
-			}
-		}
 		
 		ViewState.getInstance().showReinforcementView();
 

@@ -63,6 +63,11 @@ public class ReinforcementController implements ActionListener {
 				starUpView.showLeftArmies();
 			}
 		}
+		
+		//refresh the table for map
+		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+				
+
 	}
 	public void changeCard() {
 		starUpView.setLeftArmies(starUpView.getLeftArmies() + starUpView.getPlayer().addArmyForCard());
