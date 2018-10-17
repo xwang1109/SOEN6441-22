@@ -67,6 +67,7 @@ public class Country {
 	
 	public void addAdjacentCountry(Country country) {
 		this.adjacentCountryList.add(country);
+		
 	}
 	public void removeAdjacentCountryByID(int countryID) {
 		for(Country country:this.adjacentCountryList) {

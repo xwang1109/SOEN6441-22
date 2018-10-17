@@ -49,6 +49,14 @@ public class MapEditorController implements ActionListener {
 		case "Edit Continent":
 			editContinent();
 			break;
+			
+		case "Add Connection":
+			addConnection();
+			break;
+			
+		case "Delete Connection":
+			deleteConnection();
+			break;
 		}	
 	}
 	
@@ -129,6 +137,36 @@ public class MapEditorController implements ActionListener {
 		}
 		
 		
+	}
+	
+	public void addConnection() {
+		int id = this.view.getSelectedCountryID();
+		if(id == -1) {
+			JOptionPane.showMessageDialog(null, "Please select a country first!");
+		}
+		else {
+			ConnectionView addConnectionView = new ConnectionView(map,id,ConnectionView.ADD_CONNECTION_OPTION);
+			addConnectionView.setVisible(true);
+		}
+		
+	}
+	
+	
+	public void deleteConnection() {
+		int id = this.view.getSelectedCountryID();
+		if(id == -1) {
+			JOptionPane.showMessageDialog(null, "Please select a country first!");
+		}
+		else {
+			if(map.getCountryByID(id).getAdjacentCountryList().size()==0) {
+				JOptionPane.showMessageDialog(null, "There is no connection to delete! Choose another country");
+			}
+			
+			else {
+				ConnectionView addConnectionView = new ConnectionView(map,id,ConnectionView.DELETE_CONNECTION_OPTION);
+				addConnectionView.setVisible(true);
+			}
+		}
 	}
 	
 	
