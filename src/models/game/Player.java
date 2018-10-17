@@ -43,11 +43,11 @@ public class Player {
 		return false;
 	}
 	public int addReinforcementArmy() {
-		for(int i=0; i<reinforcementArmyNumber(); i++) {
+		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
 			Army army = new Army(this);
 			armyList.add(army);
 		}
-		return reinforcementArmyNumber();
+		return CalculateReinforcementArmyNumber();
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class Player {
 	 * to the player at the beginning of reinforcements phase
 	 * @return the number of armies given to player
 	 */
-	public int reinforcementArmyNumber(){
+	public int CalculateReinforcementArmyNumber(){
 		int armyNumber = Math.floorDiv(countryList.size(),3);
 		
 		ArrayList<Continent> ContinentList = GameState.getInstance().getMap().getContinentList();		
@@ -64,11 +64,6 @@ public class Player {
 				armyNumber += continent.getControlValue();
 			}
 		}
-
-		/*if(enforceExchangeCard() || (requestToChangeCard && isPossibleExchangeCard())) {
-			exchangeCardforArmy();
-			armyNumber += numberofArmyforCard();
-		}*/		
 		armyNumber = Math.max(armyNumber, 3);
 		return armyNumber;
 	}
