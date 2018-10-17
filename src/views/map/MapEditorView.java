@@ -81,9 +81,11 @@ public class MapEditorView extends JFrame implements Observer{
 		
 		JButton addConnectionButton = new JButton("Add Connection");
 		controlPanel.add(addConnectionButton);
+		addConnectionButton.addActionListener(new MapEditorController(map,this));
 		
 		JButton deleteConnectionButton = new JButton("Delete Connection");
 		controlPanel.add(deleteConnectionButton);
+		deleteConnectionButton.addActionListener(new MapEditorController(map,this));
 		addContinentButton.addActionListener(new MapEditorController(map,this));
 		
 		editContinentButton.addActionListener(new MapEditorController(map,this));

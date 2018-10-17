@@ -202,7 +202,17 @@ public class Map extends Observable {
 		}
 	}
 	
-
+	public void addConnection(int countryID1, int countryID2) {
+		Country country1 = this.getCountryByID(countryID1);
+		Country country2 = this.getCountryByID(countryID2);
+		
+		country1.addAdjacentCountry(country2);
+		country2.addAdjacentCountry(country1);
+		setChanged();
+		notifyObservers();
+	}
+	
+	
 	public boolean loadMapFromFile(File mapFile) {
 		
 		boolean continentBegin = false;
