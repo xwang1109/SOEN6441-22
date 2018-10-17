@@ -28,6 +28,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
@@ -38,40 +39,56 @@ public class MapEditorView extends JFrame implements Observer{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
-	private Map map;
-	private JTable mapTable;
-	
+	private MapCountryPanel mapCountryPanel;
+	private MapContinentPanel mapContinentPanel;
 	
 	
-	public MapEditorView() {
-		map = new Map();
-		File mapFile = new File("C:\\Users\\Xinyan Wang\\Documents\\Earth.map");
+	public MapEditorView(Map map) {
+		
+		File mapFile = new File("C:\\Users\\Xinyan Wang\\Documents\\3D Cliff.map");
 		map.loadMapFromFile(mapFile);
-		this.setSize(1024,800);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
+		
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel controlPanel = new JPanel();
 		getContentPane().add(controlPanel, BorderLayout.LINE_START);
 		
 		JButton addCountryButton = new JButton("Add Country");
-		addCountryButton.addActionListener(new MapEditorController(map));
+		addCountryButton.addActionListener(new MapEditorController(map,this));
 		
 		
 		JButton addContinentButton = new JButton("Add Continent");
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 		controlPanel.add(addCountryButton);
+		
+		JButton deleteCountryButton = new JButton("Delete Country");
+		deleteCountryButton.addActionListener(new MapEditorController(map,this));
+		
+		JButton editCountryButton = new JButton("Edit Country");
+		editCountryButton.addActionListener(new MapEditorController(map,this));
+		controlPanel.add(editCountryButton);
+		controlPanel.add(deleteCountryButton);
 		controlPanel.add(addContinentButton);
 		
 		JButton deleteContinentButton = new JButton("Delete Continent");
-		deleteContinentButton.addActionListener(new MapEditorController(map));
+		deleteContinentButton.addActionListener(new MapEditorController(map,this));
 		
-		JButton deleteCountryButton = new JButton("Delete Country");
-		deleteCountryButton.addActionListener(new MapEditorController(map));
-		controlPanel.add(deleteCountryButton);
+		JButton editContinentButton = new JButton("Edit Continent");
+		controlPanel.add(editContinentButton);
 		controlPanel.add(deleteContinentButton);
-		addContinentButton.addActionListener(new MapEditorController(map));
 		
+		JButton addConnectionButton = new JButton("Add Connection");
+		controlPanel.add(addConnectionButton);
+		addConnectionButton.addActionListener(new MapEditorController(map,this));
+		
+		JButton deleteConnectionButton = new JButton("Delete Connection");
+		controlPanel.add(deleteConnectionButton);
+		deleteConnectionButton.addActionListener(new MapEditorController(map,this));
+		addContinentButton.addActionListener(new MapEditorController(map,this));
+		
+		editContinentButton.addActionListener(new MapEditorController(map,this));
 		
 		JPanel menuPanel = new JPanel();
 		getContentPane().add(menuPanel, BorderLayout.PAGE_START);
@@ -88,85 +105,69 @@ public class MapEditorView extends JFrame implements Observer{
 		JMenuItem saveMenuItem = new JMenuItem("Save");
 		fileMenu.add(saveMenuItem);
 		
-		
-		
-		 // Data to be displayed in the JTable 
-        
-        /*
-        ArrayList<Country> countryList = map.getCountryList();
-        
-        String[][] mapData = new String[countryList.size()][3];
-        
-        
-        for(int i=0;i<countryList.size();i++) {
-        	
-        	Country country = countryList.get(i);
-        	
-        	
-        	mapData[i][0] = country.getName();
-        	mapData[i][1] = country.getContinent().getName();
-        	mapData[i][2] = "";
-        	
-        	ArrayList<Country> adjCountryList = country.getAdjacentCountryList();
-        	
-        	for(int j=0;j<adjCountryList.size();j++) {
-        		Country adjCountry = adjCountryList.get(j);
-        		mapData[i][2]+=adjCountry.getName()+" ";
-        		
-        	}  	
-        }
-        
-        
-  
-        // Column Names 
-        String[] columnNames = { "Country Name", "Continent", "Adj Country" }; 
-        
-        
-        
-        mapTable = new JTable(mapData,columnNames);
-        mapTable.setBounds(30, 40, 200, 300); 
-        JScrollPane countryPane = new JScrollPane(mapTable);
-        */
-		
-		MapCountryPanel mapCountryPanel = new MapCountryPanel();
+		this.mapCountryPanel = new MapCountryPanel();
 		mapCountryPanel.addCountryTableForMapEditor(map);
-		
         getContentPane().add(mapCountryPanel, BorderLayout.CENTER);
         
-        
-        
-        
-        
-        
+        this.mapContinentPanel = new MapContinentPanel();
+        mapContinentPanel.addContinentTableForMapEditor(map);
+        getContentPane().add(mapContinentPanel, BorderLayout.LINE_END);
+
 	}
 
+	public int getSelectedCountryID() {
+		JTable countryTable = this.mapCountryPanel.getCountryTable();
+		int rowID = countryTable.getSelectedRow();
+		
+		// no country has been selected
+		if(rowID==-1) {
+			return -1;	
+		}
 
+		String idString = (String)(countryTable.getValueAt(rowID, 0));
+
+		int id = Integer.parseInt(idString);
+		
+		return id;
+	}
+	
+	public int getSelectedContinentID() {
+		JTable continentTable = this.mapContinentPanel.getContinentTable();
+		int rowID = continentTable.getSelectedRow();
+		
+		// no continent has been selected
+		if(rowID==-1) {
+			return -1;	
+		}
+
+		String idString = (String)(continentTable.getValueAt(rowID, 0));
+
+		int id = Integer.parseInt(idString);
+		
+		return id;
+	}
 
 	
 	@Override
 	public void update(Observable map, Object x) {
-		this.map = (Map)map;
+		
+		getContentPane().remove(mapContinentPanel);
+		getContentPane().remove(mapCountryPanel);
+		
+		
+		this.mapContinentPanel = new MapContinentPanel();
+	    mapContinentPanel.addContinentTableForMapEditor((Map)map);
+		this.mapCountryPanel = new MapCountryPanel();
+		mapCountryPanel.addCountryTableForMapEditor((Map)map);
+		
+        getContentPane().add(mapCountryPanel, BorderLayout.CENTER);
+        getContentPane().add(mapContinentPanel, BorderLayout.LINE_END);
+
+		
+		this.revalidate();
+		
 		
 		
 	}	
 
-	
-
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
-	}
 }

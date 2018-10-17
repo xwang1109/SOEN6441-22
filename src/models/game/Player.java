@@ -5,6 +5,7 @@ import java.util.List;
 
 import models.map.Continent;
 import models.map.Country;
+import models.map.GameState;
 
 public class Player {
 	private int id;
@@ -41,13 +42,12 @@ public class Player {
 		//reassign country and armies
 		return false;
 	}
-	public List<Army> addReinforcementArmy(boolean requestToChangeCard) {
-		List<Army> newArmyList = new ArrayList<Army>();
-		for(int i=0; i<reinforcementArmyNumber(requestToChangeCard); i++) {
+	public int addReinforcementArmy() {
+		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
 			Army army = new Army(this);
-			newArmyList.add(army);
+			armyList.add(army);
 		}
-		return newArmyList;
+		return CalculateReinforcementArmyNumber();
 	}
 
 	/**
@@ -55,32 +55,17 @@ public class Player {
 	 * to the player at the beginning of reinforcements phase
 	 * @return the number of armies given to player
 	 */
-	public int reinforcementArmyNumber(boolean requestToChangeCard){
+	public int CalculateReinforcementArmyNumber(){
 		int armyNumber = Math.floorDiv(countryList.size(),3);
 		
-		assert(false);
-		//FIXME
-		List<Continent> ContinentList = new ArrayList<Continent>();
-		
+		ArrayList<Continent> ContinentList = GameState.getInstance().getMap().getContinentList();		
 		for(Continent continent: ContinentList){
 			if(continent.getOwner() != null && continent.getOwner().equals(this)){
 				armyNumber += continent.getControlValue();
 			}
 		}
-
-		if(enforceExchangeCard() || (requestToChangeCard && isPossibleExchangeCard())) {
-			exchangeCardforArmy();
-			armyNumber += numberofArmyforCard();
-		}		
 		armyNumber = Math.max(armyNumber, 3);
 		return armyNumber;
-	}
-	/**
-	 * This method
-	 * @return the number of army given to player in exchange for cards
-	 */
-	public int numberofArmyforCard(){
-		return (getArmyforCards += 1) * 5;
 	}
 	/**
 	 * This method
@@ -110,6 +95,13 @@ public class Player {
 		return cardTypeNumber;
 	}
 	/**
+	 * This method
+	 * @return the number of army given to player in exchange for cards
+	 */
+	public int numberOfArmyForCard(){
+		return (getArmyforCards += 1) * 5;
+	}
+	/**
 	 * This method exchange 3 cards for army
 	 */
 	public void exchangeCardforArmy() {
@@ -124,6 +116,15 @@ public class Player {
 		}
 		removeCard(0);removeCard(1);removeCard(2);
 	}
+	public int addArmyForCard() {
+		exchangeCardforArmy();
+		int armyForCard = numberOfArmyForCard();
+		for(int i=0; i<armyForCard; i++) {
+			Army army = new Army(this);
+			armyList.add(army);
+		}
+		return armyForCard;
+		}
 	/**
 	 * This method remove a card from cardList of player
 	 * @param cardTypeCode NEED to add more info
@@ -131,8 +132,10 @@ public class Player {
 	 */
 	public void removeCard(int cardTypeCode) {
 		for(Card card: cardList){
-			if (card.getCardType().getCardTypeCode() == cardTypeCode)
+			if (card.getCardType().getCardTypeCode() == cardTypeCode) {
 				cardList.remove(card);			
+				return;
+			}
 		}
 	}
 

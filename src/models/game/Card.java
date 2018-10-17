@@ -1,5 +1,7 @@
 package models.game;
 
+import java.util.Random;
+
 public class Card {
 	private Player player;
 	private CardType cardType;
@@ -28,9 +30,18 @@ public class Card {
 		this.cardType = cardType;
 	}
 	public Card(Player player) {
-		super();
 		this.player = player;
-		// to do random assign card type
+		int rand = (int) (Math.random()*(2));
+		switch(rand) {
+		case 0: 
+			cardType = CardType.INFANTRY;
+			break;
+		case 1:
+			cardType = cardType.CAVALRY;
+			break;
+		default:
+			cardType = cardType.ARTILLERY;
+		}
 	}
 	
 

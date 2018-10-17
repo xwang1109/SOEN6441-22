@@ -8,15 +8,21 @@ public class Country {
 	private String name;
 	private Continent continent;
 	private Player owner;
-	private int numOfArmies;
 	private int locationX;
 	private int locationY;
 	private ArrayList<Country> adjacentCountryList = new ArrayList<Country>();
-	private List<Army> armyList;
-	
+	private ArrayList<Army> armyList = new ArrayList<Army>();	
+	private int id;
+	private static int idGenerator=0;
+
 	public Country(String name) {
 		this.name = name;
-		numOfArmies =0;
+		idGenerator++;
+		this.id = idGenerator;
+	}
+	
+	public int getID() {
+		return this.id;
 	}
 	
 	public String getName() {
@@ -38,10 +44,7 @@ public class Country {
 		this.owner = owner;
 	}
 	public int getNumOfArmies() {
-		return numOfArmies;
-	}
-	public void setNumOfArmies(int numOfArmies) {
-		this.numOfArmies = numOfArmies;
+		return armyList.size();
 	}
 	public int getLocationX() {
 		return locationX;
@@ -64,15 +67,24 @@ public class Country {
 	
 	public void addAdjacentCountry(Country country) {
 		this.adjacentCountryList.add(country);
+		
 	}
+	public void removeAdjacentCountryByID(int countryID) {
+		for(Country country:this.adjacentCountryList) {
+			if(country.getID() == countryID) {
+				this.adjacentCountryList.remove(country);
+				return;
+			}
+		}
+	}
+	
 	public void AddArmy() {
 		for (Army army:owner.getArmyList()) {
-			if(army.getCountry().equals(null)) {
+			if(army.getCountry() == null) {
 				army.setCountry(this);
 				armyList.add(army);
 				break;
 			}
 		}
-		numOfArmies++;
 	}	
 }
