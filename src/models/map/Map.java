@@ -73,6 +73,7 @@ public class Map extends Observable {
 	}
 	
 	public void addCountry(Country country) {
+		country.getContinent().addCountry(country);
 		this.countryList.add(country);
 		setChanged();
 		notifyObservers();
@@ -119,6 +120,36 @@ public class Map extends Observable {
 		return null;
 	}
 	
+	public void updateContinentByID(int continentID, String name, int value) {
+		for(int i=0;i<continentList.size();i++) {
+			if(continentList.get(i).getID() == continentID){
+				continentList.get(i).setName(name);
+				continentList.get(i).setControlValue(value);
+				setChanged();
+				notifyObservers();
+			}
+		}
+	}
+	
+	public void updateCountryByID(int countryID, String name, String continentName) {
+		for(int i=0;i<countryList.size();i++) {
+			if(countryList.get(i).getID() == countryID){
+				Country country = countryList.get(i);
+				country.setName(name);
+				
+				Continent preContinent = countryList.get(i).getContinent();
+				preContinent.removeCountryByID(countryID);
+				
+				Continent continent = getContinentByName(continentName);
+				continent.addCountry(country);
+				country.setContinent(continent);
+				
+				setChanged();
+				notifyObservers();
+			}
+		}
+	}
+	
 	public int getContinentNumber() {
 		return this.continentList.size();
 	}
@@ -131,7 +162,18 @@ public class Map extends Observable {
 	public void removeContinentByID(int id) {
 		for(int i=0;i<continentList.size();i++) {
 			if(continentList.get(i).getID() == id){
+				Continent continent = continentList.get(i);
+				
+				while(continent.getCountryList().size()!=0) {
+					int countryID = continent.getCountryList().get(0).getID();
+					removeCountryByID(countryID);
+				}
+				
+				
 				continentList.remove(i);
+				setChanged();
+				notifyObservers();
+				return;
 			}
 		}
 	}
@@ -139,15 +181,30 @@ public class Map extends Observable {
 	public void removeCountryByID(int id) {
 		for(int i=0;i<this.countryList.size();i++) {
 			if(this.countryList.get(i).getID()==id){
+				Continent continent = countryList.get(i).getContinent();
+				// remove the country from its continent's country list
+				continent.removeCountryByID(id);
+				
+				// remove the country from its adj country's adj country list
+				for(Country country:this.countryList) {
+					for(Country adjCountry:country.getAdjacentCountryList()) {
+						adjCountry.removeAdjacentCountryByID(id);
+					}
+				}
+				
+				// remove the country from the map's country list
 				countryList.remove(i);
+				
+				setChanged();
+				notifyObservers();
+				return;
 			}
 		}
 	}
 	
 
 	public boolean loadMapFromFile(File mapFile) {
-		// TODO this can't be set true if the map didn't load
-		loaded = true;
+		
 		boolean continentBegin = false;
 		boolean countryBegin = false;
 		
@@ -285,10 +342,14 @@ public class Map extends Observable {
 		    		country.addAdjacentCountry(connectedCountry);
 		    	}
 		    }
+		    
+		    
 		}
 		catch (Exception e) {
 			return false;
 		}
+		
+		loaded = true;
 		setChanged();
 		notifyObservers();
 		
@@ -305,20 +366,29 @@ public class Map extends Observable {
 		return false;
 	}
 	
-	public boolean checkDuplicateContinentName(String name) {
+	/**
+	 * check if there is a same continent name except itself in the map
+	 * 
+	 * @param name
+	 * @param id
+	 * @return
+	 */
+	
+	
+	public boolean checkDuplicateContinentName(String name, int id) {
 		for(int i=0;i<this.continentList.size();i++) {
 			Continent continent = continentList.get(i);
-			if(name.equals(continent.getName())) {
+			if(name.equals(continent.getName()) && continent.getID()!=id) {
 				return true;
 			}	
 		}
 		return false;
 	}
 	
-	public boolean checkDuplicateCountryName(String name) {
+	public boolean checkDuplicateCountryName(String name, int id) {
 		for(int i=0;i<this.countryList.size();i++) {
 			Country country = countryList.get(i);
-			if(name.equals(country.getName())) {
+			if(name.equals(country.getName()) && country.getID()!=id) {
 				return true;
 			}	
 		}

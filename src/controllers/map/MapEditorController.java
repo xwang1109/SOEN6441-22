@@ -2,23 +2,24 @@ package controllers.map;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import views.map.*;
 
-import models.map.Map;
+import models.map.*;
 
 public class MapEditorController implements ActionListener {
 	
 	private Map map;
-	private int id;
+	private MapEditorView view;
 	
-	public MapEditorController(Map map) {
+	public MapEditorController(Map map, MapEditorView view) {
 		this.map = map;
+		this.view = view;
 	}
 	
-	public MapEditorController(Map map, int id) {
-		this.map = map;
-		this.id = id;	
-	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -66,21 +67,68 @@ public class MapEditorController implements ActionListener {
 	
 	public void deleteCountry() {
 		
+		int id = this.view.getSelectedCountryID();
+		if(id == -1) {
+			JOptionPane.showMessageDialog(null, "Please select a country first!");
+		}
+		else {
+			String msg = "Are you sure that you want to delete country "+
+					map.getCountryByID(id)+"?";
+		int option = JOptionPane.showConfirmDialog(null, msg);
+		if(option == JOptionPane.YES_OPTION) {
+			map.removeCountryByID(id);	
+		}
+		}
 	}
 	
 	
 	public void deleteContinent() {
-		
+		int id = this.view.getSelectedContinentID();
+		if(id == -1) {
+			JOptionPane.showMessageDialog(null, "Please select a continent first!");
+			
+		}
+		else {
+			String msg = "Are you sure that you want to delete continent "+
+						map.getContinentByID(id).getName()+
+						"? All countries in this continent will also be deleted.";
+			int option = JOptionPane.showConfirmDialog(null, msg);
+			if(option == JOptionPane.YES_OPTION) {
+				map.removeContinentByID(id);
+				
+				
+			}
+			
+		}
 	}
 	
 	
 	public void editCountry() {
+		int id = this.view.getSelectedCountryID();
+		if(id == -1) {
+			JOptionPane.showMessageDialog(null, "Please select a country first!");
+		}
+		else {
+			CountryView editCountryView = new CountryView(map,id);
+			editCountryView.setVisible(true);
+		}
+		
 		
 	}
 	
 	public void editContinent() {
-		ContinentView newContinentView = new ContinentView(map,id);
-		newContinentView.setVisible(true);
+		
+		int id = this.view.getSelectedContinentID();
+		if(id == -1) {
+			JOptionPane.showMessageDialog(null, "Please select a continent first!");
+			
+		}
+		else {
+			ContinentView editContinentView = new ContinentView(map,id);
+			editContinentView.setVisible(true);
+		}
+		
+		
 	}
 	
 	

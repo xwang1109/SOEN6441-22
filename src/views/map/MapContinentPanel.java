@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 import models.map.*;
 
@@ -44,6 +45,8 @@ public class MapContinentPanel extends JScrollPane {
         mapTable.setBounds(30, 40, 100, 200); 
         mapTable.setRowHeight(40);
         mapTable.setFont(new Font("Serif", Font.BOLD, 20));
+        mapTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        mapTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.continentTable = mapTable;
         this.getViewport().add(continentTable);  
         continentTable.setDefaultEditor(Object.class, null);
