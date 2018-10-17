@@ -12,27 +12,42 @@ import models.map.Country;
 import models.map.GameState;
 import models.map.GameState.Phase;
 
+/**
+ * Class ReinforcementController is the controller which is bound to ReinforcementView
+ * and instructs the model to perform actions based on user inputs
+ * @author Mehrnaz
+ * @see controllers.game.ReinforcementView
+ */
 public class ReinforcementController implements ActionListener {
 
 	private ReinforcementView starUpView;
-	
+/**
+ * Constructor of the class which initialize the view  	
+ * @param view ReinforcementView
+ */
 	public ReinforcementController(ReinforcementView view) {
 		starUpView = view;
 	}
-
+/**
+ * Performs actions based on user inputs
+ */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "Add Army":
 			addArmy();
 			break;
-		case "Change Card":
+		case "Exchange Card":
 			changeCard();
 			break;
 		case "Finish Attack":
 			ViewState.getInstance().showFortificationView();
 		}
 	}
+/**
+ * Perform actions when Add Army button clicked
+ * 
+ */
 	public void addArmy() {
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)) {
 			Country selectedCoutnry = starUpView.getSelectedCountry();
@@ -64,6 +79,9 @@ public class ReinforcementController implements ActionListener {
 			}
 		}
 	}
+/**
+ * Perform actions when Exchange Card button clicked
+ */
 	public void changeCard() {
 		starUpView.setLeftArmies(starUpView.getLeftArmies() + starUpView.getPlayer().addArmyForCard());
 		starUpView.changedCard();

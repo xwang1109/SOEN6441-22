@@ -45,6 +45,10 @@ public class Player {
 		//reassign country and armies
 		return false;
 	}
+	/**
+	 * This method add armies to the player according to the reinforcement rules
+	 * @return
+	 */
 	public int addReinforcementArmy() {
 		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
 			Army army = new Army(this);

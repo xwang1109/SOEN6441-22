@@ -29,7 +29,13 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
-
+/**
+ * Class ReinforcementView is the view for a part of setup phase and the reinforcement phase
+ * in this view players place their given armies one by one on their own countries
+ * then reinforcement phase begins
+ * @author Mehrnaz
+ * @see controllers.game.ReinforcementController
+ */
 public class ReinforcementView{
 	private ArrayList<Player> playerList;
 	private ArrayList<Country> countryList;
@@ -54,7 +60,7 @@ public class ReinforcementView{
 	JLabel leftArmyLabelTitle;
 	JLabel cardNumberLabelTitle;
 	JPanel buttonPane;
-	
+
 	public Player getPlayer() {
 		return player;
 	}
@@ -84,6 +90,11 @@ public class ReinforcementView{
 		playerCounter = counter;
 	}
 	
+/**
+ * The constructor of the class which adds the components to the controlPanel
+ * and initials the first player for placing his given armies on his countries
+ * @param JPanel controlPanel
+ */
 	public ReinforcementView (JPanel controlPanel) {
 		gameState = GameState.getInstance();
 		playerList = gameState.getPlayerList();
@@ -95,7 +106,7 @@ public class ReinforcementView{
 		
 		addArmyButton = new JButton("Add Army");
 		addArmyButton.addActionListener(new ReinforcementController(this));
-		changeCardButton = new JButton("Change Card");
+		changeCardButton = new JButton("Exchange Card");
 		changeCardButton.addActionListener(new ReinforcementController(this));
 		finishAttackButton = new JButton("Finish Attack");
 		finishAttackButton.addActionListener(new ReinforcementController(this));
@@ -164,11 +175,17 @@ public class ReinforcementView{
 		leftArmies = player.getArmyNumber();
 		showPlayer();
 	}
-	
+/**
+ * Refresh the number of armies left to assign to countries
+ */
 	public void showLeftArmies() {
 		leftArmyLabel.setText(Integer.toString(leftArmies));
 		mapPanel.addCountryTableForReinforcement(player);
 	}
+/**
+ * Make changes on the view of panel when the game phase changes to reinforcement
+ * also checks that if player owns 5 cards, exchanges them for armies 
+ */
 	public void changeToReinforcement() {
 		if (player.enforceExchangeCard()) {
 			leftArmies += player.addArmyForCard();
@@ -178,6 +195,9 @@ public class ReinforcementView{
 		}
 		updateLabels();
 	}
+/**
+ * Make changes on the view of panel when the game phase changes to attack
+ */
 	public void changeToAttack() {
 		buttonPane.add(finishAttackButton);
 		addArmyButton.setVisible(false);
@@ -188,10 +208,16 @@ public class ReinforcementView{
 		comboBox.setVisible(false);
 		updateLabels();
 	}
+/**
+ * Disable exchange card button when player exchanged cards for armies
+ */
 	public void changedCard() {
 		changeCardButton.setVisible(false);;				
 		updateLabels();
 	}
+/**
+ * Update values of labels 
+ */
 	public void updateLabels() {
 		playerLabel.setText(Integer.toString(player.getId()));
 		leftArmyLabel.setText(Integer.toString(leftArmies));
@@ -200,6 +226,10 @@ public class ReinforcementView{
 		leftArmyLabel.setText(Integer.toString(leftArmies));
 		cardNumberLabel.setText(Integer.toString(player.getCardList().size()));
 	}
+/**
+ * This method is called in setup phase when next player is given the term
+ * to place his given armies one by one on his countries
+ */
 	public void showPlayer() {
 		player = playerList.get(playerCounter);
 		countryList = player.getCountryList();

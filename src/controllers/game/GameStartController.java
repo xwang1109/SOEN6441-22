@@ -68,9 +68,9 @@ public class GameStartController implements ActionListener {
 //		System.out.println(num);
 
 		
-		/**
-		 * Allocate a number of initial armies to players
-		 */
+/**
+ * Allocate a number of initial armies to players
+ */
 		int initialArmy = Math.round(countryList.size() / playerList.size()) + playerList.size();
 		for (Player player:playerList) {
 			for (int i=0; i<initialArmy; i++) {

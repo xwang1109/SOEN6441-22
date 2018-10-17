@@ -13,12 +13,20 @@ import models.game.Card.CardType;
 import models.map.Continent;
 import models.map.Country;
 import models.map.GameState;
-
-public class ReinfocementTests {
+/**
+ * This class tests reinforcement functions in Player model class
+ * @author Mehrnaz
+ *
+ */
+public class ReinforcementTests {
 
 	Player player1 = new Player();
 	Player player2 = new Player();
 	
+	/**
+	 * Initialization method
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		//player1 owns 10 countries 
@@ -49,7 +57,9 @@ public class ReinfocementTests {
 		player2.getCardList().add(cards.get(0));		
 		player2.setArmyforCards(0);		
 	}
-
+	/**
+	 * This test case tests calculation of number of reinforcement armies
+	 */
 	@Test
 	public void testReinfocementArmyNumberCalculation() {
 		int expectedResult = 7;
@@ -61,6 +71,9 @@ public class ReinfocementTests {
 		assertEquals(expectedResult, result);
 	}
 
+	/**
+	 * This test case tests possibility to exchange card for armies
+	 */
 	@Test
 	public void testIsPossibleExchangeCard() {
 		boolean result = player1.isPossibleExchangeCard();
@@ -70,6 +83,9 @@ public class ReinfocementTests {
 		assertFalse(result);		
 	}
 
+	/**
+	 * This test case tests calculation of number of armies in exchange with cards
+	 */
 	@Test
 	public void testCalculateNumberOfArmyForCard() {
 		int expectedResult = 15;
