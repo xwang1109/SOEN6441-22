@@ -35,6 +35,9 @@ public class Player {
 	public ArrayList<Card> getCardList() {
 		return cardList;
 	}
+	public void setArmyforCards(int i) {
+		getArmyforCards = i;
+	}
 	
 	
 	public boolean attack(Country attacker,Country defender) {
