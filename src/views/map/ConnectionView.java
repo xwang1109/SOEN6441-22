@@ -37,7 +37,7 @@ public class ConnectionView extends JFrame{
 		getContentPane().setLayout(null);
 		
 		
-		//if(option == ADD_CONNECTION_OPTION) {
+		if(option == ADD_CONNECTION_OPTION) {
 			
 			JLabel countryInfo = new JLabel("Add a connection for country: "+country.getName());
 			countryInfo.setBounds(12, 13, 300, 16);
@@ -75,7 +75,40 @@ public class ConnectionView extends JFrame{
 			addButton.addActionListener(new ConnectionController(this,map,id));
 			getContentPane().add(addButton);
 
-		//}
+		}
+		
+		
+		if(option == DELETE_CONNECTION_OPTION) {
+			
+			JLabel countryInfo = new JLabel("Delete a connection for country: "+country.getName());
+			countryInfo.setBounds(12, 13, 300, 16);
+			getContentPane().add(countryInfo);
+			
+			JLabel text = new JLabel("Delete the link to country:");
+			text.setBounds(12, 42, 180, 16);
+			getContentPane().add(text);
+			
+			
+			ArrayList<String> connectedCountryName = new ArrayList<String>();
+			
+			for(Country c:country.getAdjacentCountryList()) {
+				connectedCountryName.add(c.getName());
+			}
+			
+			String[] connectedCountryNameArray = new String[connectedCountryName.size()];
+			connectedCountryName.toArray(connectedCountryNameArray);
+			
+			
+			comboBox = new JComboBox<String>(connectedCountryNameArray);
+			comboBox.setBounds(210, 39, 150, 22);
+			getContentPane().add(comboBox);
+			
+			JButton deleteButton = new JButton("Delete");
+			deleteButton.setBounds(155, 147, 97, 25);
+			deleteButton.addActionListener(new ConnectionController(this,map,id));
+			getContentPane().add(deleteButton);
+
+		}
 		
 	}
 	public String getSelectedCountryName(){

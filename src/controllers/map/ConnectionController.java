@@ -47,7 +47,13 @@ public class ConnectionController implements ActionListener {
 	}
 	
 	public void deleteConnection() {
+		String deleteConnectedCountryName = this.view.getSelectedCountryName();
 		
+		int deleteConnectedCountryID = map.getCountryByName(deleteConnectedCountryName).getID();
+		
+		map.removeConnection(id, deleteConnectedCountryID);
+		this.view.setVisible(false);
+		this.view.dispose();
 	}
 	
 

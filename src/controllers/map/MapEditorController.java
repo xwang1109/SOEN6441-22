@@ -158,8 +158,14 @@ public class MapEditorController implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Please select a country first!");
 		}
 		else {
-			ConnectionView addConnectionView = new ConnectionView(map,id,ConnectionView.DELETE_CONNECTION_OPTION);
-			addConnectionView.setVisible(true);
+			if(map.getCountryByID(id).getAdjacentCountryList().size()==0) {
+				JOptionPane.showMessageDialog(null, "There is no connection to delete! Choose another country");
+			}
+			
+			else {
+				ConnectionView addConnectionView = new ConnectionView(map,id,ConnectionView.DELETE_CONNECTION_OPTION);
+				addConnectionView.setVisible(true);
+			}
 		}
 	}
 	

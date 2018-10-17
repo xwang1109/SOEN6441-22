@@ -212,6 +212,16 @@ public class Map extends Observable {
 		notifyObservers();
 	}
 	
+	public void removeConnection(int countryID1, int countryID2) {
+		Country country1 = this.getCountryByID(countryID1);
+		Country country2 = this.getCountryByID(countryID2);
+		country1.removeAdjacentCountryByID(countryID2);
+		country2.removeAdjacentCountryByID(countryID1);
+		
+		setChanged();
+		notifyObservers();
+		
+	}
 	
 	public boolean loadMapFromFile(File mapFile) {
 		
