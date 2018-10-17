@@ -2,6 +2,7 @@ package models.map;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import models.game.Player;
 import views.game.ViewState;
@@ -64,7 +65,7 @@ public class GameState {
 		return playerList;
 	}
 	public void setPlayerList(ArrayList<Player> playerList) {
-		this.playerList = playerList;
+		this.playerList =  playerList;
 	}
 	public boolean loadMapFromFile(File selectedFile2) {
 		return map.loadMapFromFile(selectedFile2);

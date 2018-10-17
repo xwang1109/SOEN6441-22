@@ -50,15 +50,13 @@ public class ViewState extends JFrame {
 		setVisible(true);
 	}
 
-	public void showStarUpView(File selectedFile, List<Player> playerList, List<Country> countryList) {
+	public void showStarUpView() {
 		clear();
-		new StartUpView(controlPanel, selectedFile, this, playerList, countryList);
+		new StartUpView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
 	}
 	
-//	public void showReinforcementView(File selectedFile, List<Player> playerList, List<Country> countryList) {
-//		new ReinforcementView(controlPanel,selectedFile,this, playerList, countryList);
 	public void showReinforcementView() {
 		clear();
 		new ReinforcementView(controlPanel);

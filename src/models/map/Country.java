@@ -65,7 +65,6 @@ public class Country {
 	public void addAdjacentCountry(Country country) {
 		this.adjacentCountryList.add(country);
 	}
-	
 	public void AddArmy() {
 		for (Army army:owner.getArmyList()) {
 			if(army.getCountry().equals(null)) {
@@ -76,6 +75,4 @@ public class Country {
 		}
 		numOfArmies++;
 	}	
-	
-	
 }

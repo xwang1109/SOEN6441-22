@@ -92,7 +92,7 @@ public class MapEditorView extends JFrame implements Observer{
 		
 		 // Data to be displayed in the JTable 
         
-        
+        /*
         ArrayList<Country> countryList = map.getCountryList();
         
         String[][] mapData = new String[countryList.size()][3];
@@ -126,8 +126,12 @@ public class MapEditorView extends JFrame implements Observer{
         mapTable = new JTable(mapData,columnNames);
         mapTable.setBounds(30, 40, 200, 300); 
         JScrollPane countryPane = new JScrollPane(mapTable);
-        
-        getContentPane().add(countryPane, BorderLayout.CENTER);
+        */
+		
+		MapCountryPanel mapCountryPanel = new MapCountryPanel();
+		mapCountryPanel.addCountryTableForMapEditor(map);
+		
+        getContentPane().add(mapCountryPanel, BorderLayout.CENTER);
         
         
         

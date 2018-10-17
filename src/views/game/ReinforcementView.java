@@ -36,8 +36,6 @@ public class ReinforcementView {
     JLabel armyNumberLable;
 
 
-//    public ReinforcementView(JPanel controlPanel,File selectedFile,JFrame frame, Player player, List<Army> reinforcementArmy) {
-
 	public ReinforcementView(JPanel controlPanel) {
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
@@ -57,12 +55,12 @@ public class ReinforcementView {
 
 		//TODO below 3 lines to be modified by Mehrnaz when reinforcement is done
 		JButton fortificationButton = new JButton("REINFORCEMENT");
-		fortificationButton.addActionListener(new AttackController(numberOfPlayer));
+//		fortificationButton.addActionListener(new AttackController(numberOfPlayer));
 		controlPanel.add(fortificationButton);
 		
 		//click to enter FORTIFICATION phase
 		JButton newGameButton = new JButton("FORTIFICATION");
-		newGameButton.addActionListener(new AttackController(numberOfPlayer));
+//		newGameButton.addActionListener(new AttackController(numberOfPlayer));
 		controlPanel.add(newGameButton);
 
 	}
