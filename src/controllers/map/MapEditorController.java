@@ -2,9 +2,12 @@ package controllers.map;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileSystemView;
 
 import views.map.*;
 
@@ -26,6 +29,13 @@ public class MapEditorController implements ActionListener {
 		// TODO Auto-generated method stub
 		String actionCommand = e.getActionCommand();
 		switch(actionCommand) {
+		case "Load":
+			loadMapFromFile();
+			break;
+		case "Save":
+			saveMapToFile();
+			break;
+			
 		case "Add Country":
 			addCountry();
 			break;
@@ -57,7 +67,30 @@ public class MapEditorController implements ActionListener {
 		case "Delete Connection":
 			deleteConnection();
 			break;
+			
+		case "Edit Basic Info":
+			editBasicInfo();
+			break;
 		}	
+		
+		
+	}
+	
+	public void loadMapFromFile() {
+		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		int returnValue = jfc.showOpenDialog(null);
+		
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = jfc.getSelectedFile();
+			if(!map.loadMapFromFile(selectedFile)) {
+				map.clear();
+				JOptionPane.showMessageDialog(null, "Invalid map file!");
+			}
+		}
+	}
+	
+	public void saveMapToFile() {
+		
 	}
 	
 	
@@ -167,6 +200,11 @@ public class MapEditorController implements ActionListener {
 				addConnectionView.setVisible(true);
 			}
 		}
+	}
+	
+	public void editBasicInfo() {
+		BasicInfoView view = new BasicInfoView(map);
+		view.setVisible(true);
 	}
 	
 	

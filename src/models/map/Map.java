@@ -8,13 +8,14 @@ public class Map extends Observable {
 
 	public Map() {
 		loaded = false;
+		
 	}
 	private final int FILE_HEAD_LINE_NUMBER = 7;
 
-	private String author;
-	private String image;
+	private String author="";
+	private String image="";
 	private String wrap = "no";
-	private String scroll = "";
+	private String scroll = "none";
 	private String warn = "no";
 	private boolean loaded = false;
 	
@@ -228,9 +229,18 @@ public class Map extends Observable {
 		boolean continentBegin = false;
 		boolean countryBegin = false;
 		
-		
 		try {
-		
+			
+			String fileName = mapFile.getName();
+
+			String fileType = "";
+			String[] nameArray = fileName.split("\\.");
+			fileType = nameArray[nameArray.length-1];
+			
+			if(!fileType.equals("map")) {
+				return false;
+			}
+			
 			FileReader reader = new FileReader(mapFile);
 		    BufferedReader bufferedReader = new BufferedReader (reader);
 		    String line;
@@ -414,6 +424,33 @@ public class Map extends Observable {
 		}
 		return false;
 	}
+	
+	
+	
+	public boolean isValid() {
+		
+		
+		
+		
+		return true;
+	}
+	
+	
+	public void clear() {
+		this.author="";
+		this.image="";
+		this.wrap = "no";
+		this.scroll = "none";
+		this.warn = "no";
+		this.loaded = false;
+		
+		this.continentList.clear();
+		this.countryList.clear();
+		this.loaded = false;
+		setChanged();
+		notifyObservers();
+	}
+	
 	
 	
 	

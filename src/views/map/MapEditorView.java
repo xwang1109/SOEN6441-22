@@ -4,7 +4,11 @@ import javax.swing.JFrame;
 
 import controllers.map.*;
 import models.map.*;
+import views.game.ViewState;
+
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JList;
@@ -19,6 +23,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
@@ -31,6 +36,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.Font;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Action;
+import javax.swing.JLabel;
 
 public class MapEditorView extends JFrame implements Observer{
 
@@ -43,10 +55,12 @@ public class MapEditorView extends JFrame implements Observer{
 	private MapContinentPanel mapContinentPanel;
 	
 	
+	
+	
 	public MapEditorView(Map map) {
 		
-		File mapFile = new File("C:\\Users\\Xinyan Wang\\Documents\\3D Cliff.map");
-		map.loadMapFromFile(mapFile);
+		
+		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		
@@ -57,7 +71,6 @@ public class MapEditorView extends JFrame implements Observer{
 		
 		JButton addCountryButton = new JButton("Add Country");
 		addCountryButton.addActionListener(new MapEditorController(map,this));
-		
 		
 		JButton addContinentButton = new JButton("Add Continent");
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
@@ -85,25 +98,42 @@ public class MapEditorView extends JFrame implements Observer{
 		
 		JButton deleteConnectionButton = new JButton("Delete Connection");
 		controlPanel.add(deleteConnectionButton);
+		
+		JButton editMapInfoButton = new JButton("Edit Basic Info");
+		controlPanel.add(editMapInfoButton);
+		
+		editMapInfoButton.addActionListener(new MapEditorController(map,this));
+		
 		deleteConnectionButton.addActionListener(new MapEditorController(map,this));
 		addContinentButton.addActionListener(new MapEditorController(map,this));
 		
 		editContinentButton.addActionListener(new MapEditorController(map,this));
 		
-		JPanel menuPanel = new JPanel();
-		getContentPane().add(menuPanel, BorderLayout.PAGE_START);
+		//JPanel menuPanel = new JPanel();
+		//getContentPane().add(menuPanel, BorderLayout.PAGE_START);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuPanel.add(menuBar);
+		menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		//menuPanel.add(menuBar);
 		
 		JMenu fileMenu = new JMenu("File");
+		fileMenu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		menuBar.add(fileMenu);
 		
 		JMenuItem loadMenuItem = new JMenuItem("Load");
+		loadMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		fileMenu.add(loadMenuItem);
 		
+		loadMenuItem.addActionListener(new MapEditorController(map,this));
+		
+		this.setJMenuBar(menuBar);
+		
 		JMenuItem saveMenuItem = new JMenuItem("Save");
+		saveMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		fileMenu.add(saveMenuItem);
+		
+		
+		
 		
 		this.mapCountryPanel = new MapCountryPanel();
 		mapCountryPanel.addCountryTableForMapEditor(map);
@@ -163,7 +193,6 @@ public class MapEditorView extends JFrame implements Observer{
         getContentPane().add(mapCountryPanel, BorderLayout.CENTER);
         getContentPane().add(mapContinentPanel, BorderLayout.LINE_END);
 
-		
 		this.revalidate();
 		
 		
