@@ -9,6 +9,10 @@ import javax.swing.*;
 import models.game.Player;
 import models.map.Country;
 import models.map.Map;
+/*
+ * the class for showing country in a table
+ * @author Xinyan
+ */
 
 public class MapCountryPanel extends JScrollPane {
 
@@ -124,6 +128,7 @@ public class MapCountryPanel extends JScrollPane {
         		
         	}  	
         }
+        // these are columns for Jtable
         String[] columnNames = { "ID","Country Name", "Continent", "Adj Country" }; 
         
         JTable mapTable = new JTable(mapData,columnNames);
@@ -150,6 +155,12 @@ public class MapCountryPanel extends JScrollPane {
         countryTable.setDefaultEditor(Object.class, null);
 
 	}
+	
+	/*
+	 * the method for adding country for reinforcement
+	 * @param player the player should pass as a parameter
+	 */
+	
 	
 	public void addCountryTableForReinforcement(Player player) {
 		ArrayList<Country> countryList = player.getCountryList();
