@@ -44,6 +44,12 @@ import java.awt.event.ActionListener;
 import javax.swing.Action;
 import javax.swing.JLabel;
 
+
+
+/**
+ * this is the Class For Map Editor
+ * @author Xinyan,Parisa
+ */
 public class MapEditorView extends JFrame implements Observer{
 
 	/**
@@ -55,7 +61,10 @@ public class MapEditorView extends JFrame implements Observer{
 	private MapContinentPanel mapContinentPanel;
 	
 	
-	
+	/*
+	 * this is the constructor
+	 * @Param map the map
+	 */
 	
 	public MapEditorView(Map map) {
 		
@@ -69,33 +78,41 @@ public class MapEditorView extends JFrame implements Observer{
 		JPanel controlPanel = new JPanel();
 		getContentPane().add(controlPanel, BorderLayout.LINE_START);
 		
+		//the button for adding country
 		JButton addCountryButton = new JButton("Add Country");
 		addCountryButton.addActionListener(new MapEditorController(map,this));
 		
+		//the button for adding continent
 		JButton addContinentButton = new JButton("Add Continent");
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 		controlPanel.add(addCountryButton);
 		
+		//the button for deleting country
 		JButton deleteCountryButton = new JButton("Delete Country");
 		deleteCountryButton.addActionListener(new MapEditorController(map,this));
 		
+		//the button for editing country
 		JButton editCountryButton = new JButton("Edit Country");
 		editCountryButton.addActionListener(new MapEditorController(map,this));
 		controlPanel.add(editCountryButton);
 		controlPanel.add(deleteCountryButton);
 		controlPanel.add(addContinentButton);
 		
+		//the button for deleting continent
 		JButton deleteContinentButton = new JButton("Delete Continent");
 		deleteContinentButton.addActionListener(new MapEditorController(map,this));
 		
+		//the button for editing continent
 		JButton editContinentButton = new JButton("Edit Continent");
 		controlPanel.add(editContinentButton);
 		controlPanel.add(deleteContinentButton);
 		
+		//the button for adding connection between country
 		JButton addConnectionButton = new JButton("Add Connection");
 		controlPanel.add(addConnectionButton);
 		addConnectionButton.addActionListener(new MapEditorController(map,this));
 		
+		//the button for deleting connection between country
 		JButton deleteConnectionButton = new JButton("Delete Connection");
 		controlPanel.add(deleteConnectionButton);
 		
@@ -128,6 +145,7 @@ public class MapEditorView extends JFrame implements Observer{
 		
 		this.setJMenuBar(menuBar);
 		
+		//adding saving item in menu
 		JMenuItem saveMenuItem = new JMenuItem("Save");
 		saveMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		fileMenu.add(saveMenuItem);
@@ -144,7 +162,10 @@ public class MapEditorView extends JFrame implements Observer{
         getContentPane().add(mapContinentPanel, BorderLayout.LINE_END);
 
 	}
-
+/*
+ * method for getting Country ID
+ * @return id countryId
+ */
 	public int getSelectedCountryID() {
 		JTable countryTable = this.mapCountryPanel.getCountryTable();
 		int rowID = countryTable.getSelectedRow();
@@ -161,6 +182,10 @@ public class MapEditorView extends JFrame implements Observer{
 		return id;
 	}
 	
+	/*
+	 * method for getting continent ID
+	 * @return id continent Id
+	 */
 	public int getSelectedContinentID() {
 		JTable continentTable = this.mapContinentPanel.getContinentTable();
 		int rowID = continentTable.getSelectedRow();
@@ -176,7 +201,10 @@ public class MapEditorView extends JFrame implements Observer{
 		
 		return id;
 	}
-
+/*
+ * this the observer
+ * @see update(Observable map, Object x)
+ */
 	
 	@Override
 	public void update(Observable map, Object x) {
