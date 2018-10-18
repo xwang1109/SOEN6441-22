@@ -387,6 +387,7 @@ public class Map extends Observable {
 	 * @return True if the file is valid map file, false if the file is not
 	 */
 	public boolean loadMapFromFile(File mapFile) {
+		this.clear();
 		
 		boolean continentBegin = false;
 		boolean countryBegin = false;
@@ -593,6 +594,7 @@ public class Map extends Observable {
 		}
 		
 		if(!this.isValid()) {
+			
 			return false;
 		}
 		loaded = true;
@@ -823,6 +825,7 @@ public class Map extends Observable {
 		this.continentList.clear();
 		this.countryList.clear();
 		this.loaded = false;
+		
 		setChanged();
 		notifyObservers();
 	}
