@@ -95,9 +95,13 @@ public class MapEditorController implements ActionListener {
 	
 	
 	public void addCountry() {
-		CountryView newCountryView = new CountryView(map);
-		newCountryView.setVisible(true);
-
+		if(map.getContinentNumber()==0) {
+			JOptionPane.showMessageDialog(null, "Please add a continent first!");
+		}
+		else {
+			CountryView newCountryView = new CountryView(map);
+			newCountryView.setVisible(true);
+		}
 	}
 	
 	public void addContinent() {
