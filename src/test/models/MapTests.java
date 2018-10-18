@@ -1,11 +1,15 @@
 package test.models;
 import static org.junit.Assert.*;
+
+import models.map.Continent;
+import models.map.Country;
 import models.map.GameState;
 import models.map.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 import java.io.*;
+import java.util.ArrayList;
 
 
 /**
@@ -45,29 +49,46 @@ public class MapTests  {
 				
 
    @Test
-   public void TestCorrectMap() {
+   public void testCorrectMap() {
 	   
 		boolean resultCorrectMap = map.loadMapFromFile(fileCorrectMap);
 	    assertTrue(resultCorrectMap);
 	   
    }
   @Test
-   public void TestFalseConnection() {
+   public void testFalseConnection() {
 	   
 	   boolean resultFalseConnection = map.loadMapFromFile(fileFalseConnection);
 	   assertFalse(resultFalseConnection);
    }
   @Test
-  public void TestFalseContinent() {
+  public void testFalseContinent() {
 	   
 	   boolean resultFalseContinent = map.loadMapFromFile(fileFalseContinent);
 	   assertFalse(resultFalseContinent);
    }
   
   @Test
-  public void TestMapValidationEmptyMap() {
-	  Map map = new Map();
+  public void testMapValidationEmptyMap() {
 	  assertFalse(map.isValid());
+  }
+  
+  @Test
+  public void testMapValidationMapHasNoContinent() {
+	  map.setAuthor("Xinyan");
+	  map.setImage("test.img");
+	  map.setContinentList(new ArrayList<Continent>());
+	  assertFalse(map.isValid());
+  }
+  
+  @Test
+  public void testMapValidationMapHasNoCountry() {
+	  map.setAuthor("Xinyan");
+	  map.setImage("test.img");
+	  map.addContinent(new Continent("Test",1));
+	  map.setCountryList(new ArrayList<Country>());
+	  assertFalse(map.isValid());
+
   }
    
  
