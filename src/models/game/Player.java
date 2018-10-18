@@ -7,25 +7,71 @@ import models.map.Continent;
 import models.map.Country;
 import models.map.GameState;
 
+/**
+ * The Class Player. after a player was created ,
+ * actions of assign and remove  all the countries, all the cards, all the armies to the player  
+ * is possible to do.
+ * @author Bingyang Yu
+ * @version 1.0
+ */
 public class Player {
+	
+	/** The id. */
 	private int id;
+	
+	/** The country list. */
 	private ArrayList<Country> countryList = new ArrayList<Country>();
+	
+	/** The card list. */
 	private ArrayList<Card> cardList = new ArrayList<Card>();
+	
+	/** The army list. */
 	private ArrayList<Army> armyList = new ArrayList<Army>();
+	
+	/** The get armyfor cards. */
 	private int getArmyforCards = 0; //number of times player is given army for cards
 	
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
+	
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	/**
+	 * Gets the army list.
+	 *
+	 * @return the army list
+	 */
 	public ArrayList<Army> getArmyList() {
 		return armyList;
 	}
+	
+	/**
+	 * Gets the army number.
+	 *
+	 * @return the army number
+	 */
 	public int getArmyNumber() {
 		return armyList.size();
 	}
+	
+	/**
+	 * Gets the left army number.
+	 *
+	 * @return the left army number
+	 */
 	public int getLeftArmyNumber() {
 		int left = 0;
 		for(Army army:armyList)
@@ -33,28 +79,61 @@ public class Player {
 				left++;
 		return left;
 	}
+	
+	/**
+	 * Sets the country list.
+	 *
+	 * @param countryList the new country list
+	 */
 	public void setCountryList(ArrayList<Country> countryList) {
 		this.countryList = countryList;
 	}
+	
+	/**
+	 * Gets the country list.
+	 *
+	 * @return the country list
+	 */
 	public ArrayList<Country> getCountryList() {
 		return countryList;
 	}
+	
+	/**
+	 * Gets the card list.
+	 *
+	 * @return the card list
+	 */
 	public ArrayList<Card> getCardList() {
 		return cardList;
 	}
+	
+	/**
+	 * Sets the armyfor cards.
+	 *
+	 * @param i the new armyfor cards
+	 */
 	public void setArmyforCards(int i) {
 		getArmyforCards = i;
 	}
 	
 	
+	/**
+	 * Attack.
+	 *
+	 * @param attacker the attacker
+	 * @param defender the defender
+	 * @return true, if successful
+	 */
 	public boolean attack(Country attacker,Country defender) {
 		//to do check connections between countries, roll dice,determine winner
 		//reassign country and armies
 		return false;
 	}
+	
 	/**
-	 * This method add armies to the player according to the reinforcement rules
-	 * @return
+	 * This method add armies to the player according to the reinforcement rules.
+	 *
+	 * @return the int
 	 */
 	public int addReinforcementArmy() {
 		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
@@ -66,7 +145,8 @@ public class Player {
 
 	/**
 	 * This method is to calculate and give a number of armies 
-	 * to the player at the beginning of reinforcements phase
+	 * to the player at the beginning of reinforcements phase.
+	 *
 	 * @return the number of armies given to player
 	 */
 	public int CalculateReinforcementArmyNumber(){
@@ -81,15 +161,19 @@ public class Player {
 		armyNumber = Math.max(armyNumber, 3);
 		return armyNumber;
 	}
+	
 	/**
-	 * This method
+	 * This method.
+	 *
 	 * @return true if player has to exchange card for army
 	 */
 	public boolean enforceExchangeCard() {
 		return (cardList.size()>=5);
 	}
+	
 	/**
-	 * This method
+	 * This method.
+	 *
 	 * @return true if player has to exchange card for army
 	 */
 	public boolean isPossibleExchangeCard() {
@@ -97,8 +181,10 @@ public class Player {
 		return (Math.max(cardTypeNumber[0], Math.max(cardTypeNumber[1], cardTypeNumber[2])) >= 3)
 				|| (Math.min(cardTypeNumber[0], Math.min(cardTypeNumber[1], cardTypeNumber[2])) >= 1);
 	}
+	
 	/**
-	 * This method
+	 * This method.
+	 *
 	 * @return number of each card type
 	 */
 	public int[] cardTypeNumber() {
@@ -108,15 +194,18 @@ public class Player {
 		}
 		return cardTypeNumber;
 	}
+	
 	/**
-	 * This method
+	 * This method.
+	 *
 	 * @return the number of army given to player in exchange for cards
 	 */
 	public int numberOfArmyForCard(){
 		return (getArmyforCards += 1) * 5;
 	}
+	
 	/**
-	 * This method exchange 3 cards for army
+	 * This method exchange 3 cards for army.
 	 */
 	public void exchangeCardforArmy() {
 		int[] cardTypeNumber = cardTypeNumber();
@@ -130,6 +219,12 @@ public class Player {
 		}
 		removeCard(0);removeCard(1);removeCard(2);
 	}
+	
+	/**
+	 * Adds the army for card.
+	 *
+	 * @return the int
+	 */
 	public int addArmyForCard() {
 		exchangeCardforArmy();
 		int armyForCard = numberOfArmyForCard();
@@ -139,10 +234,11 @@ public class Player {
 		}
 		return armyForCard;
 		}
+	
 	/**
-	 * This method remove a card from cardList of player
-	 * @param cardTypeCode NEED to add more info
+	 * This method remove a card from cardList of player.
 	 *
+	 * @param cardTypeCode NEED to add more info
 	 */
 	public void removeCard(int cardTypeCode) {
 		for(Card card: cardList){
