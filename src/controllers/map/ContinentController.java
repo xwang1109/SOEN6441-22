@@ -10,19 +10,42 @@ import views.map.*;
 import models.map.*;
 
 
-
+/**
+ * The Class ContinentController. To Create continents and edit continents. 
+ * After that then showing the information of continents on map
+ * @author Bingyang Yu
+ * @version 1.0
+ */
 public class ContinentController implements ActionListener {
 
 	
+	/** The view. */
 	private ContinentView view;
+	
+	/** The map. */
 	private Map map;
+	
+	/** The id. */
 	private int id;
 	
+	/**
+	 * Instantiates a new continent controller. 
+	 *
+	 * @param view the view
+	 * @param map the map
+	 */
 	public ContinentController(ContinentView view, Map map) {
 		this.view = view;
 		this.map = map;
 	}
 	
+	/**
+	 * Instantiates a new continent controller.
+	 *
+	 * @param view the view
+	 * @param map the map
+	 * @param continentID the continent ID
+	 */
 	public ContinentController(ContinentView view,  Map map, int continentID) {
 		this(view,map);
 		this.id = continentID;
@@ -30,6 +53,10 @@ public class ContinentController implements ActionListener {
 	}
 
 	
+	/**
+	 * This method is to take action to create continents
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -48,6 +75,9 @@ public class ContinentController implements ActionListener {
 	}
 	
 	
+	/**
+	 * Creates the continent.
+	 */
 	public void createContinent() {
 		String continentName = view.getContinentName();
 		String cotinentValueString = view.getContinentValue();
@@ -78,6 +108,9 @@ public class ContinentController implements ActionListener {
 	}
 	
 	
+	/**
+	 * Edits the continent.
+	 */
 	private void editContinent() {
 		String continentName = view.getContinentName();
 		String cotinentValueString = view.getContinentValue();

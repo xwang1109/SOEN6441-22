@@ -8,13 +8,23 @@ import javax.swing.JComboBox;
 import models.map.GameState;
 import views.game.ViewState;
 
+
+
 public class AttackController implements ActionListener {
 
+	/**
+	 * Instantiates a new attack controller.
+	 *
+	 * @param numberOfPlayer the number of player
+	 */
 	public AttackController(JComboBox numberOfPlayer) {
 		// TODO Auto-generated constructor stub
 		// TODO skipping it because it's not coded
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO player should perform attacks
