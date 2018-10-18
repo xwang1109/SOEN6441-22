@@ -26,6 +26,13 @@ public class Player {
 	public int getArmyNumber() {
 		return armyList.size();
 	}
+	public int getLeftArmyNumber() {
+		int left = 0;
+		for(Army army:armyList)
+			if (army.getCountry() == null)
+				left++;
+		return left;
+	}
 	public void setCountryList(ArrayList<Country> countryList) {
 		this.countryList = countryList;
 	}

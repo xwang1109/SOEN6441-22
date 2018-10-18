@@ -193,7 +193,12 @@ public class GameState {
 				Army army = new Army(player);
 				player.getArmyList().add(army);				
 			}
-		}		
+			// place one army in each country
+			for(Country coutnry: player.getCountryList()) {
+				coutnry.AddArmy();				
+			}
+
+		}
 	}
 
 	/**

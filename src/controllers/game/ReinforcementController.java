@@ -55,7 +55,7 @@ public class ReinforcementController implements ActionListener {
 			if(starUpView.decreaseLeftArmies() == 0) {
 				if (starUpView.getPlayerCounter() < GameState.getInstance().getPlayerList().size()-1) {
 					starUpView.setPlayerCounter(starUpView.getPlayerCounter()+1);
-					starUpView.setLeftArmies(GameState.getInstance().getPlayerList().get(starUpView.getPlayerCounter()).getArmyNumber());
+					starUpView.setLeftArmies(GameState.getInstance().getPlayerList().get(starUpView.getPlayerCounter()).getLeftArmyNumber());
 					starUpView.showPlayer();
 				}
 				else {
@@ -73,12 +73,13 @@ public class ReinforcementController implements ActionListener {
 			selectedCoutnry.AddArmy();
 			if(starUpView.decreaseLeftArmies() == 0) {
 				GameState.getInstance().setPhase(Phase.ATTACK);
-				starUpView.changeToAttack();
+				//starUpView.changeToAttack();
+				ViewState.getInstance().showFortificationView();
 			} else {
 				starUpView.showLeftArmies();
 			}
 		}
-		
+
 		//refresh the table for map
 		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 				
