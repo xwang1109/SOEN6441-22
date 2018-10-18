@@ -4,9 +4,14 @@ import java.awt.event.ActionListener;
 
 import models.map.Map;
 import views.map.*;
-
+/**
+ * The Class MapEditorStartController. 
+ */
 public class MapEditorStartController implements ActionListener{
 
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

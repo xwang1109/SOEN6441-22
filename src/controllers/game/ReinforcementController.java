@@ -83,7 +83,6 @@ public class ReinforcementController implements ActionListener {
 		//refresh the table for map
 		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 				
-
 	}
 /**
  * Perform actions when Exchange Card button clicked

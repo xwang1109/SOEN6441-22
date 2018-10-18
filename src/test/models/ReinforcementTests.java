@@ -32,6 +32,9 @@ public class ReinforcementTests {
 		//player1 owns 10 countries 
 		//player1 owns a continent with control value 4
 		//player1 owns 3 INFANTRY cards
+		GameState.getInstance().getPlayerList().add(player1);
+		GameState.getInstance().getPlayerList().add(player2);
+
 		ArrayList<Continent> continentList = new ArrayList<Continent>();
 		for(int i=0; i<5; i++) {
 			continentList.add(new Continent("continent" + i, i));
@@ -39,9 +42,13 @@ public class ReinforcementTests {
 		continentList.get(4).setOwner(player1);
 		GameState.getInstance().getMap().setContinentList(continentList);
 		
+		ArrayList<Country> countryList = new ArrayList<Country>();
 		for(int i=0; i<10; i++) {
-			player1.getCountryList().add(new Country("country" + i));
+			Country country = new Country("country" + i);
+			player1.getCountryList().add(country);
+			countryList.add(country);
 		}
+		GameState.getInstance().getMap().setCountryList(countryList);
 		ArrayList<Card> cards = new ArrayList<Card>();
 		for(int i=0; i<3; i++) {
 			cards.add(new Card(player1));
@@ -53,7 +60,9 @@ public class ReinforcementTests {
 		//player2 owns 1 country
 		//player2 owns no continent
 		//player2 owns 1 INFANTRY cards
-		player2.getCountryList().add(new Country("country10"));
+		Country country = new Country("country10");
+		player2.getCountryList().add(country);
+		GameState.getInstance().getMap().getCountryList().add(country);
 		player2.getCardList().add(cards.get(0));		
 		player2.setArmyforCards(0);		
 	}
@@ -96,4 +105,15 @@ public class ReinforcementTests {
 		result = player2.numberOfArmyForCard();
 		assertEquals(expectedResult, result);
 	}
+
+	/**
+	 * This test case tests calculation of initial number of armies
+	 */
+	@Test
+	public void testCalculateInitialNumberOfArmy() {
+		int expectedResult = 7;
+		int result = GameState.getInstance().getInitialArmyNumber();
+		assertEquals(expectedResult, result);
+	}
+
 }

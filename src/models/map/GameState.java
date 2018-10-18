@@ -80,16 +80,6 @@ public class GameState {
 	}	
 	
 	/**
-	 * Public method to get initial army number
-	 * @return int
-	 */
-	public int getInitialArmyNumber(){
-		assert(false);
-		//TODO Need to be fixed
-		return map.getCountryList().size();
-	}
-	
-	/**
 	 * Public method to check if fortification succeed
 	 * @param String from, String to, int qt
 	 * @return boolean
@@ -182,14 +172,21 @@ public class GameState {
 			
 		}
 	}
+	
+	/**
+	 * Public method to get initial army number
+	 * @return initial number of armies
+	 */
+	public int getInitialArmyNumber(){
+		return Math.round(this.map.getCountryList().size() / this.playerList.size()) + this.playerList.size();
+	}
+	
 	/**
 	 * Allocate a number of initial armies to players
 	 */
-	public void assignInitialArmy() {
-		
-		int initialArmy = Math.round(this.map.getCountryList().size() / this.playerList.size()) + this.playerList.size();
+	public void assignInitialArmy() {		
 		for (Player player:this.playerList) {
-			for (int i=0; i<initialArmy; i++) {
+			for (int i=0; i<getInitialArmyNumber(); i++) {
 				Army army = new Army(player);
 				player.getArmyList().add(army);				
 			}
@@ -197,7 +194,6 @@ public class GameState {
 			for(Country coutnry: player.getCountryList()) {
 				coutnry.AddArmy();				
 			}
-
 		}
 	}
 
