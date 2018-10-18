@@ -17,11 +17,18 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 /**
  * Class PlayerSetupView is the view for player to start up by selecting number of players
- * @author 
- * @see GameState.getInstance().getMap(), 
+ * @author Bingyang Yu
+ * @see GameState.getInstance().getMap()
+ * @version 1.0
  */
 public class PlayerSetupView {
 
+	/**
+	 * Instantiates a new player setup view.
+	 *
+	 * @param controlPanel the control panel
+	 * @param frame the frame
+	 */
 	public PlayerSetupView(JPanel controlPanel,ViewState frame) {
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
