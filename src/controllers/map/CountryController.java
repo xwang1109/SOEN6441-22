@@ -8,17 +8,40 @@ import javax.swing.JOptionPane;
 import models.map.*;
 import views.map.CountryView;
 
+/**
+ * The Class CountryController. This is a class to add and edit country.
+ * @author Bingyang Yu
+ * @version 1.0
+ */
 public class CountryController implements ActionListener {
 	
+	/** The map. */
 	Map map;
+	
+	/** The view. */
 	CountryView view;
+	
+	/** The id. */
 	int id;
 	
+	/**
+	 * Instantiates a new country controller.
+	 *
+	 * @param view the view
+	 * @param map the map
+	 */
 	public CountryController(CountryView view, Map map) {
 		this.map = map;
 		this.view = view;
 	}
 	
+	/**
+	 * Instantiates a new country controller.
+	 *
+	 * @param view the view
+	 * @param map the map
+	 * @param id the id
+	 */
 	public CountryController(CountryView view, Map map, int id) {
 		this(view, map);
 		this.id = id;
@@ -26,6 +49,10 @@ public class CountryController implements ActionListener {
 	
 	
 	
+	/* *
+	 * This method is to pass action
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
@@ -45,6 +72,9 @@ public class CountryController implements ActionListener {
 	}
 	
 	
+	/**
+	 * Creates the country.
+	 */
 	public void createCountry() {
 		String countryName = view.getCountryName();
 		String continentName = view.getContinentName();
@@ -63,6 +93,9 @@ public class CountryController implements ActionListener {
 	}
 
 	
+	/**
+	 * Edits the country.
+	 */
 	public void editCountry() {
 		String countryName = view.getCountryName();
 		String continentName = view.getContinentName();
@@ -78,6 +111,9 @@ public class CountryController implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Delete country.
+	 */
 	public void deleteCountry() {
 		
 	}
