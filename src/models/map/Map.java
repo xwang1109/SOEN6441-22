@@ -554,7 +554,22 @@ public class Map extends Observable {
 	 * false in case of error
 	 */
 	public boolean fortify(String from, String to, int qt) {
-		// TODO
+		
+		for(Country country: countryList){
+			if (country.getName() == from){
+				for(int i = 0; i<qt; i++){
+					country.decreaseArmy();
+				}				
+			}
+		}
+		
+		for(Country country: countryList){
+			if (country.getName() == to){
+				for(int i = 0; i<qt; i++){
+					country.increaseArmy();
+				}				
+			}
+		}		
 		return true;
 	}
 	
@@ -624,20 +639,26 @@ public class Map extends Observable {
 	}
 
 	public ArrayList<Country> getValidDestination(Country selectedCountry) {
-		ArrayList<Country> valid = new ArrayList<Country>();
+			
 		ArrayList<Country> toBeValidated = new ArrayList<Country>();
+		ArrayList<Country> toBeValidated2 = new ArrayList<Country>();	
+		ArrayList<Country> valid = new ArrayList<Country>();
+				
+		toBeValidated.addAll(selectedCountry.getAdjacentCountryList()); 	
+						
+		return getCountryList();
 		
-		toBeValidated.add(selectedCountry);
+        /*for (Country country:countryList) {
+        	if (selectedCountry.getOwner() == GameState.getInstance().getCurrentPlayer() 
+        			&& (!(valid.contains(country)))){
+        		toBeValidated.add(country);
+        		toBeValidated.addAll(country.getAdjacentCountryList());       		
+        	}
+		}*/
+        
 		// for each country to validate
 		   // if not in the valid list && valid -> correct player
 			   // append its adjacents to "toBeValidated"
-		       // if not selected country ; add to toBeValidated
-		
-		valid.add(selectedCountry);
-		return valid;
-	}
-	
-	
-	
-	
+		       // if not selected country ; add to toBeValidated		
+	}	
 }

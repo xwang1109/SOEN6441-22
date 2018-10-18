@@ -87,4 +87,18 @@ public class Country {
 			}
 		}
 	}	
+	/**
+	 * Decrease number of Army in this country
+	 */
+	public void decreaseArmy() {
+		armyList.remove(1);
+	}
+	
+	/**
+	 * Decrease number of Army in this country
+	 */
+	public void increaseArmy() {
+		Army army = new Army(owner);
+		armyList.add(army);
+	}
 }
