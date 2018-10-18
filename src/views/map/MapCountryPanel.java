@@ -192,9 +192,9 @@ public class MapCountryPanel extends JScrollPane {
         JTable mapTable = new JTable(mapData,columnNames);
         mapTable.setBounds(30, 40, 200, 300); 
         mapTable.setRowHeight(40);
-        mapTable.setFont(new Font("Serif", Font.BOLD, 20));
-        
-        mapTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        //mapTable.setFont(new Font("Serif", Font.BOLD, 20));
+       
+        mapTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         mapTable.getColumnModel().getColumn(0).setMinWidth(150);
         mapTable.getColumnModel().getColumn(0).setMaxWidth(150);
         
