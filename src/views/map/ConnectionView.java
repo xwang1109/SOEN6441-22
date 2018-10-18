@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
+/*
+ * this class provide connection between countries
+ * @author Xinyan, Parisa
+ */
 public class ConnectionView extends JFrame{
 
 	/**
@@ -27,7 +31,9 @@ public class ConnectionView extends JFrame{
 	private int id;
 	private Map map;
 	JComboBox<String> comboBox;
-	
+	/*
+	 * this is a constructor for connectionView Class
+	 */
 	public ConnectionView(Map map, int id, int option) {
 		this.map = map;
 		this.id  = id;
