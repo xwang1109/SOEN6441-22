@@ -6,12 +6,30 @@ import java.awt.event.ActionListener;
 import models.map.*;
 import views.map.ConnectionView;
 
+/**
+ * The Class ConnectionController. To manage the connection between countries
+ * @author Bingyang Yu
+ * @version 1.0
+ */
 public class ConnectionController implements ActionListener {
+	
+	/** The view. */
 	private ConnectionView view;
+	
+	/** The id. */
 	private int id;
+	
+	/** The map. */
 	private Map map;
 	
 	
+	/**
+	 * Instantiates a new connection controller.
+	 *
+	 * @param view the view
+	 * @param map the map
+	 * @param id the id
+	 */
 	public ConnectionController(ConnectionView view, Map map, int id) {
 		this.view = view;
 		this.map = map;
@@ -19,6 +37,10 @@ public class ConnectionController implements ActionListener {
 	}
 	
 	
+	/**
+	 * Add action button to pass action to action listener
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
@@ -33,6 +55,9 @@ public class ConnectionController implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Adds the connection.
+	 */
 	public void addConnection() {
 		
 		String newConnectedCountryName = this.view.getSelectedCountryName();
@@ -46,6 +71,9 @@ public class ConnectionController implements ActionListener {
 		
 	}
 	
+	/**
+	 * Delete connection.
+	 */
 	public void deleteConnection() {
 		String deleteConnectedCountryName = this.view.getSelectedCountryName();
 		
