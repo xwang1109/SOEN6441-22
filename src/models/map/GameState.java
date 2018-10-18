@@ -3,6 +3,7 @@ package models.map;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import models.game.Army;
@@ -18,7 +19,10 @@ public class GameState {
 
 	private File selectedFile;
 	private  Map map;
-	private  ArrayList<Player> playerList = new ArrayList<Player>();
+	
+	private int currentPlayer;
+	private ArrayList<Player> playerList = new ArrayList<Player>();
+	private ArrayList<Country> destinationCountryList;
 	// hold players
 	
 	// hold phase to switch between map info and current state
@@ -123,7 +127,8 @@ public class GameState {
 	 * @param ArrayList<Player> playerList
 	 */
 	public void setPlayerList(ArrayList<Player> playerList) {
-		this.playerList =  playerList;
+		this.playerList = playerList;
+		this.currentPlayer = 0;
 	}
 	
 	/**
@@ -145,7 +150,7 @@ public class GameState {
 	/**
 	 * Randomly assign countries to players
 	 */
-	public  void randomAssignCountry() {
+	public void randomAssignCountry() {
 		int player_index=0;
 		
 		List<Continent> countinentList = this.map.getContinentList();
@@ -191,12 +196,51 @@ public class GameState {
 		}		
 	}
 
+	/**
+	 * Take user selection, set number of players
+	 * @param int num
+	 */
 	public void assignInitialPlayers(int num) {
+		assert(playerList.size() == 0); // shouldn't be called with an initialized player list, for future debug
 		
-		for(int i = 0;i < num; i++) {
+		playerList.clear(); // clear player list to make sure no previous record is there
+		for(int i = 0; i < num; i++) {
 			Player p = new Player();
 			p.setId(i);
 			playerList.add(p);
 		}
+		
+		// TODO Determine first player (0 can be good)
+		currentPlayer = 0;
+	}
+
+	/**
+	 * Get current Player
+	 * @return Player
+	 */
+	public Player getCurrentPlayer() {
+		return playerList.get(currentPlayer);
+	}
+
+	/**
+	 * End turn for current player, and set the "currentPlayer" to next player
+	 */
+	public void endPlayerTurn() {
+		currentPlayer = ++currentPlayer % playerList.size();
+	}
+
+	/**
+	 * Find all possible destination countries for the parameter country, and store them in an ArrayList
+	 * @param Country selectedCountry
+	 * @return ArrayList<Country>
+	 */
+	public ArrayList<Country> getValidDestination(Country selectedCountry) {		
+		assert( selectedCountry.getOwner() == playerList.get(currentPlayer) );// defensive programming
+		//if no country is selected, or the owner of selected country is not the current player, return an empty ArrayList
+		if ( selectedCountry == null || selectedCountry.getOwner() != playerList.get(currentPlayer) ) 
+			return new ArrayList<Country>();
+		
+		// query the map
+		return map.getValidDestination(selectedCountry);
 	}
 }
