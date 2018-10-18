@@ -19,10 +19,17 @@ import models.map.Map;
 
 import java.awt.GridLayout;
 
+/*
+ * this class for showing continent 
+ * @author Xinyan, Parisa
+ */
+
 public class ContinentView extends JFrame {
 	private JTextField nameTextField;
 	private JTextField valueTextField;
-
+/*
+ * this is the constructor for the class
+ */
 	
 	public ContinentView() {
 		this.setSize(480,300);
@@ -47,7 +54,10 @@ public class ContinentView extends JFrame {
 		valueTextField.setColumns(10);
 	}
 	
-	
+	/*
+	 * this method call the constructor
+	 * add action listener to create button
+	 */
 	public ContinentView(Map map) {
 		
 		this();
@@ -58,6 +68,9 @@ public class ContinentView extends JFrame {
 		getContentPane().add(createButton);
 		
 	}
+	/*
+	 * the method is for creating continent
+	 */
 
 	public ContinentView(Map map, int id) {
 		this();
