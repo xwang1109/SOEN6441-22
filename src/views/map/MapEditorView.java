@@ -131,6 +131,8 @@ public class MapEditorView extends JFrame implements Observer{
 		JMenuItem saveMenuItem = new JMenuItem("Save");
 		saveMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		fileMenu.add(saveMenuItem);
+		saveMenuItem.addActionListener(new MapEditorController(map,this));
+
 		
 		
 		

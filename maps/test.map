@@ -1,0 +1,14 @@
+[Map]
+author=Xinyan
+image=no image
+wrap=no
+scroll=none
+warn=no
+
+[Continents]
+Continent 1=12
+
+[Territories]
+Country 1,00Continent 1,Country 2
+Country 2,00Continent 1,Country 1
+

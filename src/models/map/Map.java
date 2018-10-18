@@ -10,7 +10,7 @@ import java.io.*;
 /**
  * This class is the model for map. 
  * It defines the basic information and behaviors of a map, and it is observed by MapEditorView.
- * @author Xinyan Wang
+ * @author Xinyan, Parisa, Lin
  * @version 1.0
  * @see views.map.MapEditorView
  */
@@ -665,11 +665,52 @@ public class Map extends Observable {
 	
 	/**
 	 * Save the map to a .map file
-	 * @return True if the map is valid and successfully saved, false if it is not.
+	 * @return True if the map successfully saved, false if it is not.
 	 */
 	
-	public boolean saveMapToFile() {
-		
+	public boolean saveMapToFile(File file) {
+		if(!this.isValid()) {
+			return false;
+		}
+		PrintWriter pw;
+
+		try {
+			pw = new PrintWriter(file,"UTF-8");
+
+			// write basic info
+			pw.println("[Map]");
+			pw.println("author="+this.author);
+			pw.println("image="+this.image);
+			pw.println("wrap="+this.wrap);
+			pw.println("scroll="+this.scroll);
+			pw.println("warn="+this.warn);
+			pw.println();
+			
+			
+			// write continent info
+			pw.println("[Continents]");
+			for(Continent continent: this.continentList) {
+				pw.println(continent.getName()+"="+continent.getControlValue());
+			}
+			pw.println();
+			
+			// write country info
+			pw.println("[Territories]");
+			for(Country country: this.countryList) {
+				String countryInfo = country.getName()+","+country.getLocationX()+","+
+							country.getLocationY()+country.getContinent().getName();
+				for(Country adjCountry: country.getAdjacentCountryList()) {
+					countryInfo+=","+adjCountry.getName();
+				}
+				pw.println(countryInfo);
+			}
+			pw.println();
+			
+		}
+		catch(Exception e) {
+			return false;
+		}
+		pw.close();
 		return true;
 	}
 	

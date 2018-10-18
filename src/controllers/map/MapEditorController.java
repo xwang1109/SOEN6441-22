@@ -91,6 +91,28 @@ public class MapEditorController implements ActionListener {
 	
 	public void saveMapToFile() {
 		
+		if(!this.map.isValid()) {
+			JOptionPane.showMessageDialog(null, "This map is not valid! You can not save it. Please check it again.");
+		}
+		else {
+			try {
+				String fileName = JOptionPane.showInputDialog("Please input the name of the map");
+	        	String currentPath=System.getProperty("user.dir");
+	        	String absoluteFilePath = currentPath+"\\maps\\"+fileName+".map";
+				File file = new File(absoluteFilePath);
+				if(!file.createNewFile()) {
+					System.out.println("This map already exists! Please use another name.");
+				}
+				else {
+					this.map.saveMapToFile(file);
+				}
+			}
+			catch(Exception e) {
+				System.out.println("Save failed, please try again later.");
+			}
+		}
+		
+		
 	}
 	
 	
@@ -182,8 +204,26 @@ public class MapEditorController implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Please select a country first!");
 		}
 		else {
-			ConnectionView addConnectionView = new ConnectionView(map,id,ConnectionView.ADD_CONNECTION_OPTION);
-			addConnectionView.setVisible(true);
+			Country country = map.getCountryByID(id);
+			ArrayList<String> availableCountryName = new ArrayList<String>();
+			ArrayList<String> connectedCountryName = new ArrayList<String>();
+			
+			for(Country c: map.getCountryList()) {
+				availableCountryName.add(c.getName());
+			}
+			
+			for(Country c:country.getAdjacentCountryList()) {
+				connectedCountryName.add(c.getName());
+			}
+			availableCountryName.removeAll(connectedCountryName);
+			availableCountryName.remove(country.getName());
+			if(availableCountryName.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "There is no country can connect to the selected country!");
+			}
+			else {
+				ConnectionView addConnectionView = new ConnectionView(map,id,ConnectionView.ADD_CONNECTION_OPTION);
+				addConnectionView.setVisible(true);
+			}
 		}
 		
 	}
