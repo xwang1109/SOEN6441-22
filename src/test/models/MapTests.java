@@ -8,10 +8,10 @@ import views.game.ViewState;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.*;
-
+import java.io.*;
 //import javax.swing.JFileChooser;
 //import javax.swing.filechooser.FileSystemView;
-
+import java.nio.file.Paths;
 import java.io.*;
 
 
@@ -27,17 +27,16 @@ public class MapTests  {
 	@Before
 	public void InitiateMap() {
 
-			//JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
-			//int returnValue = jfc.showOpenDialog(null);
-			//if (returnValue == JFileChooser.APPROVE_OPTION) {
-			//	File selectedFile = jfc.getSelectedFile();
-				//GameState.getInstance().setSelectedFile(selectedFile);
-		fileCorrectMap=new File("C:\\Users\\MAIN\\Documents\\GitHub\\SOEN6441-22\\TestCaseMapFiles\\AlabamaCorrect.map");
-		fileFalseConnection=new File("C:\\Users\\MAIN\\Documents\\GitHub\\SOEN6441-22\\TestCaseMapFiles\\AlabamaCorrect.map\\IranFalseConnection.MAP");
-		fileFalseContinent=new File("C:\\Users\\MAIN\\Documents\\GitHub\\SOEN6441-22\\TestCaseMapFiles\\AlabamaFalseContinent.map");
+		String currentPath=System.getProperty("user.dir");
+		System.out.println("Current dir:"+currentPath);
+		fileCorrectMap=new File(currentPath+"\\MapFileTests\\AlabamaCorrect.map");
+		fileFalseConnection=new File(currentPath+"\\MapFileTests\\IranFalseConnection.MAP");
+		fileFalseContinent=new File(currentPath+"\\MapFileTests\\AlabamaFalseContinent.map");
+		
 
-			}			
+			
+	}			
 
  
 				
