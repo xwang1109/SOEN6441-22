@@ -10,7 +10,7 @@ import java.io.*;
 /**
  * This class is the model for map. 
  * It defines the basic information and behaviors of a map, and it is observed by MapEditorView.
- * @author Xinyan Wang
+ * @author Xinyan, Parisa, Lin
  * @version 1.0
  * @see views.map.MapEditorView
  */
@@ -387,6 +387,7 @@ public class Map extends Observable {
 	 * @return True if the file is valid map file, false if the file is not
 	 */
 	public boolean loadMapFromFile(File mapFile) {
+		this.clear();
 		
 		boolean continentBegin = false;
 		boolean countryBegin = false;
@@ -593,6 +594,7 @@ public class Map extends Observable {
 		}
 		
 		if(!this.isValid()) {
+			
 			return false;
 		}
 		loaded = true;
@@ -665,11 +667,52 @@ public class Map extends Observable {
 	
 	/**
 	 * Save the map to a .map file
-	 * @return True if the map is valid and successfully saved, false if it is not.
+	 * @return True if the map successfully saved, false if it is not.
 	 */
 	
-	public boolean saveMapToFile() {
-		
+	public boolean saveMapToFile(File file) {
+		if(!this.isValid()) {
+			return false;
+		}
+		PrintWriter pw;
+
+		try {
+			pw = new PrintWriter(file,"UTF-8");
+
+			// write basic info
+			pw.println("[Map]");
+			pw.println("author="+this.author);
+			pw.println("image="+this.image);
+			pw.println("wrap="+this.wrap);
+			pw.println("scroll="+this.scroll);
+			pw.println("warn="+this.warn);
+			pw.println();
+			
+			
+			// write continent info
+			pw.println("[Continents]");
+			for(Continent continent: this.continentList) {
+				pw.println(continent.getName()+"="+continent.getControlValue());
+			}
+			pw.println();
+			
+			// write country info
+			pw.println("[Territories]");
+			for(Country country: this.countryList) {
+				String countryInfo = country.getName()+","+country.getLocationX()+","+
+							country.getLocationY()+country.getContinent().getName();
+				for(Country adjCountry: country.getAdjacentCountryList()) {
+					countryInfo+=","+adjCountry.getName();
+				}
+				pw.println(countryInfo);
+			}
+			pw.println();
+			
+		}
+		catch(Exception e) {
+			return false;
+		}
+		pw.close();
 		return true;
 	}
 	
@@ -782,27 +825,25 @@ public class Map extends Observable {
 		this.continentList.clear();
 		this.countryList.clear();
 		this.loaded = false;
+		
 		setChanged();
 		notifyObservers();
 	}
-
-	public ArrayList<Country> getValidDestination(Country selectedCountry) {
-			
+	
+	/**
+	 * To take input country, return which countries can be the valid destination of this country
+	 * @param Country selectedCountry
+	 * @return ArrayList<Country>
+	 */
+	public ArrayList<Country> getValidDestination(Country selectedCountry) {			
 		ArrayList<Country> toBeValidated = new ArrayList<Country>();
-		ArrayList<Country> toBeValidated2 = new ArrayList<Country>();	
 		ArrayList<Country> valid = new ArrayList<Country>();
-				
-		toBeValidated.addAll(selectedCountry.getAdjacentCountryList()); 	
-						
-		return getCountryList();
 		
-        /*for (Country country:countryList) {
-        	if (selectedCountry.getOwner() == GameState.getInstance().getCurrentPlayer() 
-        			&& (!(valid.contains(country)))){
-        		toBeValidated.add(country);
-        		toBeValidated.addAll(country.getAdjacentCountryList());       		
-        	}
-		}*/
+		ArrayList<Country> validDestination = GameState.getInstance().getCurrentPlayer().getCountryList();
+		
+		validDestination.remove(selectedCountry);
+						
+		return validDestination;
         
 		// for each country to validate
 		   // if not in the valid list && valid -> correct player

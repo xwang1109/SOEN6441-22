@@ -18,8 +18,18 @@ import controllers.game.PlayerSetupController;
 import controllers.map.MapEditorStartController;
 import views.map.MapCountryPanel;
 
+/**
+ * The Class BasicView. To show the basic information of the game
+ * @author Yan
+ * @version  1.0
+ */
 public class BasicView {
 
+	/**
+	 * Instantiates a new basic view.
+	 *
+	 * @param controlPanel the control panel
+	 */
 	public BasicView(JPanel controlPanel) {
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();

@@ -11,22 +11,40 @@ import controllers.map.BasicInfoController;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 
+/**
+ * The Class BasicInfoView. This class shows the view of the game on its startup phase.
+ * @author Yan
+ * @version  1.0
+ */
 public class BasicInfoView extends JFrame{
 
-	/**
-	 * 
-	 */
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 3406877960836351665L;
+	
+	/** The author text. */
 	private JTextField authorText;
+	
+	/** The image text. */
 	private JTextField imageText;
 	
 
 
+	/** The wrap text. */
 	private JTextField wrapText;
+	
+	/** The scroll text. */
 	private JTextField scrollText;
+	
+	/** The warn text. */
 	private JTextField warnText;
 	
 
+	/**
+	 * Instantiates a new basic info view.
+	 *
+	 * @param map the map
+	 */
 	public BasicInfoView(Map map) {
 		this.setSize(480,350);
 		getContentPane().setLayout(null);
@@ -93,6 +111,11 @@ public class BasicInfoView extends JFrame{
 		
 	}
 	
+	/**
+	 * Gets the author text.
+	 *
+	 * @return the author text
+	 */
 	public String getAuthorText() {
 		return authorText.getText();
 	}
@@ -101,6 +124,11 @@ public class BasicInfoView extends JFrame{
 	
 
 
+	/**
+	 * Gets the image text.
+	 *
+	 * @return the image text
+	 */
 	public String getImageText() {
 		return imageText.getText();
 	}
@@ -109,6 +137,11 @@ public class BasicInfoView extends JFrame{
 	
 
 
+	/**
+	 * Gets the wrap text.
+	 *
+	 * @return the wrap text
+	 */
 	public String getWrapText() {
 		return wrapText.getText();
 	}
@@ -116,6 +149,11 @@ public class BasicInfoView extends JFrame{
 
 	
 
+	/**
+	 * Gets the scroll text.
+	 *
+	 * @return the scroll text
+	 */
 	public String getScrollText() {
 		return scrollText.getText();
 	}
@@ -123,6 +161,11 @@ public class BasicInfoView extends JFrame{
 
 	
 
+	/**
+	 * Gets the warn text.
+	 *
+	 * @return the warn text
+	 */
 	public String getWarnText() {
 		return warnText.getText();
 	}

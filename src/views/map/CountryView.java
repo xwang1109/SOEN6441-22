@@ -8,6 +8,10 @@ import javax.swing.*;
 import controllers.map.*;
 import models.map.*;
 
+/*
+ * the calss for showing Country 
+ * @author Xinyan
+ */
 public class CountryView extends JFrame{
 
 	/**
@@ -17,6 +21,10 @@ public class CountryView extends JFrame{
 	private JTextField nameTextField;
 	JComboBox<String> comboBox;
 	
+	/*
+	 * method for viewing Country 
+	 * creating layout for country
+	 */
 	public CountryView() {
 		this.setSize(480,300);
 		getContentPane().setLayout(null);
@@ -59,7 +67,10 @@ public class CountryView extends JFrame{
 		getContentPane().add(createButton);
 		
 	}
-
+/*
+ * @param map getting country list for filling ComboBox
+ * @param id
+ */
 	public CountryView(Map map, int id) {
 		this();
 		
@@ -88,7 +99,9 @@ public class CountryView extends JFrame{
 		this.comboBox.setSelectedItem(country.getContinent().getName());
 	}
 	
-	
+	/*
+	 * @return returning the name of country written
+	 */
 	public String getCountryName() {
 		return this.nameTextField.getText();
 	}

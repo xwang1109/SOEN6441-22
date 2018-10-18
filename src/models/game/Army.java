@@ -4,7 +4,8 @@ import models.map.Country;
 
 /**
  * The Class Army. Set and get army according to the rules of risk game
- * 
+ * @author Bingyang Yu
+ * @version 1.0
  */
 public class Army {
 	
