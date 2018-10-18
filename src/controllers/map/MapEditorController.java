@@ -101,10 +101,15 @@ public class MapEditorController implements ActionListener {
 	        	String absoluteFilePath = currentPath+"\\maps\\"+fileName+".map";
 				File file = new File(absoluteFilePath);
 				if(!file.createNewFile()) {
-					System.out.println("This map already exists! Please use another name.");
+					JOptionPane.showMessageDialog(null, "This map already exists! Please use another name.");
 				}
 				else {
-					this.map.saveMapToFile(file);
+					if(this.map.saveMapToFile(file)) {
+						JOptionPane.showMessageDialog(null, "Save successfully!");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Save failed, please try again later.");
+					}
 				}
 			}
 			catch(Exception e) {
