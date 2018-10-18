@@ -9,7 +9,10 @@ import javax.swing.ListSelectionModel;
 
 import models.map.*;
 
-
+/*
+ * the class for showing continent in a table
+ * @author Xinyan, Parisa
+ */
 public class MapContinentPanel extends JScrollPane {
 
 	/**
@@ -28,7 +31,9 @@ public class MapContinentPanel extends JScrollPane {
 	}
 	
 	
-	
+	/*
+	 * method for adding continent table in map Editor
+	 */
 	public void addContinentTableForMapEditor(Map map) {
 		
 		ArrayList<Continent>continentList = map.getContinentList();
@@ -39,7 +44,11 @@ public class MapContinentPanel extends JScrollPane {
         	mapData[i][1] = continent.getName();
         	mapData[i][2] = Integer.toString(continent.getControlValue());
         }
+        // these are columns for Jtable 
+        
         String[] columnNames = {"ID" ,"Continent Name", "Value" }; 
+        
+        // creating the layout of the table 
         
         JTable mapTable = new JTable(mapData,columnNames);
         mapTable.setBounds(30, 40, 100, 200); 
