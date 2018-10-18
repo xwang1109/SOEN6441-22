@@ -216,7 +216,9 @@ public class Country {
 	 * Decrease number of Army in this country.
 	 */
 	public void decreaseArmy() {
-		armyList.remove(1);
+		if(armyList.size()>1){
+			armyList.remove(1);
+		}		
 	}
 	
 	/**

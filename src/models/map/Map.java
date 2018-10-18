@@ -387,6 +387,7 @@ public class Map extends Observable {
 	 * @return True if the file is valid map file, false if the file is not
 	 */
 	public boolean loadMapFromFile(File mapFile) {
+		this.clear();
 		
 		boolean continentBegin = false;
 		boolean countryBegin = false;
@@ -593,6 +594,7 @@ public class Map extends Observable {
 		}
 		
 		if(!this.isValid()) {
+			
 			return false;
 		}
 		loaded = true;
@@ -823,27 +825,25 @@ public class Map extends Observable {
 		this.continentList.clear();
 		this.countryList.clear();
 		this.loaded = false;
+		
 		setChanged();
 		notifyObservers();
 	}
-
-	public ArrayList<Country> getValidDestination(Country selectedCountry) {
-			
+	
+	/**
+	 * To take input country, return which countries can be the valid destination of this country
+	 * @param Country selectedCountry
+	 * @return ArrayList<Country>
+	 */
+	public ArrayList<Country> getValidDestination(Country selectedCountry) {			
 		ArrayList<Country> toBeValidated = new ArrayList<Country>();
-		ArrayList<Country> toBeValidated2 = new ArrayList<Country>();	
 		ArrayList<Country> valid = new ArrayList<Country>();
-				
-		toBeValidated.addAll(selectedCountry.getAdjacentCountryList()); 	
-						
-		return getCountryList();
 		
-        /*for (Country country:countryList) {
-        	if (selectedCountry.getOwner() == GameState.getInstance().getCurrentPlayer() 
-        			&& (!(valid.contains(country)))){
-        		toBeValidated.add(country);
-        		toBeValidated.addAll(country.getAdjacentCountryList());       		
-        	}
-		}*/
+		ArrayList<Country> validDestination = GameState.getInstance().getCurrentPlayer().getCountryList();
+		
+		validDestination.remove(selectedCountry);
+						
+		return validDestination;
         
 		// for each country to validate
 		   // if not in the valid list && valid -> correct player

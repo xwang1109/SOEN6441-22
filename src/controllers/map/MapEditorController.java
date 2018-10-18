@@ -98,10 +98,12 @@ public class MapEditorController implements ActionListener {
 	 * Load map from file.
 	 */
 	public void loadMapFromFile() {
+		
 		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 		int returnValue = jfc.showOpenDialog(null);
 		
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			map.clear();
 			File selectedFile = jfc.getSelectedFile();
 			if(!map.loadMapFromFile(selectedFile)) {
 				map.clear();
@@ -122,18 +124,21 @@ public class MapEditorController implements ActionListener {
 		else {
 			try {
 				String fileName = JOptionPane.showInputDialog("Please input the name of the map");
-	        	String currentPath=System.getProperty("user.dir");
-	        	String absoluteFilePath = currentPath+"\\maps\\"+fileName+".map";
-				File file = new File(absoluteFilePath);
-				if(!file.createNewFile()) {
-					JOptionPane.showMessageDialog(null, "This map already exists! Please use another name.");
-				}
-				else {
-					if(this.map.saveMapToFile(file)) {
-						JOptionPane.showMessageDialog(null, "Save successfully!");
+				
+				if(fileName!=null) {
+		        	String currentPath=System.getProperty("user.dir");
+		        	String absoluteFilePath = currentPath+"\\maps\\"+fileName+".map";
+					File file = new File(absoluteFilePath);
+					if(!file.createNewFile()) {
+						JOptionPane.showMessageDialog(null, "This map already exists! Please use another name.");
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "Save failed, please try again later.");
+						if(this.map.saveMapToFile(file)) {
+							JOptionPane.showMessageDialog(null, "Save successfully!");
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Save failed, please try again later.");
+						}
 					}
 				}
 			}
