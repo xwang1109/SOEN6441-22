@@ -6,7 +6,11 @@ import org.junit.Test;
 import java.io.*;
 
 
-
+/**
+ * This class tests Validity Of Map Files in Map Model
+ * @author Parisa
+ *
+ */
 
 
 public class MapTests  {
@@ -15,14 +19,19 @@ public class MapTests  {
 	File fileFalseConnection;
 	File fileFalseContinent;
 
-	
+	/**
+	 * Loading Map Files
+	 */
 	@Before
 	public void InitiateMap() {
 
 
 		String currentPath=System.getProperty("user.dir");
+		//this is the correct map
 		fileCorrectMap=new File(currentPath+"\\MapFileTests\\AlabamaCorrect.map");
+		//there is a wrong connection for country, one of country does not exist.
 		fileFalseConnection=new File(currentPath+"\\MapFileTests\\IranFalseConnection.MAP");
+		//there is a wrong continent. one of continent does not exist.
 		fileFalseContinent=new File(currentPath+"\\MapFileTests\\AlabamaFalseContinent.map");
 		
 
