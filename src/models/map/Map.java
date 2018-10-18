@@ -424,37 +424,67 @@ public class Map extends Observable {
 			    		}
 			    		break;
 			    	case 2:
-			    		splitLine = line.split("=",2);
+			    		splitLine = line.split("=");
+			    		if(splitLine.length!=2) {
+	    					return false;
+	    				}
 			    		if(!splitLine[0].equals("author")) {
+			    			return false;
+			    		}
+			    		if(splitLine[1].equals("")) {
 			    			return false;
 			    		}
 			    		this.author = splitLine[1];
 			    		break;
 			    	case 3:
-			    		splitLine = line.split("=",2);
+			    		splitLine = line.split("=");
+			    		if(splitLine.length!=2) {
+	    					return false;
+	    				}
 			    		if(!splitLine[0].equals("image")) {
+			    			return false;
+			    		}
+			    		if(splitLine[1].equals("")) {
 			    			return false;
 			    		}
 			    		this.image = splitLine[1];
 			    		break;
 			    		
 			    	case 4:
-			    		splitLine = line.split("=",2);
+			    		splitLine = line.split("=");
+			    		if(splitLine.length!=2) {
+	    					return false;
+	    				}
 			    		if(!splitLine[0].equals("wrap")) {
+			    			return false;
+			    		}
+			    		if(splitLine[1].equals("")) {
 			    			return false;
 			    		}
 			    		this.wrap = splitLine[1];
 			    		break;
 			    	case 5:
-			    		splitLine = line.split("=",2);
+			    		splitLine = line.split("=");
+			    		if(splitLine.length!=2) {
+	    					return false;
+	    				}
 			    		if(!splitLine[0].equals("scroll")) {
+			    			return false;
+			    		}
+			    		if(splitLine[1].equals("")) {
 			    			return false;
 			    		}
 			    		this.scroll = splitLine[1];
 			    		break;
 			    	case 6:
-			    		splitLine = line.split("=",2);
+			    		splitLine = line.split("=");
+			    		if(splitLine.length!=2) {
+	    					return false;
+	    				}
 			    		if(!splitLine[0].equals("warn")) {
+			    			return false;
+			    		}
+			    		if(splitLine[1].equals("")) {
 			    			return false;
 			    		}
 			    		this.warn = splitLine[1];
@@ -479,15 +509,30 @@ public class Map extends Observable {
 		    				countryBegin = true;
 		    			}
 		    			else {
-		    				splitLine = line.split("=", 2);
-		    				continentList.add(new Continent(splitLine[0], Integer.parseInt(splitLine[1])));
+		    				splitLine = line.split("=");
+		    				if(splitLine.length!=2) {
+		    					return false;
+		    				}
+		    				if(this.checkDuplicateContinentName(splitLine[0], -1)) {
+		    					return false;
+		    				}
+		    				int value = Integer.parseInt(splitLine[1]);
+		    				if(value<=0) {
+		    					return false;
+		    				}
+		    				continentList.add(new Continent(splitLine[0], value));
 		    			}
 		    			
 		    		}
 		    		else if(countryBegin && !continentBegin) {
 		    			
-		    			
 		    			splitLine = line.split(",");
+		    			if(this.checkDuplicateCountryName(splitLine[0], -1)) {
+		    				return false;
+		    			}
+		    			if(splitLine.length<=4) {
+		    				return false;
+		    			}
 		    			Country country = new Country(splitLine[0]);
 		    			
 		    			int locationX = Integer.parseInt(splitLine[1]);
@@ -508,6 +553,9 @@ public class Map extends Observable {
 		    			// after finish reading the countries, add the connection relationship
 		    			
 		    			int numConnectedCountry = splitLine.length-4;
+		    			if(numConnectedCountry<=0) {
+		    				return false;
+		    			}
 		    			
 		    			String[] connectedCountryNameArray = new String[numConnectedCountry];
 		    			System.arraycopy(splitLine, 4, connectedCountryNameArray, 0, numConnectedCountry);
@@ -531,6 +579,9 @@ public class Map extends Observable {
 		    		if(connectedCountry == null) {
 		    			return false;
 		    		}
+		    		if(connectedCountryNameArray[j].equals(country.getName())) {
+		    			return false;
+		    		}
 		    		country.addAdjacentCountry(connectedCountry);
 		    	}
 		    }
@@ -541,6 +592,9 @@ public class Map extends Observable {
 			return false;
 		}
 		
+		if(!this.isValid()) {
+			return false;
+		}
 		loaded = true;
 		setChanged();
 		notifyObservers();
@@ -610,13 +664,107 @@ public class Map extends Observable {
 	}
 	
 	/**
-	 * Check if the map is a valid map.
-	 * @return True if the map is valid, false if it is not.
+	 * Save the map to a .map file
+	 * @return True if the map is valid and successfully saved, false if it is not.
 	 */
 	
-	public boolean isValid() {		
+	public boolean saveMapToFile() {
+		
 		return true;
 	}
+	
+	/**
+	 * To check if the map is a valid map
+	 * @return True if it is valid, false if not
+	 */
+	
+	public boolean isValid() {
+		// check basic info
+		if(this.author.equals("") || this.image.equals("") || 
+			this.wrap.equals("") || this.scroll.equals("") ||
+			this.warn.equals("")) {
+					return false;
+			}
+		
+		// check the number of continent
+		if(this.getContinentNumber() <= 0) {
+			return false;
+		}
+		
+		// check the duplicate of continent
+		for(Continent c:this.continentList) {
+			if(this.checkDuplicateContinentName(c.getName(), c.getID())) {
+				return false;
+			}
+		}
+		
+		// check the number of country
+		if(this.getCountryNumber()<=0) {
+			return false;
+		}
+		
+		// check the number of country in the continent{
+		for(Continent c:this.continentList) {
+			if(c.getCountryList().size()<=0) {
+				return false;
+			}
+		}
+		
+		// check the duplicate of continent
+		for(Country c:this.countryList) {
+			if(this.checkDuplicateCountryName(c.getName(), c.getID())) {
+				return false;
+			}
+		}
+		
+		// check if the map is connected
+		if(!this.isConnected()) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Check if the map is a connected graph
+	 * @return True if the map is connected, false if it is not
+	 */
+	
+	public boolean isConnected() {
+    	if(countryList.size()<=1) {
+    		return false;
+    	}
+		Hashtable<String,String> countryVisited = new Hashtable<String,String>();
+    	for(Country country:this.countryList) {
+    		countryVisited.put(country.getName(), "unvisited");
+    	}
+    	Country startCountry = this.countryList.get(0);
+    	dfs(startCountry,countryVisited);
+    	if(countryVisited.containsValue("unvisited")) {
+    		return false;
+    	}
+    	return true;
+	}
+    
+	
+	/**
+	 * dfs for country list
+	 */
+	
+	public void dfs(Country country, Hashtable<String,String> countryVisited){ 
+	    String name = country.getName();
+	    if(countryVisited.get(name).equals("visited")){
+	    	return;
+	    }    
+	    countryVisited.put(name,"visited");    
+	    for(Country c:country.getAdjacentCountryList()){
+	    	if(countryVisited.get(c.getName()).equals("unvisited")){
+	    		dfs(c,countryVisited);
+	    	}
+	    }
+	    
+	}
+	
 	
 	/**
 	 * Clear all the information of the map.

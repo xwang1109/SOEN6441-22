@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 import controllers.game.GameStartController;
 import controllers.game.PlayerSetupController;
@@ -148,10 +149,10 @@ public class ReinforcementView{
 		labelValuePane.add(leftArmyLabel);
 		labelValuePane.add(cardNumberLabel);
 
-		JPanel mapPane = new JPanel();
+		JPanel mapPane = new JPanel(new GridLayout(0,1));
 		mapPane.add(mapPanel);
 		
-		buttonPane = new JPanel(new GridLayout(0,1));
+		buttonPane = new JPanel();
 		messageLable = new JLabel("");
 		buttonPane.add(messageLable);
 		buttonPane.add(comboBox);
@@ -160,6 +161,7 @@ public class ReinforcementView{
 		controlPanel.add(labelPane);
 		controlPanel.add(labelValuePane);
 		controlPanel.add(buttonPane);
+		mapPane.setSize(200,200);
 		controlPanel.add(mapPane);
 		
 		///////test change cards///////
@@ -172,7 +174,8 @@ public class ReinforcementView{
 		
 		playerCounter = 0;
 		player = playerList.get(playerCounter);		
-		leftArmies = player.getArmyNumber();
+//		leftArmies = player.getArmyNumber();
+		leftArmies = player.getLeftArmyNumber();
 		showPlayer();
 	}
 /**
