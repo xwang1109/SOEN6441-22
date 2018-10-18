@@ -24,6 +24,7 @@ import models.game.Player;
 import models.game.Card;
 import models.map.Country;
 import models.map.GameState;
+import models.map.GameState.Phase;
 import views.map.MapCountryPanel;
 
 import javax.swing.JTextPane;
@@ -172,10 +173,12 @@ public class ReinforcementView{
 		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
 		//////////////////////////////////////
 		
-		playerCounter = 0;
-		player = playerList.get(playerCounter);		
-//		leftArmies = player.getArmyNumber();
-		leftArmies = player.getLeftArmyNumber();
+		if (GameState.getInstance().getPhase().equals(Phase.SETUP)){
+			playerCounter = 0;
+			player = playerList.get(playerCounter);		
+//			leftArmies = player.getArmyNumber();
+			leftArmies = player.getLeftArmyNumber();		
+		}
 		showPlayer();
 	}
 /**
