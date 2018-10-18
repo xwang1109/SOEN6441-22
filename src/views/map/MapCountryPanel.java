@@ -164,27 +164,16 @@ public class MapCountryPanel extends JScrollPane {
 	
 	public void addCountryTableForReinforcement(Player player) {
 		ArrayList<Country> countryList = player.getCountryList();
-		String[][] mapData = new String[countryList.size()][4];
+		String[][] mapData = new String[countryList.size()][3];
         for(int i=0;i<countryList.size();i++) {
         	
         	Country country = countryList.get(i);
         	mapData[i][0] = country.getName();
         	mapData[i][1] = country.getContinent().getName();
         	mapData[i][2] = "";
-        	ArrayList<Country> adjCountryList = country.getAdjacentCountryList();
-        	
-        	for(int j=0;j<adjCountryList.size();j++) {
-        		Country adjCountry = adjCountryList.get(j);
-        		if(j!=adjCountryList.size()-1) {
-        			mapData[i][3]+=adjCountry.getName()+", ";
-        		}
-        		else {
-        			mapData[i][3]+=adjCountry.getName();
-        		}
-        	}
         	mapData[i][2] = Integer.toString(country.getNumOfArmies()) ;
         }
-        String[] columnNames = { "Country Name", "Continent","Numer of Armies", "Adj Country"}; 
+        String[] columnNames = { "Country Name", "Continent","Numer of Armies"}; 
         
         
         
@@ -195,18 +184,7 @@ public class MapCountryPanel extends JScrollPane {
         //mapTable.setFont(new Font("Serif", Font.BOLD, 20));
        
         mapTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        mapTable.getColumnModel().getColumn(0).setMinWidth(150);
-        mapTable.getColumnModel().getColumn(0).setMaxWidth(150);
-        
-        mapTable.getColumnModel().getColumn(1).setMinWidth(150);
-        mapTable.getColumnModel().getColumn(1).setMaxWidth(150);
-        
-        mapTable.getColumnModel().getColumn(2).setMinWidth(100);
-        mapTable.getColumnModel().getColumn(2).setMaxWidth(100);
        
-        mapTable.getColumnModel().getColumn(3).setMinWidth(150);
-     
-        mapTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         mapTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.countryTable = mapTable;
         this.getViewport().add(countryTable); 
