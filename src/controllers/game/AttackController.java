@@ -8,8 +8,11 @@ import javax.swing.JComboBox;
 import models.map.GameState;
 import views.game.ViewState;
 
-
-
+/**
+ * The Class AttackController. player perform attacks according to the rule of risk
+ * @author Bingyang Yu
+ * @version 1.0
+ */
 public class AttackController implements ActionListener {
 
 	/**
@@ -22,7 +25,7 @@ public class AttackController implements ActionListener {
 		// TODO skipping it because it's not coded
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override

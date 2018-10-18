@@ -45,7 +45,8 @@ public class GameStartController implements ActionListener {
 	private Map map;
 	
 	/**
-	 * Instantiates a new game start controller. Load map into the controller. Display the map on the frame. If map is not valid, show an error message.
+	 * Instantiates a new game start controller. Load map into the controller. Display the map on the frame.
+	 *  If map is not valid, show an error message.
 	 *
 	 * @param numberOfPlayer a JComboBox to choose the number of players
 	 * @param selectedFile player selected map file. Format: .map
