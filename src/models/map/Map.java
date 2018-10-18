@@ -4,75 +4,171 @@ package models.map;
 import java.util.*;
 import java.io.*;
 
+/**
+ * This class is the model for map. 
+ * It defines the basic information and behaviors of a map, and it is observed by MapEditorView.
+ * @author Xinyan Wang
+ * @version 1.0
+ * @see views.map.MapEditorView
+ */
+
 public class Map extends Observable {
 
-	public Map() {
-		loaded = false;
-		
-	}
+	
 	private final int FILE_HEAD_LINE_NUMBER = 7;
 
-	private String author="";
-	private String image="";
-	private String wrap = "no";
-	private String scroll = "none";
-	private String warn = "no";
-	private boolean loaded = false;
+	private String author;
+	private String image;
+	private String wrap;
+	private String scroll;
+	private String warn;
+	private boolean loaded;
 	
-	private ArrayList<Continent> continentList = new ArrayList<Continent>();
-	private ArrayList<Country> countryList = new ArrayList<Country>();
+	private ArrayList<Continent> continentList;
+	private ArrayList<Country> countryList;
 	
+	/**
+	 * Constructor to create a map
+	 * It initializes the basic information of a map
+	 */
+	
+	public Map() {
+		loaded = false;
+		author="";
+		image="";
+		wrap = "no";
+		scroll = "none";
+		warn = "no";
+		loaded = false;
+		continentList = new ArrayList<Continent>();
+		countryList = new ArrayList<Country>();
+	}
+	
+	/**
+	 * This method gets the author's name of the map
+	 * @return The author's name
+	 */
 	
 	public String getAuthor() {
 		return author;
 	}
+	
+	/**
+	 * This method sets the author's name by a given name
+	 * @param The author's name
+	 */
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+	
+	/**
+	 * This method gets the path of the map's image file
+	 * @return The image file's path of the map
+	 */
 	public String getImage() {
 		return image;
 	}
+	
+	/**
+	 * This method sets the image file's path as the given path
+	 * @param image The image file's path
+	 */
 	public void setImage(String image) {
 		this.image = image;
 	}
 	
+	/**
+	 * This method gets the map's wrap type
+	 * @return The wrap type of the map
+	 */
 	public String getWrap() {
 		return wrap;
 	}
+	
+	/**
+	 * This method sets the wrap type based on given type
+	 * @param wrap The given wrap type
+	 */
 	public void setWrap(String wrap) {
 		this.wrap = wrap;
 	}
+	
+	/**
+	 * This method gets the scroll type of the map
+	 * @return The map's scroll type
+	 */
 	public String getScroll() {
 		return scroll;
 	}
+	
+	/**
+	 * Set the scroll typo based on given type
+	 * @param scroll The given scroll type
+	 */
 	public void setScroll(String scroll) {
 		this.scroll = scroll;
 	}
+	
+	/**
+	 * This method gets the warn type of the map
+	 * @return The warn type of the map
+	 */
 	public String getWarn() {
 		return warn;
 	}
+	
+	/**
+	 * Set the map's warn type as the given type
+	 * @param warn The given type of warn
+	 */
 	public void setWarn(String warn) {
 		this.warn = warn;
 	}
+	
+	/**
+	 * Get all continents in this map
+	 * @return The list of continents in this map
+	 */
 	public ArrayList<Continent> getContinentList() {
 		return continentList;
 	}
+	
+	/**
+	 * Set the map's continents based on a given continents list
+	 * @param continentList A lists of continents
+	 */
 	public void setContinentList(ArrayList<Continent> continentList) {
 		this.continentList = continentList;
 	}
+	
+	/**
+	 * Get all countries in this map
+	 * @return The list of countries in this map
+	 */
 	public ArrayList<Country> getCountryList() {
 		return countryList;
 	}
+	/**
+	 * Set the map's countries based on a given countries list
+	 * @param countryList A lists of countries
+	 */
 	public void setCountryList(ArrayList<Country> countryList) {
 		this.countryList = countryList;
 	}
-	
+	/**
+	 * Add a continent to the map, also notify the MapEditorView that the map has been changed.
+	 * @param continent The continent need to be added
+	 */
 	public void addContinent(Continent continent) {
 		this.continentList.add(continent);
 		setChanged();
 		notifyObservers();
 	}
 	
+	/**
+	 * Add a country to the map, also notify the MapEditorView that the map has been changed.
+	 * @param country The country need to be added
+	 */
 	public void addCountry(Country country) {
 		country.getContinent().addCountry(country);
 		this.countryList.add(country);
@@ -80,11 +176,19 @@ public class Map extends Observable {
 		notifyObservers();
 	}
 	
-	
+	/**
+	 * Check if the map has been successfully loaded from file
+	 * @return True if the map has been loaded from file, false if it hasn't
+	 */
 	public boolean isLoaded() {
 		return loaded;
 	}
 	
+	/**
+	 * Get the continent in this map based on the continent's name
+	 * @param continentName The continent's name need to be searched in the map
+	 * @return The target continent object; null if there is no such continent
+	 */
 	public Continent getContinentByName(String continentName) {
 		for(int i=0;i<continentList.size();i++) {
 			if(continentList.get(i).getName().equals(continentName)){
@@ -93,7 +197,11 @@ public class Map extends Observable {
 		}
 		return null;
 	}
-	
+	/**
+	 * Get the continent in this map based on the continent's id
+	 * @param continentID The continent's id need to be searched in the map
+	 * @return The target continent object; null if there is no such continent
+	 */
 	public Continent getContinentByID(int continentID) {
 		for(int i=0;i<continentList.size();i++) {
 			if(continentList.get(i).getID() == continentID){
@@ -102,7 +210,11 @@ public class Map extends Observable {
 		}
 		return null;
 	}
-	
+	/**
+	 * Get the country in this map based on the country's name
+	 * @param countryName The country's name need to be searched in the map
+	 * @return The target country object; null if there is no such country
+	 */
 	public Country getCountryByName(String countryName) {
 		for(int i=0;i<this.countryList.size();i++) {
 			if(this.countryList.get(i).getName().equals(countryName)){
@@ -111,6 +223,12 @@ public class Map extends Observable {
 		}
 		return null;
 	}
+	
+	/**
+	 * Get the country in this map based on the country's id.
+	 * @param countryID The country's id need to be searched in the map
+	 * @return The target country object; null if there is no such country
+	 */
 	
 	public Country getCountryByID(int countryID) {
 		for(int i=0;i<this.countryList.size();i++) {
@@ -121,6 +239,13 @@ public class Map extends Observable {
 		return null;
 	}
 	
+	/**
+	 * Update a continent's name and value in this map. 
+	 * In addition, notify the MapEditorView that the map has been changed.
+	 * @param continentID The id of the continent which is to be updated
+	 * @param name The new name of the continent
+	 * @param value The new value of the continent
+	 */
 	public void updateContinentByID(int continentID, String name, int value) {
 		for(int i=0;i<continentList.size();i++) {
 			if(continentList.get(i).getID() == continentID){
@@ -131,7 +256,13 @@ public class Map extends Observable {
 			}
 		}
 	}
-	
+	/**
+	 * Update a country's name and continent which the country belongs to in this map. 
+	 * In addition, notify the MapEditorView that the map has been changed.
+	 * @param countryID The id of the country which is to be updated
+	 * @param name The new name of the country
+	 * @param continentName The new continent's name which the country belongs to
+	 */
 	public void updateCountryByID(int countryID, String name, String continentName) {
 		for(int i=0;i<countryList.size();i++) {
 			if(countryList.get(i).getID() == countryID){
@@ -150,16 +281,26 @@ public class Map extends Observable {
 			}
 		}
 	}
-	
+	/**
+	 * Get the number of continents in this map
+	 * @return The number of continents in this map
+	 */
 	public int getContinentNumber() {
 		return this.continentList.size();
 	}
 	
-	
+	/**
+	 * Get the number of countries in this map
+	 * @return The number of countries in this map
+	 */
 	public int getCountryNumber() {
 		return this.countryList.size();
 	}
-	
+	/**
+	 * Remove a continent from the map, and also remove all countries belong to this continent.
+	 * In addition, notify the MapEditorView that the map has been changed.
+	 * @param id The id of the continent to be removed
+	 */
 	public void removeContinentByID(int id) {
 		for(int i=0;i<continentList.size();i++) {
 			if(continentList.get(i).getID() == id){
@@ -178,7 +319,11 @@ public class Map extends Observable {
 			}
 		}
 	}
-	
+	/**
+	 * Remove a country from the map, and also remove all connection relationships of this country.
+	 * In addition, notify the MapEditorView that the map has been changed.
+	 * @param id The id of the country to be removed
+	 */
 	public void removeCountryByID(int id) {
 		for(int i=0;i<this.countryList.size();i++) {
 			if(this.countryList.get(i).getID()==id){
@@ -202,7 +347,12 @@ public class Map extends Observable {
 			}
 		}
 	}
-	
+	/**
+	 * Add a connection between two countries.
+	 * In addition, notify the MapEditorView that the map has been changed.
+	 * @param countryID1 The id of the first country
+	 * @param countryID2 The id of the second country
+	 */
 	public void addConnection(int countryID1, int countryID2) {
 		Country country1 = this.getCountryByID(countryID1);
 		Country country2 = this.getCountryByID(countryID2);
@@ -212,7 +362,12 @@ public class Map extends Observable {
 		setChanged();
 		notifyObservers();
 	}
-	
+	/**
+	 * Remove a connection between two countries.
+	 * In addition, notify the MapEditorView that the map has been changed.
+	 * @param countryID1 The id of the first country
+	 * @param countryID2 The id of the second country
+	 */
 	public void removeConnection(int countryID1, int countryID2) {
 		Country country1 = this.getCountryByID(countryID1);
 		Country country2 = this.getCountryByID(countryID2);
@@ -223,7 +378,11 @@ public class Map extends Observable {
 		notifyObservers();
 		
 	}
-	
+	/**
+	 * Load and store map information from a .map file
+	 * @param mapFile The file's path
+	 * @return True if the file is valid map file, false if the file is not
+	 */
 	public boolean loadMapFromFile(File mapFile) {
 		
 		boolean continentBegin = false;
@@ -397,11 +556,11 @@ public class Map extends Observable {
 	}
 	
 	/**
-	 * check if there is a same continent name except itself in the map
+	 * Check if there is a continent has the same name except itself in the map
 	 * 
-	 * @param name
-	 * @param id
-	 * @return
+	 * @param name The continent's name need to be checked
+	 * @param id The continent's id
+	 * @return True if there is a duplicate name, false if there is no duplicate name
 	 */
 	
 	
@@ -415,6 +574,13 @@ public class Map extends Observable {
 		return false;
 	}
 	
+	/**
+	 * Check if there is a country has the same name except itself in the map
+	 * @param name The country's name need to be checked
+	 * @param id The country's id
+	 * @return True if there is a duplicate name, false if there is no duplicate name
+	 */
+	
 	public boolean checkDuplicateCountryName(String name, int id) {
 		for(int i=0;i<this.countryList.size();i++) {
 			Country country = countryList.get(i);
@@ -425,7 +591,10 @@ public class Map extends Observable {
 		return false;
 	}
 	
-	
+	/**
+	 * Check if the map is a valid map.
+	 * @return True if the map is valid, false if it is not.
+	 */
 	
 	public boolean isValid() {
 		
@@ -435,7 +604,11 @@ public class Map extends Observable {
 		return true;
 	}
 	
-	
+	/**
+	 * Clear all the information of the map.
+	 * In addition, notify the MapEditorView that the map has been changed.
+	 * 
+	 */
 	public void clear() {
 		this.author="";
 		this.image="";
