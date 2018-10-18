@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
+import models.map.GameState;
 import views.game.ViewState;
 
 public class AttackController implements ActionListener {
@@ -20,6 +21,10 @@ public class AttackController implements ActionListener {
 		// everytime there's a successful attack ; check if the game is finished
 		// have a button for end of attack;
 		// for now, skip always directly to fortification
+		
+		//remember to refresh the map view all the time
+		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+
 		ViewState.getInstance().showFortificationView();
 		
 	}

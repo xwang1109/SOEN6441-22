@@ -35,6 +35,9 @@ public class Player {
 	public ArrayList<Card> getCardList() {
 		return cardList;
 	}
+	public void setArmyforCards(int i) {
+		getArmyforCards = i;
+	}
 	
 	
 	public boolean attack(Country attacker,Country defender) {
@@ -42,6 +45,10 @@ public class Player {
 		//reassign country and armies
 		return false;
 	}
+	/**
+	 * This method add armies to the player according to the reinforcement rules
+	 * @return
+	 */
 	public int addReinforcementArmy() {
 		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
 			Army army = new Army(this);
@@ -127,6 +134,8 @@ public class Player {
 		}
 	/**
 	 * This method remove a card from cardList of player
+	 * @param cardTypeCode NEED to add more info
+	 *
 	 */
 	public void removeCard(int cardTypeCode) {
 		for(Card card: cardList){

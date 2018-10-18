@@ -2,8 +2,10 @@ package models.map;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import models.game.Army;
 import models.game.Player;
 import views.game.ViewState;
 
@@ -15,8 +17,8 @@ import views.game.ViewState;
 public class GameState {
 
 	private File selectedFile;
-	private Map map;
-	private ArrayList<Player> playerList = new ArrayList<Player>();
+	private  Map map;
+	private  ArrayList<Player> playerList = new ArrayList<Player>();
 	// hold players
 	
 	// hold phase to switch between map info and current state
@@ -139,5 +141,62 @@ public class GameState {
 	 */
 	public Map getMap() {
 		return map;
+	}
+	/**
+	 * Randomly assign countries to players
+	 */
+	public  void randomAssignCountry() {
+		int player_index=0;
+		
+		List<Continent> countinentList = this.map.getContinentList();
+		
+		for(Continent continent: countinentList)//this is try to avoid one play takes over an entire continent in the first round
+		{
+			
+			List<Country> countryList = continent.getCountryList();  //get all countries from each continent
+			
+			Collections.shuffle(countryList);
+
+			for(int i = 0; i < countryList.size(); i++)  
+			{
+				Country c = countryList.get(i);                // loop for get each country of the map
+				Player p = this.playerList.get(player_index);  // find the corresponding player by the order of the player
+				p.getCountryList().add(c);                     // assign country to each player
+				c.setOwner(p);
+				
+				if(player_index<this.playerList.size()-1)      //if not all players get a new country in this round
+				{
+					player_index++;
+				}
+				else                                           //if all players get a new counter in this round, start from player 1
+				{
+					player_index=0;
+				}
+				
+			}
+			
+		}
+	}
+	/**
+	 * Allocate a number of initial armies to players
+	 */
+	public void assignInitialArmy() {
+		
+		int initialArmy = Math.round(this.map.getCountryList().size() / this.playerList.size()) + this.playerList.size();
+		for (Player player:this.playerList) {
+			for (int i=0; i<initialArmy; i++) {
+				Army army = new Army(player);
+				player.getArmyList().add(army);				
+			}
+		}		
+	}
+
+	public void assignInitialPlayers(int num) {
+		
+		for(int i = 0;i < num; i++) {
+			Player p = new Player();
+			p.setId(i);
+			playerList.add(p);
+		}
 	}
 }

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import models.game.Player;
 import models.map.Country;
+import views.map.MapCountryPanel;
 
 /**
  * class ViewState to switching between different views of the game
@@ -19,7 +20,7 @@ public class ViewState extends JFrame {
 	private static final long serialVersionUID = 7243006502142830314L;
 
 	private JPanel controlPanel = new JPanel();
-	//private JPanel mapPanel = new JPanel();
+	private MapCountryPanel mapPanel = new MapCountryPanel();             //all the views need to share a table for map
 	
 	/**
 	 * Constructor of class ViewState to set the window of the game
@@ -49,7 +50,7 @@ public class ViewState extends JFrame {
 	}
 	
 	/**
-	 * Show basic view
+	 * Show basic view. only shows a "new" and "map editor" button.
 	 */
 	public void showBasicView() {
 		clear();
@@ -59,17 +60,18 @@ public class ViewState extends JFrame {
 	}
 
 	/**
-	 * Show player view
+	 * Show player view. shows map info.
 	 */
 	public void showPlayerView() {
 		clear();
-		new PlayerSetupView(controlPanel);
+		new PlayerSetupView(controlPanel,this);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		getContentPane().add(mapPanel, BorderLayout.SOUTH);
 		setVisible(true);
 	}
 	
 	/**
-	 * Show reinforcement view
+	 * Show reinforcement view.
 	 */
 	public void showReinforcementView() {
 		clear();
@@ -86,5 +88,13 @@ public class ViewState extends JFrame {
 		new FortificationView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
+	}
+
+	public MapCountryPanel getMapPanel() {
+		return mapPanel;
+	}
+
+	public void setMapPanel(MapCountryPanel mapPanel) {
+		this.mapPanel = mapPanel;
 	}
 }

@@ -20,16 +20,30 @@ import models.map.GameState;
 import models.map.Map;
 import views.game.ViewState;
 
+
+/**
+ * The Class PlayerSetupController. 
+ * @see views.game.PlayerSetupView
+ * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+ */
 public class PlayerSetupController implements ActionListener{
 	
+	/**
+	 * Instantiates a new player setup controller.
+	 */
 	public PlayerSetupController() {
 		
 	}
 	
 
+	/**
+	 * This method is triggered by "NEW GAME" button. 
+	 * It opens up a new dialog and allows player to choose map file. 
+	 * The file is passed to PlayerSetupView
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// this is called on new game. Validate that the map is valid, or display error
+		
 		
 		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 

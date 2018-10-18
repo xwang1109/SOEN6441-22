@@ -8,13 +8,16 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import controllers.game.GameStartController;
+import models.map.GameState;
+import views.map.MapCountryPanel;
+
 import javax.swing.JSplitPane;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 
 public class PlayerSetupView {
 
-	public PlayerSetupView(JPanel controlPanel) {
+	public PlayerSetupView(JPanel controlPanel,ViewState frame) {
 		// feed the beast
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
@@ -29,6 +32,14 @@ public class PlayerSetupView {
 		newGameButton.addActionListener(new GameStartController(numberOfPlayer));
 		controlPanel.add(numberOfPlayer);
 		controlPanel.add(newGameButton);
+		
+		MapCountryPanel mapPanel = frame.getMapPanel();
+		
+		mapPanel.addCountryTableForMap(GameState.getInstance().getMap());
+		//JPanel mapPane = new JPanel();
+		//mapPane.add(mapPanel);
+		
+		
 		
 	}
 }
