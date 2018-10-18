@@ -3,6 +3,7 @@ package controllers.game;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import models.map.GameState;
@@ -15,7 +16,8 @@ import views.game.ViewState;
  */
 public class FortificationController implements ActionListener {
 	
-	private JTextField from, to, quantity;
+	private JComboBox from, to;
+	private JTextField quantity;
 	
 	/**
 	 * Constructor of class FortificationController
@@ -23,7 +25,7 @@ public class FortificationController implements ActionListener {
 	 * @param to
 	 * @param quantity
 	 */
-	public FortificationController(JTextField from, JTextField to, JTextField quantity) {
+	public FortificationController(JComboBox from, JComboBox to, JTextField quantity) {
 		this.from = from;
 		this.to = to;
 		this.quantity = quantity;
@@ -35,13 +37,17 @@ public class FortificationController implements ActionListener {
 	 * @param ActionEvent e
 	 */
 	public void actionPerformed(ActionEvent e) {
-		String fromStr = from.getText();
-		String toStr = to.getText();
+		String fromStr = (String) from.getSelectedItem();
+		String toStr = (String) to.getSelectedItem();
 		int qt = Integer.parseInt( quantity.getText() );
 		
 		if (GameState.getInstance().fortify(fromStr, toStr, qt ) ) {
+			//deduct number of armies from country fromStr, add number of armies to country toStr
+			
+			
 			// TODO current player ended his turn.
-			// set the gameState to next player.
+			GameState.getInstance().endPlayerTurn();
+			
 			
 			//remember to refresh the map view all the time
 			ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());

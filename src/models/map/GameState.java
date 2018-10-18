@@ -3,6 +3,7 @@ package models.map;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import models.game.Army;
@@ -18,7 +19,9 @@ public class GameState {
 
 	private File selectedFile;
 	private  Map map;
-	private  ArrayList<Player> playerList = new ArrayList<Player>();
+	
+	private Player currentPlayer;
+	private ArrayList<Player> playerList = new ArrayList<Player>();
 	// hold players
 	
 	// hold phase to switch between map info and current state
@@ -123,7 +126,8 @@ public class GameState {
 	 * @param ArrayList<Player> playerList
 	 */
 	public void setPlayerList(ArrayList<Player> playerList) {
-		this.playerList =  playerList;
+		this.playerList = playerList;
+		this.currentPlayer = playerList.get(0);
 	}
 	
 	/**
@@ -145,7 +149,7 @@ public class GameState {
 	/**
 	 * Randomly assign countries to players
 	 */
-	public  void randomAssignCountry() {
+	public void randomAssignCountry() {
 		int player_index=0;
 		
 		List<Continent> countinentList = this.map.getContinentList();
@@ -192,11 +196,24 @@ public class GameState {
 	}
 
 	public void assignInitialPlayers(int num) {
+		assert(playerList.size() == 0); // shouldn't be called with an initialized player list
 		
-		for(int i = 0;i < num; i++) {
+		playerList.clear(); // clear player list 
+		for(int i = 0; i < num; i++) {
 			Player p = new Player();
 			p.setId(i);
 			playerList.add(p);
 		}
+		// TODO Determine first player (0 can be good)
+		currentPlayer = playerList.get(0);
+	}
+
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void endPlayerTurn() {
+		//TODO ; iterator + increment :/
+		//currentPlayer ++
 	}
 }
