@@ -115,6 +115,35 @@ public class MapEditorController implements ActionListener {
 	 */
 	public void saveMapToFile() {
 		
+
+		if(!this.map.isValid()) {
+			JOptionPane.showMessageDialog(null, "This map is not valid! You can not save it. Please check it again.");
+		}
+		else {
+			try {
+				String fileName = JOptionPane.showInputDialog("Please input the name of the map");
+	        	String currentPath=System.getProperty("user.dir");
+	        	String absoluteFilePath = currentPath+"\\maps\\"+fileName+".map";
+				File file = new File(absoluteFilePath);
+				if(!file.createNewFile()) {
+					JOptionPane.showMessageDialog(null, "This map already exists! Please use another name.");
+				}
+				else {
+					if(this.map.saveMapToFile(file)) {
+						JOptionPane.showMessageDialog(null, "Save successfully!");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Save failed, please try again later.");
+					}
+				}
+			}
+			catch(Exception e) {
+				System.out.println("Save failed, please try again later.");
+			}
+		}
+		
+		
+
 	}
 	
 	
