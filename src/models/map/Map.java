@@ -2,6 +2,9 @@ package models.map;
 
 
 import java.util.*;
+
+import models.game.Player;
+
 import java.io.*;
 
 /**
@@ -552,7 +555,7 @@ public class Map extends Observable {
 	 */
 	public boolean fortify(String from, String to, int qt) {
 		// TODO
-		return false;
+		return true;
 	}
 	
 	/**
@@ -596,11 +599,7 @@ public class Map extends Observable {
 	 * @return True if the map is valid, false if it is not.
 	 */
 	
-	public boolean isValid() {
-		
-		
-		
-		
+	public boolean isValid() {		
 		return true;
 	}
 	
@@ -622,6 +621,20 @@ public class Map extends Observable {
 		this.loaded = false;
 		setChanged();
 		notifyObservers();
+	}
+
+	public ArrayList<Country> getValidDestination(Country selectedCountry) {
+		ArrayList<Country> valid = new ArrayList<Country>();
+		ArrayList<Country> toBeValidated = new ArrayList<Country>();
+		
+		toBeValidated.add(selectedCountry);
+		// for each country to validate
+		   // if not in the valid list && valid -> correct player
+			   // append its adjacents to "toBeValidated"
+		       // if not selected country ; add to toBeValidated
+		
+		valid.add(selectedCountry);
+		return valid;
 	}
 	
 	

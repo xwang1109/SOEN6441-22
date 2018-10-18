@@ -20,8 +20,9 @@ public class GameState {
 	private File selectedFile;
 	private  Map map;
 	
-	private Player currentPlayer;
+	private int currentPlayer;
 	private ArrayList<Player> playerList = new ArrayList<Player>();
+	private ArrayList<Country> destinationCountryList;
 	// hold players
 	
 	// hold phase to switch between map info and current state
@@ -127,7 +128,7 @@ public class GameState {
 	 */
 	public void setPlayerList(ArrayList<Player> playerList) {
 		this.playerList = playerList;
-		this.currentPlayer = playerList.get(0);
+		this.currentPlayer = 0;
 	}
 	
 	/**
@@ -195,25 +196,51 @@ public class GameState {
 		}		
 	}
 
+	/**
+	 * Take user selection, set number of players
+	 * @param int num
+	 */
 	public void assignInitialPlayers(int num) {
-		assert(playerList.size() == 0); // shouldn't be called with an initialized player list
+		assert(playerList.size() == 0); // shouldn't be called with an initialized player list, for future debug
 		
-		playerList.clear(); // clear player list 
+		playerList.clear(); // clear player list to make sure no previous record is there
 		for(int i = 0; i < num; i++) {
 			Player p = new Player();
 			p.setId(i);
 			playerList.add(p);
 		}
+		
 		// TODO Determine first player (0 can be good)
-		currentPlayer = playerList.get(0);
+		currentPlayer = 0;
 	}
 
+	/**
+	 * Get current Player
+	 * @return Player
+	 */
 	public Player getCurrentPlayer() {
-		return currentPlayer;
+		return playerList.get(currentPlayer);
 	}
 
+	/**
+	 * End turn for current player, and set the "currentPlayer" to next player
+	 */
 	public void endPlayerTurn() {
-		//TODO ; iterator + increment :/
-		//currentPlayer ++
+		currentPlayer = ++currentPlayer % playerList.size();
+	}
+
+	/**
+	 * Find all possible destination countries for the parameter country, and store them in an ArrayList
+	 * @param Country selectedCountry
+	 * @return ArrayList<Country>
+	 */
+	public ArrayList<Country> getValidDestination(Country selectedCountry) {		
+		assert( selectedCountry.getOwner() == playerList.get(currentPlayer) );// defensive programming
+		//if no country is selected, or the owner of selected country is not the current player, return an empty ArrayList
+		if ( selectedCountry == null || selectedCountry.getOwner() != playerList.get(currentPlayer) ) 
+			return new ArrayList<Country>();
+		
+		// query the map
+		return map.getValidDestination(selectedCountry);
 	}
 }

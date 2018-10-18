@@ -21,9 +21,9 @@ public class FortificationController implements ActionListener {
 	
 	/**
 	 * Constructor of class FortificationController
-	 * @param from
-	 * @param to
-	 * @param quantity
+	 * @param JComboBox from
+	 * @param JComboBox to
+	 * @param JTextField quantity
 	 */
 	public FortificationController(JComboBox from, JComboBox to, JTextField quantity) {
 		this.from = from;
@@ -45,15 +45,15 @@ public class FortificationController implements ActionListener {
 			//deduct number of armies from country fromStr, add number of armies to country toStr
 			
 			
-			// TODO current player ended his turn.
+			// TODO current player ended his/her turn.
 			GameState.getInstance().endPlayerTurn();
-			
-			
+						
 			//remember to refresh the map view all the time
 			ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 
 			
-			ViewState.getInstance().showReinforcementView();			
+			ViewState.getInstance().showReinforcementView();		
+			
 		} else {
 			System.out.println("Invalid reinforcement");
 		}
