@@ -6,7 +6,7 @@ import models.game.*;
 
 
 /**
- * The Class Continent. To create, remove, add the countries to the country list
+ * The Class Continent. To create, remove, add the continents to the continent list
  * @author Yan
  * @version  1.0
  */

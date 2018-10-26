@@ -13,7 +13,6 @@ import views.game.ViewState;
 /**
  * class GameState to store and pass the current state of the game
  * @author Lin Li
- * @see models.map.loadMapFromFile
  */
 public class GameState {
 
@@ -47,7 +46,7 @@ public class GameState {
 	
 	/**
 	 * Public method to set the current phase of game as parameter passed
-	 * @param Phase phase
+	 * @param phase
 	 */
 	public void setPhase(Phase phase) { 
 		this.phase = phase; 
@@ -79,10 +78,14 @@ public class GameState {
 		return map.isLoaded();
 	}	
 	
+	
 	/**
-	 * Public method to check if fortification succeed
-	 * @param String from, String to, int qt
-	 * @return boolean
+	 * check if fortification succeed
+	 *
+	 * @param from the from
+	 * @param to the to
+	 * @param qt the qt
+	 * @return true, if successful
 	 */
 	public boolean fortify(String from, String to, int qt) {
 		return map.fortify(from, to, qt);
@@ -98,7 +101,7 @@ public class GameState {
 	
 	/**
 	 * Public method to set the file to be selected
-	 * @param File selectedFile
+	 * @param selectedFile
 	 */
 	public void setSelectedFile( File selectedFile ) {
 		this.selectedFile = selectedFile;
@@ -106,7 +109,7 @@ public class GameState {
 	
 	/**
 	 * Public method to get the array list of players
-	 * @return ArrayList<Player>
+	 * @return ArrayList
 	 */
 	public ArrayList<Player> getPlayerList() {
 		return playerList;
@@ -114,7 +117,7 @@ public class GameState {
 	
 	/**
 	 * Public method to set the array list of players
-	 * @param ArrayList<Player> playerList
+	 * @param playerList
 	 */
 	public void setPlayerList(ArrayList<Player> playerList) {
 		this.playerList = playerList;
@@ -123,7 +126,7 @@ public class GameState {
 	
 	/**
 	 * Public method to check if map is loaded from selected file
-	 * @param File selectedFile2
+	 * @param selectedFile2
 	 * @return boolean
 	 */
 	public boolean loadMapFromFile(File selectedFile2) {
@@ -199,7 +202,7 @@ public class GameState {
 
 	/**
 	 * Take user selection, set number of players
-	 * @param int num
+	 * @param num
 	 */
 	public void assignInitialPlayers(int num) {
 		assert(playerList.size() == 0); // shouldn't be called with an initialized player list, for future debug
@@ -232,8 +235,8 @@ public class GameState {
 
 	/**
 	 * Find all possible destination countries for the parameter country, and store them in an ArrayList
-	 * @param Country selectedCountry
-	 * @return ArrayList<Country>
+	 * @param selectedCountry
+	 * @return ArrayList
 	 */
 	public ArrayList<Country> getValidDestination(Country selectedCountry) {		
 		assert( selectedCountry.getOwner() == playerList.get(currentPlayer) );// defensive programming

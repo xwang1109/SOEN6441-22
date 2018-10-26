@@ -33,6 +33,8 @@ public class FortificationView {
 		fromDropDown = new JComboBox<String>();
 		toDropDown = new JComboBox<String>(); 
 		
+		JTextArea currentPlayerIndicator = new JTextArea("Current Player: " + GameState.getInstance().getCurrentPlayer().getId());
+		
 		// text shown to guide user to select from which country the armies should go out
 		JTextArea textFrom = new JTextArea("From Country:");
 		
@@ -83,6 +85,7 @@ public class FortificationView {
 		JButton executeFortification = new JButton("Fortify!");
 		executeFortification.addActionListener(new FortificationController(fromDropDown, toDropDown, quantity));
 		
+		controlPanel.add(currentPlayerIndicator);
 		controlPanel.add(textFrom);
 		controlPanel.add(fromDropDown);
 		controlPanel.add(textTo);
