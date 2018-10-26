@@ -79,8 +79,7 @@ public class ReinforcementView{
 		return leftArmies;
 	}
 	public int decreaseLeftArmies() {
-		leftArmies--;
-		return leftArmies;
+		return --leftArmies;
 	}
 	public void setLeftArmies(int leftArmies) {
 		this.leftArmies = leftArmies;
@@ -174,10 +173,9 @@ public class ReinforcementView{
 		//////////////////////////////////////
 		
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)){
-			playerCounter = 0;
-			player = playerList.get(playerCounter);		
-//			leftArmies = player.getArmyNumber();
-			leftArmies = player.getLeftArmyNumber();		
+			GameState.getInstance().setFirstPlayer();		
+		} else {
+			GameState.getInstance().getCurrentPlayer().addReinforcementArmy();
 		}
 		showPlayer();
 	}
@@ -229,15 +227,14 @@ public class ReinforcementView{
 		leftArmyLabel.setText(Integer.toString(leftArmies));
 		cardNumberLabel.setText(Integer.toString(player.getCardList().size()));
 		phaseLabel.setText(GameState.getInstance().getPhase().toString());
-		leftArmyLabel.setText(Integer.toString(leftArmies));
-		cardNumberLabel.setText(Integer.toString(player.getCardList().size()));
 	}
 /**
  * This method is called in setup phase when next player is given the term
  * to place his given armies one by one on his countries
  */
 	public void showPlayer() {
-		player = playerList.get(playerCounter);
+		player = GameState.getInstance().getCurrentPlayer();		
+		leftArmies = player.getLeftArmyNumber();
 		countryList = player.getCountryList();
 		mapPanel.addCountryTableForReinforcement(player);
 		updateLabels();
@@ -252,5 +249,4 @@ public class ReinforcementView{
 		isActionListenerActive = true;
 		comboBox.setSelectedIndex(0);
 	}
-
 }

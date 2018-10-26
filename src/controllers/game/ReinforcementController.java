@@ -49,28 +49,21 @@ public class ReinforcementController implements ActionListener {
  * 
  */
 	public void addArmy() {
+		Country selectedCoutnry = starUpView.getSelectedCountry();
+		selectedCoutnry.AddArmy();
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)) {
-			Country selectedCoutnry = starUpView.getSelectedCountry();
-			selectedCoutnry.AddArmy();
 			if(starUpView.decreaseLeftArmies() == 0) {
-				if (starUpView.getPlayerCounter() < GameState.getInstance().getPlayerList().size()-1) {
-					starUpView.setPlayerCounter(starUpView.getPlayerCounter()+1);
-					starUpView.setLeftArmies(GameState.getInstance().getPlayerList().get(starUpView.getPlayerCounter()).getLeftArmyNumber());
-					starUpView.showPlayer();
-				}
-				else {
+				if (!GameState.getInstance().setUpRoundRobin()) {
 					GameState.getInstance().setPhase(Phase.REINFORCEMENT);
-					starUpView.setPlayerCounter(0);
-					starUpView.setLeftArmies(GameState.getInstance().getPlayerList().get(starUpView.getPlayerCounter()).addReinforcementArmy());
-					starUpView.showPlayer();
+					GameState.getInstance().setFirstPlayer();
+					GameState.getInstance().getCurrentPlayer().addReinforcementArmy();
 					starUpView.changeToReinforcement();
 				}
+				starUpView.showPlayer();
 			} else {
 				starUpView.showLeftArmies();
 			}
 		} else if (GameState.getInstance().getPhase().equals(Phase.REINFORCEMENT)) {
-			Country selectedCoutnry = starUpView.getSelectedCountry();
-			selectedCoutnry.AddArmy();
 			if(starUpView.decreaseLeftArmies() == 0) {
 				GameState.getInstance().setPhase(Phase.ATTACK);
 				//starUpView.changeToAttack();

@@ -234,6 +234,21 @@ public class GameState {
 	}
 
 	/**
+	 * Get current Player
+	 * @return Player
+	 */
+	public void setFirstPlayer() {
+		currentPlayer = 0;
+	}
+	
+	/**
+	 * End turn for current player and set the "currentPlayer" to next player in setUp Phase
+	 */
+	public boolean setUpRoundRobin() {
+		return ++currentPlayer < playerList.size();
+	}
+	
+	/**
 	 * Find all possible destination countries for the parameter country, and store them in an ArrayList
 	 * @param selectedCountry
 	 * @return ArrayList

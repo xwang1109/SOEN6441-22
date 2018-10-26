@@ -135,12 +135,12 @@ public class Player {
 	 *
 	 * @return the int
 	 */
-	public int addReinforcementArmy() {
+	public void addReinforcementArmy() {
 		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
 			Army army = new Army(this);
 			armyList.add(army);
 		}
-		return CalculateReinforcementArmyNumber();
+//		return CalculateReinforcementArmyNumber();
 	}
 
 	/**
