@@ -9,12 +9,13 @@ import java.util.List;
 import models.game.Army;
 import models.game.Player;
 import views.game.ViewState;
+import java.util.Observable;
 
 /**
  * class GameState to store and pass the current state of the game
  * @author Lin Li
  */
-public class GameState {
+public class GameState extends Observable {
 
 	private File selectedFile;
 	private  Map map;
@@ -50,6 +51,7 @@ public class GameState {
 	 */
 	public void setPhase(Phase phase) { 
 		this.phase = phase; 
+		
 	}
 	
 	/**
@@ -148,6 +150,7 @@ public class GameState {
 		
 		List<Continent> countinentList = this.map.getContinentList();
 		
+		
 		for(Continent continent: countinentList)//this is try to avoid one play takes over an entire continent in the first round
 		{
 			
@@ -174,7 +177,11 @@ public class GameState {
 			}
 			
 		}
+		setChanged();
+		notifyObservers();
 	}
+	
+
 	
 	/**
 	 * Public method to get initial army number
@@ -198,6 +205,8 @@ public class GameState {
 				country.AddArmy();				
 			}		
 		}
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -213,6 +222,8 @@ public class GameState {
 			p.setId(i);
 			playerList.add(p);
 		}
+		setChanged();
+		notifyObservers();
 		
 		// TODO Determine first player (0 can be good)
 		currentPlayer = 0;
