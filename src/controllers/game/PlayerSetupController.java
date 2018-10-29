@@ -45,6 +45,8 @@ public class PlayerSetupController implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		
+		
+		
 		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
 		int returnValue = jfc.showOpenDialog(null);

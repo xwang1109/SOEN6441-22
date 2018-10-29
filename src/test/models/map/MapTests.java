@@ -1,4 +1,4 @@
-package test.models;
+package test.models.map;
 import static org.junit.Assert.*;
 
 import models.map.Continent;
