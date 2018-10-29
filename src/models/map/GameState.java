@@ -193,6 +193,7 @@ public class GameState extends Observable {
 	
 	/**
 	 * Allocate a number of initial armies to players
+	 * place an army in each country
 	 */
 	public void assignInitialArmy() {		
 		for (Player player:this.playerList) {
@@ -200,10 +201,9 @@ public class GameState extends Observable {
 				Army army = new Army(player);
 				player.getArmyList().add(army);				
 			}
-			// place one army in each country
-			for(Country coutnry: player.getCountryList()) {
-				coutnry.AddArmy();				
-			}
+			for(Country country: player.getCountryList()) {
+				country.AddArmy();				
+			}		
 		}
 		setChanged();
 		notifyObservers();
