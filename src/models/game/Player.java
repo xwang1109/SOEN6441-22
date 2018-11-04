@@ -288,5 +288,40 @@ public class Player {
 			frame.update();
 		}
 	}
+	
+	/**
+	 * Execute the fortification move
+	 * return true if the fortification order was executed
+	 * false in case of error
+	 */
+	public boolean fortify(String from, String to, int qt) {
+		
+		Country source = null, dest = null;
+		
+		// validate that the player owns both countries
+		for(Country country: countryList){
+			if (country.getName() == from) {
+				source = country;
+			} else if (country.getName() == to) {
+				dest = country;
+			}
+		}
+	 
+		if (source == null || dest == null) {
+			return false;
+		}
+		
+		// Make sure there's enough armies to move
+		int realQt = Math.min( source.getNumOfArmies()-1, qt );
+				
+		// Move armies
+		for(int i = 0; i<realQt; i++){
+			source.decreaseArmy();
+			dest.increaseArmy();
+		}
+		
+		// error if move was invalid, made the biggest move
+		return realQt == qt;
+	}
 
 }

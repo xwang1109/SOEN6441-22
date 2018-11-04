@@ -91,7 +91,7 @@ public class GameState extends Observable {
 	 * @return true, if successful
 	 */
 	public boolean fortify(String from, String to, int qt) {
-		return map.fortify(from, to, qt);
+		return getCurrentPlayer().fortify(from, to, qt);
 	}
 	
 	/**
@@ -178,6 +178,7 @@ public class GameState extends Observable {
 			}
 			
 		}
+			
 		setChanged();
 		notifyObservers();
 	}

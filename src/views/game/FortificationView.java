@@ -56,7 +56,7 @@ public class FortificationView {
 		
 		fromDropDown.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent event){
-                JComboBox comboBox = (JComboBox) event.getSource();
+                JComboBox<String> comboBox = (JComboBox<String>) event.getSource();
                 String selected = (String)comboBox.getSelectedItem();
             	Country selectedCountry = null;
                 for(Country c:countryList) {
