@@ -37,8 +37,8 @@ public class ReinforcementController implements ActionListener {
 		case "Add Army":
 			addArmy();
 			break;
-		case "Exchange Card":
-			changeCard();
+		case "Open exchange card view":
+			starUpView.exchangeCard();
 			break;
 		case "Finish Attack":
 			ViewState.getInstance().showFortificationView();
@@ -63,7 +63,11 @@ public class ReinforcementController implements ActionListener {
 					starUpView.setPlayerCounter(0);
 					starUpView.setLeftArmies(GameState.getInstance().getPlayerList().get(starUpView.getPlayerCounter()).addReinforcementArmy());
 					starUpView.showPlayer();
-					starUpView.changeToReinforcement();
+					if(starUpView.getPlayer().getCardList().size()>4)//if there are more or equal to 5 cards, force to change card
+					{
+						starUpView.exchangeCard();;
+
+					}
 				}
 			} else {
 				starUpView.showLeftArmies();
@@ -83,12 +87,5 @@ public class ReinforcementController implements ActionListener {
 		//refresh the table for map
 		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 				
-	}
-/**
- * Perform actions when Exchange Card button clicked
- */
-	public void changeCard() {
-		starUpView.setLeftArmies(starUpView.getLeftArmies() + starUpView.getPlayer().addArmyForCard());
-		starUpView.changedCard();
 	}
 }
