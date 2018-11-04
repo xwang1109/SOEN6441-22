@@ -3,9 +3,12 @@ package models.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+
 import models.map.Continent;
 import models.map.Country;
 import models.map.GameState;
+import views.game.BaseObserverFrame;
 
 /**
  * The Class Player. after a player was created ,
@@ -30,6 +33,13 @@ public class Player {
 	
 	/** The get armyfor cards. */
 	private int getArmyforCards = 0; //number of times player is given army for cards
+	
+	private List<BaseObserverFrame> observerList=new ArrayList<BaseObserverFrame>();
+	
+	public void attachObserver(BaseObserverFrame frame)
+	{
+		observerList.add(frame);
+	}
 	
 	/**
 	 * Gets the id.
@@ -243,9 +253,39 @@ public class Player {
 	public void removeCard(int cardTypeCode) {
 		for(Card card: cardList){
 			if (card.getCardType().getCardTypeCode() == cardTypeCode) {
-				cardList.remove(card);			
+				cardList.remove(card);	
+				notifyObservers();
 				return;
 			}
+		}
+		
+	}
+	/**
+	 * This method remove multiple cards at the same time
+	 *
+	 * @param toremovecards is the list of cards to be removed for exchange
+	 */
+	public void removeCards(List<Card> toremovecards) {
+		
+		cardList.removeAll(toremovecards);
+		
+		notifyObservers();
+
+	}
+	
+	
+	
+	public void getNewCard()
+	{
+		Card c=new Card(this);
+		this.cardList.add(c);
+		notifyObservers();
+	}
+	private void notifyObservers()
+	{
+		for(BaseObserverFrame frame:this.observerList)
+		{
+			frame.update();
 		}
 	}
 

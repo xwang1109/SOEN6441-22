@@ -92,7 +92,10 @@ public class Card {
 	 */
 	public Card(Player player) {
 		this.player = player;
-		int rand = (int) (Math.random()*(2));
+		Random randomizer = new Random();
+
+		
+		int rand = randomizer.nextInt(3);
 		switch(rand) {
 		case 0: 
 			cardType = CardType.INFANTRY;

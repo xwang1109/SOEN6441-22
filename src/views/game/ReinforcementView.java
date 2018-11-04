@@ -1,10 +1,13 @@
 package views.game;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ import controllers.game.PlayerSetupController;
 import controllers.game.ReinforcementController;
 import controllers.map.MapEditorStartController;
 import models.game.Player;
+import models.game.Card.CardType;
 import models.game.Card;
 import models.map.Country;
 import models.map.GameState;
@@ -29,6 +33,7 @@ import views.map.MapCountryPanel;
 
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 /**
@@ -56,11 +61,20 @@ public class ReinforcementView{
 	JComboBox<String> comboBox;
 	JLabel playerLabel;
 	JLabel leftArmyLabel;
-	JLabel cardNumberLabel;
+	
+	
+	JLabel infantrycardNumberLabel;
+	JLabel cavalrycardNumberLabel;
+	JLabel artillerycardNumberLabel;
+
+	
 	JLabel phaseLabel;
 	JLabel messageLable;
 	JLabel leftArmyLabelTitle;
-	JLabel cardNumberLabelTitle;
+	JLabel infantrycardNumberLabelTitle;	
+	JLabel cavalrycardNumberLabelTitle;
+	JLabel artillerycardNumberLabelTitle;
+
 	JPanel buttonPane;
 
 	public Player getPlayer() {
@@ -97,7 +111,8 @@ public class ReinforcementView{
  * and initials the first player for placing his given armies on his countries
  * @param JPanel controlPanel
  */
-	public ReinforcementView (JPanel controlPanel) {
+	public ReinforcementView  (JPanel controlPanel) {
+		
 		gameState = GameState.getInstance();
 		playerList = gameState.getPlayerList();
 		mapPanel = new MapCountryPanel();
@@ -133,22 +148,44 @@ public class ReinforcementView{
 		playerLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		leftArmyLabelTitle = new JLabel("Left Armies:");
 		leftArmyLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
-		cardNumberLabelTitle = new JLabel("Number Of Cards:");
-		cardNumberLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		
+		
+		infantrycardNumberLabelTitle = new JLabel("Number Of Infantry Cards:");
+		infantrycardNumberLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+
+		cavalrycardNumberLabelTitle = new JLabel("Number Of Cavary Cards:");
+		cavalrycardNumberLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+
+		artillerycardNumberLabelTitle = new JLabel("Number Of Artilery Cards:");
+		artillerycardNumberLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		
 		labelPane.add(phaseLabelTitle);
 		labelPane.add(playerLabelTitle);
 		labelPane.add(leftArmyLabelTitle);
-		labelPane.add(cardNumberLabelTitle);
+		labelPane.add(infantrycardNumberLabelTitle);
+		labelPane.add(cavalrycardNumberLabelTitle);
+		labelPane.add(artillerycardNumberLabelTitle);
+
 		
 		JPanel labelValuePane = new JPanel(new GridLayout(0,1));
 		playerLabel = new JLabel("");
 		leftArmyLabel = new JLabel("");
 		phaseLabel = new JLabel("");
-		cardNumberLabel = new JLabel("");
+		infantrycardNumberLabel = new JLabel("");
+		cavalrycardNumberLabel = new JLabel("");
+		artillerycardNumberLabel = new JLabel("");
+
 		labelValuePane.add(phaseLabel);		
 		labelValuePane.add(playerLabel);
 		labelValuePane.add(leftArmyLabel);
-		labelValuePane.add(cardNumberLabel);
+		labelValuePane.add(infantrycardNumberLabel);
+		labelValuePane.add(cavalrycardNumberLabel);
+		labelValuePane.add(artillerycardNumberLabel);
+
 
 		JPanel mapPane = new JPanel(new GridLayout(0,1));
 		mapPane.add(mapPanel);
@@ -166,11 +203,12 @@ public class ReinforcementView{
 		controlPanel.add(mapPane);
 		
 		///////test change cards///////
-		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
-		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
-		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
-		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
-		//playerList.get(0).getCardList().add(new Card(playerList.get(0)));
+		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();
+
 		//////////////////////////////////////
 		
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)){
@@ -179,6 +217,7 @@ public class ReinforcementView{
 //			leftArmies = player.getArmyNumber();
 			leftArmies = player.getLeftArmyNumber();		
 		}
+		
 		showPlayer();
 	}
 /**
@@ -193,12 +232,15 @@ public class ReinforcementView{
  * also checks that if player owns 5 cards, exchanges them for armies 
  */
 	public void changeToReinforcement() {
-		if (player.enforceExchangeCard()) {
-			leftArmies += player.addArmyForCard();
-			messageLable.setText("Your cards have exchanged with armies");
-		} else if (player.isPossibleExchangeCard()) {
-			buttonPane.add(changeCardButton);				
-		}
+		CardExchangeView ccv=new CardExchangeView(player,this);
+		ccv.setVisible(true);
+		
+		//if (player.enforceExchangeCard()) {
+		//	leftArmies += player.addArmyForCard();
+		//	messageLable.setText("Your cards have exchanged with armies");
+		//} else if (player.isPossibleExchangeCard()) {
+		//	buttonPane.add(changeCardButton);				
+		//}
 		updateLabels();
 	}
 /**
@@ -208,9 +250,15 @@ public class ReinforcementView{
 		buttonPane.add(finishAttackButton);
 		addArmyButton.setVisible(false);
 		leftArmyLabelTitle.setVisible(false);;
-		cardNumberLabelTitle.setVisible(false);
+		infantrycardNumberLabelTitle.setVisible(false);
+		artillerycardNumberLabelTitle.setVisible(false);
+		cavalrycardNumberLabelTitle.setVisible(false);
+
 		leftArmyLabel.setVisible(false);;
-		cardNumberLabel.setVisible(false);
+		infantrycardNumberLabel.setVisible(false);
+		cavalrycardNumberLabel.setVisible(false);
+		artillerycardNumberLabel.setVisible(false);
+
 		comboBox.setVisible(false);
 		updateLabels();
 	}
@@ -226,11 +274,15 @@ public class ReinforcementView{
  */
 	public void updateLabels() {
 		playerLabel.setText(Integer.toString(player.getId()));
-		leftArmyLabel.setText(Integer.toString(leftArmies));
-		cardNumberLabel.setText(Integer.toString(player.getCardList().size()));
+		
 		phaseLabel.setText(GameState.getInstance().getPhase().toString());
 		leftArmyLabel.setText(Integer.toString(leftArmies));
-		cardNumberLabel.setText(Integer.toString(player.getCardList().size()));
+		
+		
+		infantrycardNumberLabel.setText(Integer.toString(player.cardTypeNumber()[0]));
+		cavalrycardNumberLabel.setText(Integer.toString(player.cardTypeNumber()[1]));
+		artillerycardNumberLabel.setText(Integer.toString(player.cardTypeNumber()[2]));
+		
 	}
 /**
  * This method is called in setup phase when next player is given the term
@@ -251,6 +303,23 @@ public class ReinforcementView{
 		comboBox.repaint();
 		isActionListenerActive = true;
 		comboBox.setSelectedIndex(0);
+	}
+	public void disable()
+	{
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(thisPanel);
+
+		thisPanel.setVisible(false);
+		mapPanel.setVisible(false);
+		topFrame.setVisible(false);
+	}
+	public void enable()
+	{
+		JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(thisPanel);
+
+		thisPanel.setVisible(true);
+		mapPanel.setVisible(true);
+		topFrame.setVisible(true);
+
 	}
 
 }

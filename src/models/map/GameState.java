@@ -21,11 +21,12 @@ public class GameState extends Observable {
 	private  Map map;
 	
 	private int currentPlayer;
-	private ArrayList<Player> playerList = new ArrayList<Player>();
-	private ArrayList<Country> destinationCountryList;
-	// hold players
+	private ArrayList<Player> playerList = new ArrayList<Player>();	// hold players
+
+	private ArrayList<Country> destinationCountryList;	// hold phase to switch between map info and current state
+
 	
-	// hold phase to switch between map info and current state
+	
 	public enum Phase
 	{
 		SETUP,
