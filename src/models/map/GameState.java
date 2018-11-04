@@ -258,6 +258,6 @@ public class GameState extends Observable {
 			return new ArrayList<Country>();
 		
 		// query the map
-		return map.getValidDestination(selectedCountry);
+		return getCurrentPlayer().getValidDestination(selectedCountry);
 	}
 }

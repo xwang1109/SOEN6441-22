@@ -804,20 +804,4 @@ public class Map extends Observable {
 		setChanged();
 		notifyObservers();
 	}
-	
-	/**
-	 * To take input country, return which countries can be the valid destination of this country
-	 * @param Country selectedCountry
-	 * @return ArrayList<Country>
-	 */
-	public ArrayList<Country> getValidDestination(Country selectedCountry) {			
-		ArrayList<Country> toBeValidated = new ArrayList<Country>();
-		ArrayList<Country> valid = new ArrayList<Country>();
-		
-		ArrayList<Country> validDestination = (ArrayList<Country>)GameState.getInstance().getCurrentPlayer().getCountryList().clone();
-		
-		validDestination.remove(selectedCountry);
-						
-		return validDestination;		
-	}	
 }

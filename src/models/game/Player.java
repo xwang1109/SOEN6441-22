@@ -314,5 +314,41 @@ public class Player {
 		// error if move was invalid, made the biggest move
 		return realQt == qt;
 	}
+	
+	/**
+	 * To take input country, return which countries can be the valid destination of this country
+	 * @param Country selectedCountry
+	 * @return ArrayList<Country>
+	 */
+	public ArrayList<Country> getValidDestination(Country selectedCountry) {
+		ArrayList<Country> valid = new ArrayList<Country>();
+		if ( selectedCountry.getOwner() != this) return valid;
+		ArrayList<Country> toIterate = new ArrayList<Country>();
+		toIterate.add(selectedCountry);
+		
+		
+		// TODO finish
+		while(!toIterate.isEmpty()) {
+			// remove first element
+			Country current = toIterate.get(0);
+			toIterate.remove(0);
+			
+			// if it's a valid country
+			if (current.getOwner() == this && valid.indexOf(current) == -1 ) {
+				// keep it
+				valid.add(current);
+				
+				// flag nei for validation
+				for( Country nei : current.getAdjacentCountryList()) {
+					if ( toIterate.indexOf(nei) == -1 && valid.indexOf(nei) == -1) {
+						toIterate.add(nei);
+					}
+				}
+			}
+		}
+
+		valid.remove(selectedCountry);
+		return valid;		
+	}	
 
 }
