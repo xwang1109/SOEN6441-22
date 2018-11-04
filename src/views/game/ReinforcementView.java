@@ -56,7 +56,6 @@ public class ReinforcementView{
 	JPanel thisPanel;
 	MapCountryPanel mapPanel;
 	JButton addArmyButton;
-	JButton changeCardButton;
 	JButton finishAttackButton;
 	JComboBox<String> comboBox;
 	JLabel playerLabel;
@@ -76,6 +75,7 @@ public class ReinforcementView{
 	JLabel artillerycardNumberLabelTitle;
 
 	JPanel buttonPane;
+	private JButton exchangeCardViewButton;
 
 	public Player getPlayer() {
 		return player;
@@ -123,8 +123,12 @@ public class ReinforcementView{
 		
 		addArmyButton = new JButton("Add Army");
 		addArmyButton.addActionListener(new ReinforcementController(this));
-		changeCardButton = new JButton("Exchange Card");
-		changeCardButton.addActionListener(new ReinforcementController(this));
+
+		exchangeCardViewButton = new JButton("Open exchange card view");
+		exchangeCardViewButton.addActionListener(new ReinforcementController(this));
+		exchangeCardViewButton.setVisible(false);
+		
+		
 		finishAttackButton = new JButton("Finish Attack");
 		finishAttackButton.addActionListener(new ReinforcementController(this));
 		comboBox = new JComboBox<String>();
@@ -195,7 +199,8 @@ public class ReinforcementView{
 		buttonPane.add(messageLable);
 		buttonPane.add(comboBox);
 		buttonPane.add(addArmyButton);
-
+		buttonPane.add(exchangeCardViewButton);
+		
 		controlPanel.add(labelPane);
 		controlPanel.add(labelValuePane);
 		controlPanel.add(buttonPane);
@@ -231,7 +236,7 @@ public class ReinforcementView{
  * Make changes on the view of panel when the game phase changes to reinforcement
  * also checks that if player owns 5 cards, exchanges them for armies 
  */
-	public void changeToReinforcement() {
+	public void exchangeCard() {
 		CardExchangeView ccv=new CardExchangeView(player,this);
 		ccv.setVisible(true);
 		
@@ -262,13 +267,7 @@ public class ReinforcementView{
 		comboBox.setVisible(false);
 		updateLabels();
 	}
-/**
- * Disable exchange card button when player exchanged cards for armies
- */
-	public void changedCard() {
-		changeCardButton.setVisible(false);;				
-		updateLabels();
-	}
+
 /**
  * Update values of labels 
  */
@@ -276,7 +275,18 @@ public class ReinforcementView{
 		playerLabel.setText(Integer.toString(player.getId()));
 		
 		phaseLabel.setText(GameState.getInstance().getPhase().toString());
+		leftArmies=player.getLeftArmyNumber();
 		leftArmyLabel.setText(Integer.toString(leftArmies));
+		if(GameState.getInstance().getPhase().equals(GameState.Phase.REINFORCEMENT))
+		{
+			this.exchangeCardViewButton.setVisible(true);
+		}
+		else
+		{
+			this.exchangeCardViewButton.setVisible(false);
+
+		}
+		
 		
 		
 		infantrycardNumberLabel.setText(Integer.toString(player.cardTypeNumber()[0]));

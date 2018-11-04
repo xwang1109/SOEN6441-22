@@ -79,6 +79,7 @@ public class CardExchangeView extends BaseObserverFrame  {
         		cardpanel.repaint();
         		CardExchangeView.super.dispose();
         		//mainPanel.getParent().setVisible(false);
+        		originalview.updateLabels();
         		originalview.enable();
             }
         });
@@ -99,7 +100,8 @@ public class CardExchangeView extends BaseObserverFrame  {
 						checkedcards.add(cards.get(i));
 					}
 				}
-				player.removeCards(checkedcards);
+				int numberOfNewCards=player.exchangeCardforArmy(checkedcards);
+				
 			}
 			
 		});
@@ -190,6 +192,15 @@ public class CardExchangeView extends BaseObserverFrame  {
 							exchangebutton.setVisible(true);
 
 						}
+						else
+						{
+							exchangebutton.setVisible(false);
+
+						}
+					}
+					else
+					{
+						exchangebutton.setVisible(false);
 					}
 					
 				}

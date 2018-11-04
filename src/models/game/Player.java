@@ -36,6 +36,19 @@ public class Player {
 	
 	private List<BaseObserverFrame> observerList=new ArrayList<BaseObserverFrame>();
 	
+	
+	public int getLeftOverArmy()
+	{
+		int totalArmy=armyList.size();
+		int assignedArmy=0;
+		
+		for(Country country:countryList)
+		{
+			assignedArmy+=country.getNumOfArmies();
+		}
+		return totalArmy-assignedArmy;
+		
+	}
 	public void attachObserver(BaseObserverFrame frame)
 	{
 		observerList.add(frame);
@@ -205,45 +218,24 @@ public class Player {
 		return cardTypeNumber;
 	}
 	
-	/**
-	 * This method.
-	 *
-	 * @return the number of army given to player in exchange for cards
-	 */
-	public int numberOfArmyForCard(){
-		return (getArmyforCards += 1) * 5;
-	}
-	
+		
 	/**
 	 * This method exchange 3 cards for army.
+	 * 	 
+	 * @param toremovecards is the list of cards to be changed
+	 *@return the number of armies
 	 */
-	public void exchangeCardforArmy() {
-		int[] cardTypeNumber = cardTypeNumber();
-		for (int counter=0; counter<3; counter++) {
-			if (cardTypeNumber[counter]>=3)
-			{
-				for (int i=0; i<3; i++)
-					removeCard(counter);
-				return;
-			}
-		}
-		removeCard(0);removeCard(1);removeCard(2);
-	}
-	
-	/**
-	 * Adds the army for card.
-	 *
-	 * @return the int
-	 */
-	public int addArmyForCard() {
-		exchangeCardforArmy();
-		int armyForCard = numberOfArmyForCard();
+	public int exchangeCardforArmy(List<Card> toremovecards) {
+		removeCards(toremovecards);
+		int armyForCard = (getArmyforCards += 1) * 5;
+		
 		for(int i=0; i<armyForCard; i++) {
 			Army army = new Army(this);
 			armyList.add(army);
 		}
 		return armyForCard;
-		}
+	}
+	
 	
 	/**
 	 * This method remove a card from cardList of player.
@@ -274,13 +266,23 @@ public class Player {
 	}
 	
 	
-	
+	/**
+	 * This method gets a random new car for the player
+	 *
+	 * 
+	 */
 	public void getNewCard()
 	{
 		Card c=new Card(this);
 		this.cardList.add(c);
 		notifyObservers();
 	}
+	
+	/**
+	 * This method is the notification for the observer pattern
+	 *
+	 * 
+	 */
 	private void notifyObservers()
 	{
 		for(BaseObserverFrame frame:this.observerList)
