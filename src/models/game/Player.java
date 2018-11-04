@@ -37,18 +37,7 @@ public class Player {
 	private List<BaseObserverFrame> observerList=new ArrayList<BaseObserverFrame>();
 	
 	
-	public int getLeftOverArmy()
-	{
-		int totalArmy=armyList.size();
-		int assignedArmy=0;
-		
-		for(Country country:countryList)
-		{
-			assignedArmy+=country.getNumOfArmies();
-		}
-		return totalArmy-assignedArmy;
-		
-	}
+
 	public void attachObserver(BaseObserverFrame frame)
 	{
 		observerList.add(frame);
