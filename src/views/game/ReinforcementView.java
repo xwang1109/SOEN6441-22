@@ -67,7 +67,7 @@ public class ReinforcementView{
 	JLabel artillerycardNumberLabel;
 
 	
-	JLabel phaseLabel;
+	
 	JLabel messageLable;
 	JLabel leftArmyLabelTitle;
 	JLabel infantrycardNumberLabelTitle;	
@@ -178,12 +178,11 @@ public class ReinforcementView{
 		JPanel labelValuePane = new JPanel(new GridLayout(0,1));
 		playerLabel = new JLabel("");
 		leftArmyLabel = new JLabel("");
-		phaseLabel = new JLabel("");
 		infantrycardNumberLabel = new JLabel("");
 		cavalrycardNumberLabel = new JLabel("");
 		artillerycardNumberLabel = new JLabel("");
 
-		labelValuePane.add(phaseLabel);		
+		labelValuePane.add(ViewState.getInstance().getPhaseLabel());		
 		labelValuePane.add(playerLabel);
 		labelValuePane.add(leftArmyLabel);
 		labelValuePane.add(infantrycardNumberLabel);
@@ -274,7 +273,6 @@ public class ReinforcementView{
 	public void updateLabels() {
 		playerLabel.setText(Integer.toString(player.getId()));
 		
-		phaseLabel.setText(GameState.getInstance().getPhase().toString());
 		leftArmies=player.getLeftArmyNumber();
 		leftArmyLabel.setText(Integer.toString(leftArmies));
 		if(GameState.getInstance().getPhase().equals(GameState.Phase.REINFORCEMENT))
