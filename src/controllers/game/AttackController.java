@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 
 import models.map.GameState;
+import models.map.GameState.Phase;
 import views.game.ViewState;
 
 /**
@@ -38,6 +39,7 @@ public class AttackController implements ActionListener {
 		//remember to refresh the map view all the time
 		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 
+		GameState.getInstance().setPhase(Phase.FORTIFICATION);
 		ViewState.getInstance().showFortificationView();
 		
 	}

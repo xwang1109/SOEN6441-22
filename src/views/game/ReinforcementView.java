@@ -118,7 +118,8 @@ public class ReinforcementView{
 		mapPanel = new MapCountryPanel();
 		thisPanel = controlPanel;
 		
-		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
+	    FlowLayout fl_controlPanel = new FlowLayout();
+	    controlPanel.setLayout(fl_controlPanel);
 		fl_controlPanel.setAlignment(FlowLayout.LEADING);
 		
 		addArmyButton = new JButton("Add Army");

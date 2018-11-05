@@ -326,8 +326,6 @@ public class Player {
 		ArrayList<Country> toIterate = new ArrayList<Country>();
 		toIterate.add(selectedCountry);
 		
-		
-		// TODO finish
 		while(!toIterate.isEmpty()) {
 			// remove first element
 			Country current = toIterate.get(0);

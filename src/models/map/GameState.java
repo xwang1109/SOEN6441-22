@@ -31,7 +31,7 @@ public class GameState extends Observable {
 		SETUP,
 		REINFORCEMENT,
 		ATTACK,
-		FORTIFY,
+		FORTIFICATION,
 		FINISHED
 	};
 	

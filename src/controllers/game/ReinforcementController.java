@@ -76,7 +76,7 @@ public class ReinforcementController implements ActionListener {
 			Country selectedCoutnry = starUpView.getSelectedCountry();
 			selectedCoutnry.AddArmy();
 			if(starUpView.decreaseLeftArmies() == 0) {
-				GameState.getInstance().setPhase(Phase.ATTACK);
+				GameState.getInstance().setPhase(Phase.FORTIFICATION);
 				//starUpView.changeToAttack();
 				ViewState.getInstance().showFortificationView();
 			} else {
