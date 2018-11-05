@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 import models.map.GameState;
+import models.map.GameState.Phase;
+import views.game.AttackView;
 import views.game.ViewState;
 
 /**
@@ -15,14 +18,24 @@ import views.game.ViewState;
  */
 public class AttackController implements ActionListener {
 
+	private JComboBox<String> fromDropBox = new JComboBox<String>();
+	private JComboBox<String> destDropBox = new JComboBox<String>();
+	private JTextField qtTextField = new JTextField();
+	private AttackView attackView;
+	
 	/**
 	 * Instantiates a new attack controller.
 	 *
 	 * @param numberOfPlayer the number of player
+	 * @param attackView 
+	 * @param qtTextField 
+	 * @param destDropBox 
 	 */
-	public AttackController(JComboBox numberOfPlayer) {
-		// TODO Auto-generated constructor stub
-		// TODO skipping it because it's not coded
+	public AttackController(JComboBox fromDropBox, JComboBox<String> destDropBox, JTextField qtTextField, AttackView attackView) {
+		this.fromDropBox = fromDropBox;
+		this.destDropBox = destDropBox;
+		this.qtTextField = qtTextField;
+		this.attackView = attackView;
 	}
 
 	/**
@@ -30,16 +43,35 @@ public class AttackController implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO player should perform attacks
-		// everytime there's a successful attack ; check if the game is finished
-		// have a button for end of attack;
-		// for now, skip always directly to fortification
-		
-		//remember to refresh the map view all the time
 		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
-
-		ViewState.getInstance().showFortificationView();
 		
+		switch ( e.getActionCommand() ) {
+		case AttackView.RollDiceStr:
+		case AttackView.RollAgainStr:
+			//TODO here is pseudocode
+			// do a roll, fill results, 
+			// if src dead ; switch back to losing 
+			// else if dst dead ; switch back to win
+			// else switch back to resolution
+			break;
+
+		// Move, stop and more will send to selection afterward
+		case AttackView.MoveArmiesStr:
+		    //TODO performMove();
+			attackView.showSelectionState();
+			break;
+		case AttackView.StopAttackStr:
+		case AttackView.MoreAttackStr:
+			attackView.showSelectionState();
+			break;
+
+		// end attack transitions to next phase
+		case AttackView.EndAttackPhaseStr:
+			GameState.getInstance().setPhase(Phase.FORTIFICATION);
+			ViewState.getInstance().showFortificationView();
+			break;
+		}
+				
 	}
 
 }

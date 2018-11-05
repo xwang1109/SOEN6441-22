@@ -3,13 +3,12 @@ package models.map;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import models.game.Army;
 import models.game.Player;
-import views.game.ViewState;
-import java.util.Observable;
 
 /**
  * class GameState to store and pass the current state of the game
@@ -21,28 +20,41 @@ public class GameState extends Observable {
 	private  Map map;
 	
 	private int currentPlayer;
-	private ArrayList<Player> playerList = new ArrayList<Player>();
-	private ArrayList<Country> destinationCountryList;
-	// hold players
+	private ArrayList<Player> playerList = new ArrayList<Player>();	// hold players
+
+	private ArrayList<Country> destinationCountryList;	// hold phase to switch between map info and current state
+
 	
-	// hold phase to switch between map info and current state
+	
 	public enum Phase
 	{
 		SETUP,
 		REINFORCEMENT,
 		ATTACK,
-		FORTIFY,
+		FORTIFICATION,
 		FINISHED
 	};
 	
-	private Phase phase = Phase.SETUP;
+	public class PhaseState extends Observable {
+		private Phase phase = Phase.SETUP;
+		
+		public Phase getPhase() { 
+			return phase; 
+		}
+		public void setPhase(Phase phase) { 
+			this.phase = phase; 
+			setChanged();
+			notifyObservers();		
+		}
+	}
 	
+	private PhaseState phaseState = new PhaseState();
 	/**
 	 * Public method to return the current phase of game
 	 * @return Phase
 	 */
 	public Phase getPhase() { 
-		return phase; 
+		return phaseState.getPhase(); 
 	}
 	
 	/**
@@ -50,8 +62,11 @@ public class GameState extends Observable {
 	 * @param phase
 	 */
 	public void setPhase(Phase phase) { 
-		this.phase = phase; 
-		
+		phaseState.setPhase(phase);	
+	}
+
+	public void addPhaseObserver(Observer observer) {
+		phaseState.addObserver(observer);
 	}
 	
 	/**
@@ -90,7 +105,7 @@ public class GameState extends Observable {
 	 * @return true, if successful
 	 */
 	public boolean fortify(String from, String to, int qt) {
-		return map.fortify(from, to, qt);
+		return getCurrentPlayer().fortify(from, to, qt);
 	}
 	
 	/**
@@ -177,6 +192,7 @@ public class GameState extends Observable {
 			}
 			
 		}
+			
 		setChanged();
 		notifyObservers();
 	}
@@ -271,6 +287,7 @@ public class GameState extends Observable {
 			return new ArrayList<Country>();
 		
 		// query the map
-		return map.getValidDestination(selectedCountry);
+		return getCurrentPlayer().getValidDestination(selectedCountry);
 	}
+
 }

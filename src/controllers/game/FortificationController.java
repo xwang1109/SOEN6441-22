@@ -41,7 +41,9 @@ public class FortificationController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String fromStr = (String) from.getSelectedItem();
 		String toStr = (String) to.getSelectedItem();
-		int qt = Integer.parseInt( quantity.getText() );
+		
+		int qt = 0;
+		try { qt = Integer.parseInt( quantity.getText() ); } catch (Exception ex) {}
 		
 		if (GameState.getInstance().fortify(fromStr, toStr, qt ) ) {
 			//deduct number of armies from country fromStr, add number of armies to country toStr
