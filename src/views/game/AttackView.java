@@ -25,12 +25,16 @@ import models.map.GameState;
  */
 public class AttackView {
 	
+	/**
+	 * Different situations when clicking different buttons
+	 */
 	public final static String EndAttackPhaseStr =  "End Attack Phase";
 	public final static String RollDiceStr =  "ROLL THE DICE!";
-	public final static String RollAgainStr =  "roll again";
-	public final static String MoveArmiesStr =  "move armies";
-	public final static String MoreAttackStr =  "more attack";
-	public final static String StopAttackStr =  "stop attack";
+	public final static String RollAgainStr =  "Roll Dice Again";
+	public final static String MoveArmiesStr =  "Move Armies";
+	public final static String MoreAttackStr =  "More Attack";
+	public final static String StopAttackStr =  "Stop Attack";
+	
 	/**
 	 * UI Objects that will be modified depending of state
 	 */
@@ -110,27 +114,31 @@ public class AttackView {
 
 	class CountLabelListener implements ActionListener {
 		private JLabel label;
-		private boolean needsSame;
+		private boolean needsSame; //to facilitate code re-use
 		
 		CountLabelListener(JLabel label, boolean needsSame) {
 			this.label = label;
 			this.needsSame = needsSame;
 		}
 		
-            public void actionPerformed(ActionEvent event) {
-            	JComboBox comboBox = (JComboBox) event.getSource();
-                String selected = (String)comboBox.getSelectedItem();
-                Country selectedCountry = null;
-                for(Country c: GameState.getInstance().getMap().getCountryList()) {
-                	if (c.getName().equals(selected))
-                		selectedCountry = c; 
-                }
-                
-                boolean sameOwner = selectedCountry.getOwner() == GameState.getInstance().getCurrentPlayer();
-                if ( selectedCountry != null && (sameOwner == needsSame) ) {
-                	label.setText(String.valueOf(selectedCountry.getNumOfArmies()));
-                }
+        public void actionPerformed(ActionEvent event) {
+        	JComboBox comboBox = (JComboBox) event.getSource();
+            String selected = (String)comboBox.getSelectedItem();
+            Country selectedCountry = null;
+            for(Country c: GameState.getInstance().getMap().getCountryList()) {
+            	if (c.getName().equals(selected))
+            		selectedCountry = c; 
             }
+            
+            //check if the owner of the selected country is the same as current player
+            boolean sameOwner = selectedCountry.getOwner() == GameState.getInstance().getCurrentPlayer();
+            
+            //if select a country and the owner is the current player,
+            //show the number of armies of this country
+            if ( selectedCountry != null && (sameOwner == needsSame) ) {
+            	label.setText(String.valueOf(selectedCountry.getNumOfArmies()));
+            }
+        }
 	}
 	
 	public void showSelectionState() {
@@ -157,8 +165,11 @@ public class AttackView {
 		JLabel numberOfArmyInFromCountry = new JLabel("Number of Armies");
 		JLabel numberOfArmyInTargetCountry = new JLabel("Number of Armies");
 		
+		//clear drop down box
 		fromDropBox.removeAllItems();
 		targetDropBox.removeAllItems();
+		
+		//get list for drop down box
 		for(Country c: GameState.getInstance().getMap().getCountryList()) {
         	if (c.getOwner() == GameState.getInstance().getCurrentPlayer() &&
         		c.getNumOfArmies() > 1)
@@ -168,7 +179,9 @@ public class AttackView {
 		actionCountryInfoPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		actionCountryInfoPanel.add(fromDropBox);
+		
 		fromDropBox.addActionListener(new CountLabelListener(numberOfArmyInFromCountry, true));
+		
 		fromDropBox.addActionListener((ActionListener) new ActionListener() {
             public void actionPerformed(ActionEvent event) {
             	JComboBox comboBox = (JComboBox) event.getSource();
@@ -179,12 +192,14 @@ public class AttackView {
                 		selectedCountry = c; 
                 }
                 
+                //get target countries for the drop down box, only show the adjacent countries of the "from country" which has different owner
                 for( Country n: selectedCountry.getAdjacentCountryList()) {
                 	if ( n.getOwner() != GameState.getInstance().getCurrentPlayer() ) {
                 		targetDropBox.addItem(n.getName());
                 	}
                 }
-            }});
+            }
+         });
 		
 		JLabel label = new JLabel("");
 		actionCountryInfoPanel.add(label);
