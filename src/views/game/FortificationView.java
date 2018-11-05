@@ -32,8 +32,8 @@ import java.awt.Insets;
  */
 public class FortificationView {
 
-	JComboBox<String> fromDropDown = new JComboBox<String>(); //declare JComboBox to show a drop-down list
-	JComboBox<String> toDropDown = new JComboBox<String>(); //declare JComboBox to show a drop-down list
+	private JComboBox<String> fromDropDown = new JComboBox<String>(); //declare JComboBox to show a drop-down list
+	private JComboBox<String> toDropDown = new JComboBox<String>(); //declare JComboBox to show a drop-down list
 	private JTextField quantity = new JTextField();
 	
 	/**

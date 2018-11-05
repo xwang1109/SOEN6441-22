@@ -41,7 +41,7 @@ public class ReinforcementController implements ActionListener {
 			starUpView.exchangeCard();
 			break;
 		case "Finish Attack":
-			ViewState.getInstance().showFortificationView();
+			ViewState.getInstance().showAttackView();
 		}
 	}
 /**
@@ -76,9 +76,8 @@ public class ReinforcementController implements ActionListener {
 			Country selectedCoutnry = starUpView.getSelectedCountry();
 			selectedCoutnry.AddArmy();
 			if(starUpView.decreaseLeftArmies() == 0) {
-				GameState.getInstance().setPhase(Phase.FORTIFICATION);
-				//starUpView.changeToAttack();
-				ViewState.getInstance().showFortificationView();
+				GameState.getInstance().setPhase(Phase.ATTACK);
+				ViewState.getInstance().showAttackView();
 			} else {
 				starUpView.showLeftArmies();
 			}

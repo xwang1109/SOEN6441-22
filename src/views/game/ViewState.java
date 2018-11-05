@@ -109,6 +109,16 @@ public class ViewState extends JFrame {
 	}
 	
 	/**
+	 * Show attack view
+	 */
+	public void showAttackView() {
+		clear();
+		new AttackView(controlPanel);
+		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		setVisible(true);
+	}
+	
+	/**
 	 * Show fortification view
 	 */
 	public void showFortificationView() {
