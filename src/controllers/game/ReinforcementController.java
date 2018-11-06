@@ -37,11 +37,11 @@ public class ReinforcementController implements ActionListener {
 		case "Add Army":
 			addArmy();
 			break;
-		case "Exchange Card":
-			changeCard();
+		case "Open exchange card view":
+			starUpView.exchangeCard();
 			break;
 		case "Finish Attack":
-			ViewState.getInstance().showFortificationView();
+			ViewState.getInstance().showAttackView();
 		}
 	}
 /**
@@ -49,25 +49,35 @@ public class ReinforcementController implements ActionListener {
  * 
  */
 	public void addArmy() {
-		Country selectedCoutnry = starUpView.getSelectedCountry();
-		selectedCoutnry.AddArmy();
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)) {
+			Country selectedCoutnry = starUpView.getSelectedCountry();
+			selectedCoutnry.AddArmy();
 			if(starUpView.decreaseLeftArmies() == 0) {
-				if (!GameState.getInstance().setUpRoundRobin()) {
-					GameState.getInstance().setPhase(Phase.REINFORCEMENT);
-					GameState.getInstance().setFirstPlayer();
-					GameState.getInstance().getCurrentPlayer().addReinforcementArmy();
-					starUpView.changeToReinforcement();
+				if (starUpView.getPlayerCounter() < GameState.getInstance().getPlayerList().size()-1) {
+					starUpView.setPlayerCounter(starUpView.getPlayerCounter()+1);
+					starUpView.setLeftArmies(GameState.getInstance().getPlayerList().get(starUpView.getPlayerCounter()).getLeftArmyNumber());
+					starUpView.showPlayer();
 				}
-				starUpView.showPlayer();
+				else {
+					GameState.getInstance().setPhase(Phase.REINFORCEMENT);
+					starUpView.setPlayerCounter(0);
+					starUpView.setLeftArmies(GameState.getInstance().getPlayerList().get(starUpView.getPlayerCounter()).addReinforcementArmy());
+					starUpView.showPlayer();
+					if(starUpView.getPlayer().getCardList().size()>4)//if there are more or equal to 5 cards, force to change card
+					{
+						starUpView.exchangeCard();;
+
+					}
+				}
 			} else {
 				starUpView.showLeftArmies();
 			}
 		} else if (GameState.getInstance().getPhase().equals(Phase.REINFORCEMENT)) {
+			Country selectedCoutnry = starUpView.getSelectedCountry();
+			selectedCoutnry.AddArmy();
 			if(starUpView.decreaseLeftArmies() == 0) {
 				GameState.getInstance().setPhase(Phase.ATTACK);
-				//starUpView.changeToAttack();
-				ViewState.getInstance().showFortificationView();
+				ViewState.getInstance().showAttackView();
 			} else {
 				starUpView.showLeftArmies();
 			}
@@ -76,12 +86,5 @@ public class ReinforcementController implements ActionListener {
 		//refresh the table for map
 		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 				
-	}
-/**
- * Perform actions when Exchange Card button clicked
- */
-	public void changeCard() {
-		starUpView.setLeftArmies(starUpView.getLeftArmies() + starUpView.getPlayer().addArmyForCard());
-		starUpView.changedCard();
 	}
 }

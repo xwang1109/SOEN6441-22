@@ -1,19 +1,29 @@
 package views.game;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import controllers.game.FortificationController;
 import models.game.Player;
 import models.map.Country;
 import models.map.GameState;
+import views.map.MapCountryPanel;
+import javax.swing.JSplitPane;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 /**
  * class FortificationView is the view for fortification phase
@@ -21,31 +31,73 @@ import models.map.GameState;
  * @see controllers.game.FortificationController
  */
 public class FortificationView {
-	JComboBox<String> fromDropDown; //declare JComboBox to show a drop-down list
-	JComboBox<String> toDropDown; //declare JComboBox to show a drop-down list
+
+	private JComboBox<String> fromDropDown = new JComboBox<String>(); //declare JComboBox to show a drop-down list
+	private JComboBox<String> toDropDown = new JComboBox<String>(); //declare JComboBox to show a drop-down list
+	private JTextField quantity = new JTextField();
 	
 	/**
 	 * Constructor of class FortificationView
 	 * @param JPanel controlPanel
 	 */
 	public FortificationView(JPanel controlPanel) {
-		// initialized before handler
-		fromDropDown = new JComboBox<String>();
-		toDropDown = new JComboBox<String>(); 
+		controlPanel.setLayout(new GridLayout(0, 2));
+		JPanel informationPanel = new JPanel();
+		controlPanel.add(informationPanel);
 		
-		JTextArea currentPlayerIndicator = new JTextArea("Current Player: " + GameState.getInstance().getCurrentPlayer().getId());
+		JPanel labelColumn = new JPanel();
+		informationPanel.add(labelColumn);
+		labelColumn.setLayout(new GridLayout(0, 1));
+		
+		JLabel phaseTextLabel = new JLabel("Phase: ");
+		labelColumn.add(phaseTextLabel);
+		
+		JLabel currentPlayerTextLabel = new JLabel("Current Player: ");
+		labelColumn.add(currentPlayerTextLabel);
+		
+		JPanel dataColumn = new JPanel();
+		informationPanel.add(dataColumn);
+		dataColumn.setLayout(new GridLayout(0, 1));
+		dataColumn.add(ViewState.getInstance().getPhaseLabel());
+		
+		JLabel currentPlayerIndicator = new JLabel(String.valueOf(GameState.getInstance().getCurrentPlayer().getId()));
+		dataColumn.add(currentPlayerIndicator);
+		
+		JPanel fortificationPanel = new JPanel();
+		controlPanel.add(fortificationPanel);
+		fortificationPanel.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel fortificationInfoPanel = new JPanel();
+		fortificationPanel.add(fortificationInfoPanel);
+		fortificationInfoPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		// text shown to guide user to select from which country the armies should go out
 		JTextArea textFrom = new JTextArea("From Country:");
+		fortificationInfoPanel.add(textFrom);
 		
 		// text shown to guide user to select destination country
 		JTextArea textTo = new JTextArea("To Country:");
+		fortificationInfoPanel.add(textTo);
 		
 		// declare quantity fields
 		JTextArea textQuantity = new JTextArea("Number of Armies:");
-		JTextField quantity = new JTextField(5);
+		fortificationInfoPanel.add(textQuantity);
 		
+		JPanel fortificationPanel_1 = new JPanel();
+		fortificationPanel.add(fortificationPanel_1);
+		fortificationPanel_1.setLayout(new GridLayout(3, 1, 0, 0));
 		
+		// initialized before handler
+		fortificationPanel_1.add(fromDropDown);
+		fortificationPanel_1.add(toDropDown);
+		
+		quantity = new JTextField(5);
+		fortificationPanel_1.add(quantity);
+		quantity.setColumns(10);
+		
+		JPanel fortificationButtonPanel = new JPanel();
+		fortificationPanel.add(fortificationButtonPanel);
+				
 		Player player = GameState.getInstance().getCurrentPlayer(); //get current player
 		ArrayList<Country> countryList = player.getCountryList(); //get country list of current player
 		
@@ -56,7 +108,7 @@ public class FortificationView {
 		
 		fromDropDown.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent event){
-                JComboBox comboBox = (JComboBox) event.getSource();
+                JComboBox<String> comboBox = (JComboBox<String>) event.getSource();
                 String selected = (String)comboBox.getSelectedItem();
             	Country selectedCountry = null;
                 for(Country c:countryList) {
@@ -83,15 +135,10 @@ public class FortificationView {
 			
 		// callback to fortification controller
 		JButton executeFortification = new JButton("Fortify!");
+		executeFortification.setVerticalAlignment(SwingConstants.BOTTOM);
 		executeFortification.addActionListener(new FortificationController(fromDropDown, toDropDown, quantity));
 		
-		controlPanel.add(currentPlayerIndicator);
-		controlPanel.add(textFrom);
-		controlPanel.add(fromDropDown);
-		controlPanel.add(textTo);
-		controlPanel.add(toDropDown);
-		controlPanel.add(textQuantity);
-		controlPanel.add(quantity);
-		controlPanel.add(executeFortification);
+		fortificationButtonPanel.add(executeFortification);
+		
 	}
 }

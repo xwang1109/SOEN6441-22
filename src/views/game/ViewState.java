@@ -1,15 +1,14 @@
 package views.game;
 
 import java.awt.BorderLayout;
-import java.io.File;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import models.game.Player;
-import models.map.Country;
+import models.map.GameState;
 import views.map.MapCountryPanel;
 
 /**
@@ -22,12 +21,41 @@ public class ViewState extends JFrame {
 	private JPanel controlPanel = new JPanel();
 	private MapCountryPanel mapPanel = new MapCountryPanel();             //all the views need to share a table for map
 	
+	// Phase label implementation through observer pattern
+	class PhaseDisplay implements Observer {
+		private JLabel phaseLabel = new JLabel();
+		
+		public PhaseDisplay() {
+			doUpdateLabel();
+		}
+		
+		@Override
+		public void update(Observable o, Object arg) {
+			doUpdateLabel();
+		}
+		
+		public JLabel getLabel() {
+			return phaseLabel;
+		}
+		
+		private void doUpdateLabel() {
+			phaseLabel.setText(GameState.getInstance().getPhase().toString());
+		}
+	}
+	PhaseDisplay phaseDisplay = new PhaseDisplay();
+	
+	JLabel getPhaseLabel() {
+		return phaseDisplay.getLabel();
+	}
+	
 	/**
 	 * Constructor of class ViewState to set the window of the game
 	 */
 	private ViewState() {
 		controlPanel = new JPanel();
 		this.setSize(1024,800);
+		
+		GameState.getInstance().addPhaseObserver(phaseDisplay);
 	}
 	
 	static private ViewState instance = new ViewState();
@@ -76,6 +104,16 @@ public class ViewState extends JFrame {
 	public void showReinforcementView() {
 		clear();
 		new ReinforcementView(controlPanel);
+		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		setVisible(true);
+	}
+	
+	/**
+	 * Show attack view
+	 */
+	public void showAttackView() {
+		clear();
+		new AttackView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
 	}
