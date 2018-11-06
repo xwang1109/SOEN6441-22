@@ -3,12 +3,9 @@ package models.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-
 import models.map.Continent;
 import models.map.Country;
 import models.map.GameState;
-import views.game.BaseObserverFrame;
 
 /**
  * The Class Player. after a player was created ,
@@ -33,15 +30,6 @@ public class Player {
 	
 	/** The get armyfor cards. */
 	private int getArmyforCards = 0; //number of times player is given army for cards
-	
-	private List<BaseObserverFrame> observerList=new ArrayList<BaseObserverFrame>();
-	
-	
-
-	public void attachObserver(BaseObserverFrame frame)
-	{
-		observerList.add(frame);
-	}
 	
 	/**
 	 * Gets the id.
@@ -207,24 +195,45 @@ public class Player {
 		return cardTypeNumber;
 	}
 	
-		
+	/**
+	 * This method.
+	 *
+	 * @return the number of army given to player in exchange for cards
+	 */
+	public int numberOfArmyForCard(){
+		return (getArmyforCards += 1) * 5;
+	}
+	
 	/**
 	 * This method exchange 3 cards for army.
-	 * 	 
-	 * @param toremovecards is the list of cards to be changed
-	 *@return the number of armies
 	 */
-	public int exchangeCardforArmy(List<Card> toremovecards) {
-		removeCards(toremovecards);
-		int armyForCard = (getArmyforCards += 1) * 5;
-		
+	public void exchangeCardforArmy() {
+		int[] cardTypeNumber = cardTypeNumber();
+		for (int counter=0; counter<3; counter++) {
+			if (cardTypeNumber[counter]>=3)
+			{
+				for (int i=0; i<3; i++)
+					removeCard(counter);
+				return;
+			}
+		}
+		removeCard(0);removeCard(1);removeCard(2);
+	}
+	
+	/**
+	 * Adds the army for card.
+	 *
+	 * @return the int
+	 */
+	public int addArmyForCard() {
+		exchangeCardforArmy();
+		int armyForCard = numberOfArmyForCard();
 		for(int i=0; i<armyForCard; i++) {
 			Army army = new Army(this);
 			armyList.add(army);
 		}
 		return armyForCard;
-	}
-	
+		}
 	
 	/**
 	 * This method remove a card from cardList of player.
@@ -234,119 +243,10 @@ public class Player {
 	public void removeCard(int cardTypeCode) {
 		for(Card card: cardList){
 			if (card.getCardType().getCardTypeCode() == cardTypeCode) {
-				cardList.remove(card);	
-				notifyObservers();
+				cardList.remove(card);			
 				return;
 			}
 		}
-		
 	}
-	/**
-	 * This method remove multiple cards at the same time
-	 *
-	 * @param toremovecards is the list of cards to be removed for exchange
-	 */
-	public void removeCards(List<Card> toremovecards) {
-		
-		cardList.removeAll(toremovecards);
-		
-		notifyObservers();
-
-	}
-	
-	
-	/**
-	 * This method gets a random new car for the player
-	 *
-	 * 
-	 */
-	public void getNewCard()
-	{
-		Card c=new Card(this);
-		this.cardList.add(c);
-		notifyObservers();
-	}
-	
-	/**
-	 * This method is the notification for the observer pattern
-	 *
-	 * 
-	 */
-	private void notifyObservers()
-	{
-		for(BaseObserverFrame frame:this.observerList)
-		{
-			frame.update();
-		}
-	}
-	
-	/**
-	 * Execute the fortification move
-	 * return true if the fortification order was executed
-	 * false in case of error
-	 */
-	public boolean fortify(String from, String to, int qt) {
-		
-		Country source = null, dest = null;
-		
-		// validate that the player owns both countries
-		for(Country country: countryList){
-			if (country.getName() == from) {
-				source = country;
-			} else if (country.getName() == to) {
-				dest = country;
-			}
-		}
-	 
-		if (source == null || dest == null) {
-			return false;
-		}
-		
-		// Make sure there's enough armies to move
-		int realQt = Math.min( source.getNumOfArmies()-1, qt );
-				
-		// Move armies
-		for(int i = 0; i<realQt; i++){
-			source.decreaseArmy();
-			dest.increaseArmy();
-		}
-		
-		// error if move was invalid, made the biggest move
-		return realQt == qt;
-	}
-	
-	/**
-	 * To take input country, return which countries can be the valid destination of this country
-	 * @param Country selectedCountry
-	 * @return ArrayList<Country>
-	 */
-	public ArrayList<Country> getValidDestination(Country selectedCountry) {
-		ArrayList<Country> valid = new ArrayList<Country>();
-		if ( selectedCountry.getOwner() != this) return valid;
-		ArrayList<Country> toIterate = new ArrayList<Country>();
-		toIterate.add(selectedCountry);
-		
-		while(!toIterate.isEmpty()) {
-			// remove first element
-			Country current = toIterate.get(0);
-			toIterate.remove(0);
-			
-			// if it's a valid country
-			if (current.getOwner() == this && valid.indexOf(current) == -1 ) {
-				// keep it
-				valid.add(current);
-				
-				// flag nei for validation
-				for( Country nei : current.getAdjacentCountryList()) {
-					if ( toIterate.indexOf(nei) == -1 && valid.indexOf(nei) == -1) {
-						toIterate.add(nei);
-					}
-				}
-			}
-		}
-
-		valid.remove(selectedCountry);
-		return valid;		
-	}	
 
 }

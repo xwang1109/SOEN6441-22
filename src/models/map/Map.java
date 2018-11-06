@@ -604,7 +604,30 @@ public class Map extends Observable {
 		return true;
 	}
 	
-	
+	/**
+	 * Execute the fortification move
+	 * return true if the fortification order was executed
+	 * false in case of error
+	 */
+	public boolean fortify(String from, String to, int qt) {
+		
+		for(Country country: countryList){
+			if (country.getName() == from){
+				for(int i = 0; i<qt; i++){
+					country.decreaseArmy();
+				}				
+			}
+		}
+		
+		for(Country country: countryList){
+			if (country.getName() == to){
+				for(int i = 0; i<qt; i++){
+					country.increaseArmy();
+				}				
+			}
+		}		
+		return true;
+	}
 	
 	/**
 	 * Check if there is a continent has the same name except itself in the map
@@ -612,7 +635,9 @@ public class Map extends Observable {
 	 * @param name The continent's name need to be checked
 	 * @param id The continent's id
 	 * @return True if there is a duplicate name, false if there is no duplicate name
-	 */	
+	 */
+	
+	
 	public boolean checkDuplicateContinentName(String name, int id) {
 		for(int i=0;i<this.continentList.size();i++) {
 			Continent continent = continentList.get(i);
@@ -804,4 +829,25 @@ public class Map extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+	
+	/**
+	 * To take input country, return which countries can be the valid destination of this country
+	 * @param Country selectedCountry
+	 * @return ArrayList<Country>
+	 */
+	public ArrayList<Country> getValidDestination(Country selectedCountry) {			
+		ArrayList<Country> toBeValidated = new ArrayList<Country>();
+		ArrayList<Country> valid = new ArrayList<Country>();
+		
+		ArrayList<Country> validDestination = GameState.getInstance().getCurrentPlayer().getCountryList();
+		
+		validDestination.remove(selectedCountry);
+						
+		return validDestination;
+        
+		// for each country to validate
+		   // if not in the valid list && valid -> correct player
+			   // append its adjacents to "toBeValidated"
+		       // if not selected country ; add to toBeValidated		
+	}	
 }

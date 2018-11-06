@@ -3,7 +3,6 @@ package test.models.game;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -98,36 +97,13 @@ public class ReinforcementTests {
 	 * This test case tests calculation of number of armies in exchange with cards
 	 */
 	@Test
-	public void testExchangeArmyForCard() {
+	public void testCalculateNumberOfArmyForCard() {
 		int expectedResult = 15;
-		Card c1=new Card(player1);
-		Card c2=new Card(player1);
-		Card c3=new Card(player1);
-		c1.setCardType(CardType.ARTILLERY);
-		c2.setCardType(CardType.CAVALRY);
-		c3.setCardType(CardType.INFANTRY);
-
-		List<Card> exchangeList=new ArrayList<Card>();
-		exchangeList.add(c1);
-		exchangeList.add(c2);
-		exchangeList.add(c3);
-
-		int result = player1.exchangeCardforArmy(exchangeList);
+		int result = player1.numberOfArmyForCard();
 		assertEquals(expectedResult, result);
 
 		expectedResult = 5;
-		Card c6=new Card(player2);
-		Card c4=new Card(player2);
-		Card c5=new Card(player2);
-		c6.setCardType(CardType.ARTILLERY);
-		c4.setCardType(CardType.CAVALRY);
-		c5.setCardType(CardType.INFANTRY);
-		List<Card> exchangeList2=new ArrayList<Card>();
-		exchangeList.add(c4);
-		exchangeList.add(c5);
-		exchangeList.add(c6);
-		
-		result = player2.exchangeCardforArmy(exchangeList2);
+		result = player2.numberOfArmyForCard();
 		assertEquals(expectedResult, result);
 	}
 
