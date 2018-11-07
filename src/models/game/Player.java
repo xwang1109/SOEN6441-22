@@ -17,7 +17,7 @@ import views.game.BaseObserverFrame;
  * The Class Player. after a player was created ,
  * actions of assign and remove  all the countries, all the cards, all the armies to the player  
  * is possible to do.
- * @author Bingyang Yu
+ * @author Bingyang Yu ,Parisa khazaei
  * @version 1.0
  */
 public class Player {
