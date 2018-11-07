@@ -28,7 +28,7 @@ public class Dice {
 		    
 		    for(int i=0;i<attackerDice.length;i++)
 		    {
-		    	for (randAttcker.nextInt())
+		    	
 		    	attackerDice[i] = randAttcker.nextInt(6-1);
 		    	
 		    }
