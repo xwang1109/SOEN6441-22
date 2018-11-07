@@ -213,16 +213,18 @@ public class Country {
 	}	
 	
 	/**
-	 * Decrease number of Army in this country.
+	 * Decrease one Army of this country.
 	 */
 	public void decreaseArmy() {
 		if(armyList.size()>1){
-			armyList.remove(1);
+			Army army = armyList.get(1);
+			owner.getArmyList().remove(army);
+			armyList.remove(army);
 		}		
 	}
 	
 	/**
-	 * Decrease number of Army in this country.
+	 * Increase One Army to this country.
 	 */
 	public void increaseArmy() {
 		Army army = new Army(owner);

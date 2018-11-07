@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import models.game.Dice;
+import models.map.Country;
 import models.map.GameState;
 import models.map.GameState.Phase;
 import views.game.AttackView;
@@ -31,10 +33,11 @@ public class AttackController implements ActionListener {
 	 * @param qtTextField 
 	 * @param destDropBox 
 	 */
-	public AttackController(JComboBox fromDropBox, JComboBox<String> destDropBox, JTextField qtTextField, AttackView attackView) {
-		this.fromDropBox = fromDropBox;
-		this.destDropBox = destDropBox;
-		this.qtTextField = qtTextField;
+//	public AttackController(JComboBox fromDropBox, JComboBox<String> destDropBox, JTextField qtTextField, AttackView attackView) {
+	public AttackController(AttackView attackView) {
+		//this.fromDropBox = fromDropBox;
+		//this.destDropBox = destDropBox;
+		//this.qtTextField = qtTextField;
 		this.attackView = attackView;
 	}
 
@@ -47,13 +50,31 @@ public class AttackController implements ActionListener {
 		
 		switch ( e.getActionCommand() ) {
 		case AttackView.RollDiceStr:
-		case AttackView.RollAgainStr:
+			int attacherDiceNumber = attackView.getAttacherDiceNumber();
+			int defenderDiceNumber = attackView.getDefenderDiceNumber();
+			Country attackerCountry = attackView.getSelecterdCountryFrom();
+			Country defenderCountry = attackView.getSelecterdCountryTo();
+
+			if (attacherDiceNumber!=0 && defenderDiceNumber!=0) {
+				Dice dice = new Dice();
+				int[] attacherDice = dice.attackerDiceRandomFill(attacherDiceNumber);
+				int[] defenderDice = dice.defenderDiceRandomFill(defenderDiceNumber);
+				int[] attackResult = {0,0};
+				//int[] attackResult = GameState.getInstance().getCurrentPlayer().attack(attacherDice, defenderDice);
+				for(int i=0; i<attackResult[0]; i++)
+					attackerCountry.decreaseArmy();
+				for(int i=0; i<attackResult[1]; i++)
+					defenderCountry.decreaseArmy();
+				attackView.showResolutionState(attacherDice, defenderDice, attackResult[0], attackResult[1]);
+			}
+			break;
+		//case AttackView.RollAgainStr:
 			//TODO here is pseudocode
 			// do a roll, fill results, 
 			// if src dead ; switch back to losing 
 			// else if dst dead ; switch back to win
 			// else switch back to resolution
-			break;
+			//break;
 
 		// Move, stop and more will send to selection afterward
 		case AttackView.MoveArmiesStr:
@@ -61,9 +82,9 @@ public class AttackController implements ActionListener {
 			attackView.showSelectionState();
 			break;
 		case AttackView.StopAttackStr:
-		case AttackView.MoreAttackStr:
-			attackView.showSelectionState();
-			break;
+		//case AttackView.MoreAttackStr:
+		//	attackView.showSelectionState();
+		//	break;
 
 		// end attack transitions to next phase
 		case AttackView.EndAttackPhaseStr:
