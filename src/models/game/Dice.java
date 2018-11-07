@@ -1,3 +1,9 @@
+/**
+ * The Class Dice . after  players rolled Dice  ,
+ * actions of assign random value to Dices
+ * @author Parisa khazaei
+ * @version 1.0
+ */
 package models.game;
 import java.util.Random;
 
@@ -14,7 +20,7 @@ public class Dice {
 	public Dice() {
 		
 	}
-	
+	//this method assign random value to Dices.
 	 public int[] attackerDiceRandomFill(int numberAttackerDice){
 
 		 	int[] attackerDice = new int[numberAttackerDice];
@@ -22,7 +28,8 @@ public class Dice {
 		    
 		    for(int i=0;i<attackerDice.length;i++)
 		    {
-		    	attackerDice[i] = randAttcker.nextInt();
+		    	for (randAttcker.nextInt())
+		    	attackerDice[i] = randAttcker.nextInt(6-1);
 		    	
 		    }
 		    return attackerDice;
@@ -34,7 +41,7 @@ public class Dice {
 		    
 		    for(int i=0;i<defenderDice.length;i++)
 		    {
-		    	defenderDice[i] = randDefender.nextInt();
+		    	defenderDice[i] = randDefender.nextInt(6-1);
 		    	
 		    }
 		    return defenderDice;

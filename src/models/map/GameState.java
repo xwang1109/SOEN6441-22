@@ -12,7 +12,7 @@ import models.game.Player;
 
 /**
  * class GameState to store and pass the current state of the game
- * @author Lin Li
+ * @author Lin Li, Parisa khazaei
  */
 public class GameState extends Observable {
 
