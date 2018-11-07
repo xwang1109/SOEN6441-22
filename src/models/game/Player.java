@@ -364,8 +364,8 @@ public class Player {
 	public int[] attack(int[] attackerDice,int[] defenderDice) {
   
     	
-    	int numAtcLooser=0;
-    	int numDfrLooser=0;
+    	int numberAttacerLoser=0;
+    	int numberDefenderLoser=0;
     	
     	for(int i=0; i<defenderDice.length; i++) {
     		
@@ -376,10 +376,10 @@ public class Player {
     		if (maxValueDefender>=maxValueAttacker) {
     		
     			
-    			numAtcLooser=numAtcLooser++;
+    			numberAttacerLoser=numberAttacerLoser++;
     		}
     		else {
-    			numDfrLooser=numDfrLooser++;
+    			numberDefenderLoser=numberDefenderLoser++;
     		}
     		//getting next maximum item from array
     	   int indexArrAtc= Arrays.binarySearch(attackerDice, maxValueAttacker);
@@ -389,7 +389,7 @@ public class Player {
     	   
     	   
     	}
-    	 int[] result= {numAtcLooser,numDfrLooser};
+    	 int[] result= {numberAttacerLoser,numberDefenderLoser};
     	 return result;
     	
     	
