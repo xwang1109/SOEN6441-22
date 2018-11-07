@@ -1,6 +1,8 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -9,6 +11,7 @@ import models.map.Continent;
 import models.map.Country;
 import models.map.GameState;
 import views.game.BaseObserverFrame;
+
 
 /**
  * The Class Player. after a player was created ,
@@ -33,6 +36,8 @@ public class Player {
 	
 	/** The get armyfor cards. */
 	private int getArmyforCards = 0; //number of times player is given army for cards
+	//the number of looser 
+	
 	
 	private List<BaseObserverFrame> observerList=new ArrayList<BaseObserverFrame>();
 	
@@ -348,5 +353,46 @@ public class Player {
 		valid.remove(selectedCountry);
 		return valid;		
 	}	
+	/*
+	 * this is the attack method. it compares the value of dice 
+	 *and return the number of looser army for players
+	 * @param attackerDice the number of attacker dice 
+	 * @param defenderDice the number of defender dice
+	 * @return it returns an array with value of number of looser army for both players
+	 */
+
+	public int[] attack(int[] attackerDice,int[] defenderDice) {
+  
+    	
+    	int numAtcLooser=0;
+    	int numDfrLooser=0;
+    	
+    	for(int i=0; i<defenderDice.length; i++) {
+    		
+    		int maxValueAttacker=Arrays.stream(attackerDice).max().getAsInt();
+    		int maxValueDefender=Arrays.stream(defenderDice).max().getAsInt();
+    		
+    		//this step defines which player will lose his army.
+    		if (maxValueDefender>=maxValueAttacker) {
+    		
+    			
+    			numAtcLooser=numAtcLooser++;
+    		}
+    		else {
+    			numDfrLooser=numDfrLooser++;
+    		}
+    		//getting next maximum item from array
+    	   int indexArrAtc= Arrays.binarySearch(attackerDice, maxValueAttacker);
+    	   int indexArrDfr= Arrays.binarySearch(defenderDice, maxValueDefender);
+    	   attackerDice[indexArrAtc]=0;
+    	   defenderDice[indexArrDfr]=0;
+    	   
+    	   
+    	}
+    	 int[] result= {numAtcLooser,numDfrLooser};
+    	 return result;
+    	
+    	
+    }
 
 }
