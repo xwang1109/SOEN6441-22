@@ -384,6 +384,7 @@ public class Player {
     		//getting next maximum item from array
     	   int indexArrAtc= Arrays.binarySearch(attackerDice, maxValueAttacker);
     	   int indexArrDfr= Arrays.binarySearch(defenderDice, maxValueDefender);
+    	   
     	   attackerDice[indexArrAtc]=0;
     	   defenderDice[indexArrDfr]=0;
     	   
