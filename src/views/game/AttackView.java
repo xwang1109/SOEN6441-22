@@ -16,10 +16,10 @@ import javax.swing.SwingConstants;
 
 import controllers.game.AttackController;
 import controllers.game.FortificationController;
+import models.game.GameState;
 import models.game.Player;
+import models.game.GameState.Phase;
 import models.map.Country;
-import models.map.GameState;
-import models.map.GameState.Phase;
 
 /**
  * class AttackView is the view for attack phase

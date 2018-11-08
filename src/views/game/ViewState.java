@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import models.map.GameState;
+import models.game.GameState;
 import views.map.MapCountryPanel;
 
 /**

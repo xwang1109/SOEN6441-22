@@ -7,10 +7,10 @@ import javax.swing.JComboBox;
 
 import views.game.ReinforcementView;
 import views.game.ViewState;
+import models.game.GameState;
 import models.game.Player;
+import models.game.GameState.Phase;
 import models.map.Country;
-import models.map.GameState;
-import models.map.GameState.Phase;
 
 /**
  * Class ReinforcementController is the controller which is bound to ReinforcementView

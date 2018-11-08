@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import models.game.GameState;
 import models.game.Player;
 import models.map.Country;
-import models.map.GameState;
 
 public class GameStateTest {
 

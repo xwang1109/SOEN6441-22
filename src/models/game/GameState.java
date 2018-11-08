@@ -1,4 +1,4 @@
-package models.map;
+package models.game;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import models.game.Army;
-import models.game.Player;
+import models.map.Continent;
+import models.map.Country;
+import models.map.Map;
 
 /**
  * class GameState to store and pass the current state of the game

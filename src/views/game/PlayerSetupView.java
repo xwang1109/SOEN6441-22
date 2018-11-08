@@ -8,7 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import controllers.game.GameStartController;
-import models.map.GameState;
+import models.game.GameState;
 import views.map.MapCountryPanel;
 
 import javax.swing.JSplitPane;

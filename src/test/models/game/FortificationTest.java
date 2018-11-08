@@ -8,11 +8,11 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import models.game.GameState;
 import models.game.Player;
+import models.game.GameState.Phase;
 import models.map.Continent;
 import models.map.Country;
-import models.map.GameState;
-import models.map.GameState.Phase;
 
 /**
  * This class tests fortification functions in Player model class

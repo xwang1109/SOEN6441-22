@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileSystemView;
 
-import models.map.GameState;
+import models.game.GameState;
 import models.map.Map;
 import views.game.ViewState;
 

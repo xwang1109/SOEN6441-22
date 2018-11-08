@@ -12,10 +12,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import models.game.GameState;
 import models.game.Player;
 import models.map.Continent;
 import models.map.Country;
-import models.map.GameState;
 import models.map.Map;
 
 public class PlayerWorldDomainView extends JScrollPane implements Observer {

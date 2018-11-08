@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 
 import models.map.Continent;
 import models.map.Country;
-import models.map.GameState;
 import views.game.BaseObserverFrame;
 
 

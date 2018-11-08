@@ -9,11 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import models.game.Card;
+import models.game.GameState;
 import models.game.Player;
 import models.game.Card.CardType;
 import models.map.Continent;
 import models.map.Country;
-import models.map.GameState;
 /**
  * This class tests reinforcement functions in Player model class
  * @author Mehrnaz

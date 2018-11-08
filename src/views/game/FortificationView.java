@@ -14,9 +14,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controllers.game.FortificationController;
+import models.game.GameState;
 import models.game.Player;
 import models.map.Country;
-import models.map.GameState;
 import views.map.MapCountryPanel;
 import javax.swing.JSplitPane;
 import java.awt.FlowLayout;

@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import models.game.GameState;
+import models.game.GameState.Phase;
 import models.map.Country;
-import models.map.GameState;
-import models.map.GameState.Phase;
 import views.game.ViewState;
 
 /**

@@ -17,10 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import models.game.Army;
+import models.game.GameState;
 import models.game.Player;
 import models.map.Continent;
 import models.map.Country;
-import models.map.GameState;
 import models.map.Map;
 import views.game.ViewState;
 

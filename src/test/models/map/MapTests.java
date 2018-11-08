@@ -1,9 +1,9 @@
 package test.models.map;
 import static org.junit.Assert.*;
 
+import models.game.GameState;
 import models.map.Continent;
 import models.map.Country;
-import models.map.GameState;
 import models.map.Map;
 
 import org.junit.Before;
