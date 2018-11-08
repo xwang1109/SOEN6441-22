@@ -40,7 +40,7 @@ import javax.swing.border.EtchedBorder;
  * Class ReinforcementView is the view for a part of setup phase and the reinforcement phase
  * in this view players place their given armies one by one on their own countries
  * then reinforcement phase begins
- * @author Mehrnaz,Bingyang
+ * @author Mehrnaz, Bingyang
  * @see controllers.game.ReinforcementController
  * @version 2.0
  */
@@ -110,7 +110,8 @@ public class ReinforcementView{
 /**
  * The constructor of the class which adds the components to the controlPanel
  * and initials the first player for placing his given armies on his countries
- * @param JPanel controlPanel
+ * @param controlPanel  to control panel
+ * 
  */
 	public ReinforcementView  (JPanel controlPanel) {
 		
