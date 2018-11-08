@@ -128,6 +128,16 @@ public class ViewState extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Show End Game view
+	 */
+	public void showEndGameView() {
+		clear();
+		new EndGameView(controlPanel);
+		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		setVisible(true);
+	}
+	
 	public MapCountryPanel getMapPanel() {
 		return mapPanel;
 	}

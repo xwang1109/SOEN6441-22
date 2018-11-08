@@ -782,7 +782,17 @@ public class Map extends Observable {
 	    }
 	    
 	}
-	
+
+	/**
+	 * find out if player parameter is the owner of the whole map 
+	 */
+	public boolean mapOwner(Player player) {
+		for(Country c: countryList) {
+			if(!c.getOwner().equals(player))
+				return false;
+		}
+		return true;
+	}
 	
 	/**
 	 * Clear all the information of the map.
