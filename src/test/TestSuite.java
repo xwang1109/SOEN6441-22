@@ -15,6 +15,11 @@ import test.models.game.*;
 	DiceTest.class,AttackTest.class,FortificationTest.class,GameStateTest.class,
 	PlayerTest.class,ReinforcementTests.class
 	})
+/**
+ * Test Suite for running all tests
+ * @author Xinyan Wang
+ *
+ */
 public class TestSuite {
 
 	
