@@ -187,6 +187,9 @@ public class AttackView {
         }
 	}
 	
+	/**
+	 * Let player to select the countries, number of armies, etc, in the attack phase
+	 */
 	public void showSelectionState() {
 			
 		clearAction();
@@ -367,6 +370,13 @@ public class AttackView {
 	}
 
 
+	/**
+	 * After player chooses from which country to attack, the target, and number of dice, show the result of dice play
+	 * @param attackerDice
+	 * @param defenderDice
+	 * @param attackerLost
+	 * @param defenderLost
+	 */
 	public void showResolutionState(int[] attackerDice, int[] defenderDice, int attackerLost, int defenderLost) {
 		clearAction();
 
@@ -443,6 +453,10 @@ public class AttackView {
 		
 	}
 
+	/**
+	 * After conquering, move army
+	 * @param minArmies
+	 */
 	public void showMoveArmiesState(int minArmies) {
 		clearAction();
 
