@@ -49,6 +49,7 @@ import javax.swing.JLabel;
 /**
  * this is the Class For Map Editor
  * @author Xinyan,Parisa
+ *@version 1.0
  */
 public class MapEditorView extends JFrame implements Observer{
 

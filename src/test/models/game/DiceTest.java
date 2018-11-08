@@ -1,41 +1,33 @@
+/**
+ * this is the test Case for checking dice value between 6 & 1
+ * @author Parisa
+ * @version 2.0.0
+ */
 package test.models.game;
-//import org.junit.Before;
+import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
-import models.game.Player;
+
 import models.game.Dice;
 
-//import static org.junit.Assert.assertTrue;
-
-import java.io.*;
-import java.util.ArrayList;
-
-
 public class DiceTest {
-	public void aaa() {
-		
-	Player p1=new Player();
-    int[] a= {1,3,6};
-    int[] b= {4,2};
-	//System.out.print(p1.attack(a,b));
-    int[] attackM=new int[2];
-    
+int[] diceRoll;
+@Before	
+public void setupTest() {
+		Dice diceRollTest=new Dice();
+		diceRoll=diceRollTest.diceRoll(5);
 	}
-}
-
-
-
-/**
-@Before
-Dice dice=new Dice();
-public void InitiateDice() {
-	Dice dice=new Dice();
-}
-
+/*
+ * it is true if the value is between 1 & 6 for Dice
+ */
 @Test
-public void testCorrectMap() {
-	   
-	int[] resultDiceValue = dice.attackerDiceRandomFill(3);
-    assertTrue(condition);
-   
+public void validDiceTestValue() {
+	int a=diceRoll[2];
+	boolean diceValue1 = false;
+	if (1<=a & a<=6) {
+		diceValue1=true;
+	}
+	assertTrue(diceValue1);
 }
-*/
+
+}

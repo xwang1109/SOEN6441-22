@@ -50,14 +50,7 @@ public class FortificationTest {
 		countryList.add(countryFrom);
 		countryList.add(countryTo);
 		GameState.getInstance().getMap().setCountryList(countryList);
-		
-		ArrayList<Continent> continentList = new ArrayList<Continent>();
-		for(int i=0; i<5; i++) {
-			continentList.add(new Continent("continent" + i, i));
-		}
-		continentList.get(4).setOwner(player);
-		GameState.getInstance().getMap().setContinentList(continentList);
-		
+
 		countryFrom.setName("countryFromStr");
 		countryTo.setName("countryToStr");
 	}
@@ -79,5 +72,4 @@ public class FortificationTest {
 		assertEquals(countryFrom.getNumOfArmies(), (oldArmyNumberCountryFrom - 5));
 		assertEquals(countryTo.getNumOfArmies(), (oldArmyNumberCountryTo + 5));
 	}
-
 }
