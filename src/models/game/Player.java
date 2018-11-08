@@ -239,7 +239,7 @@ public class Player {
 	/**
 	 * This method remove a card from cardList of player.
 	 *
-	 * @param cardTypeCode NEED to add more info
+	 * @param cardTypeCode 
 	 */
 	public void removeCard(int cardTypeCode) {
 		for(Card card: cardList){
@@ -396,7 +396,7 @@ public class Player {
     	int j=attackerDice.length;
     	
     	
-    	//for(int i=0; i<defenderDice.length; i++) {
+    	
 
     	for(int i=defenderDice.length-1; i>=0; i--) {
     		j=j-1; 

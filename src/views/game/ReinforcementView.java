@@ -40,8 +40,9 @@ import javax.swing.border.EtchedBorder;
  * Class ReinforcementView is the view for a part of setup phase and the reinforcement phase
  * in this view players place their given armies one by one on their own countries
  * then reinforcement phase begins
- * @author Mehrnaz
+ * @author Mehrnaz,Bingyang
  * @see controllers.game.ReinforcementController
+ * @version 2.0
  */
 public class ReinforcementView{
 	private ArrayList<Player> playerList;
@@ -208,11 +209,11 @@ public class ReinforcementView{
 		controlPanel.add(mapPane);
 		
 		///////test change cards///////
+		/*playerList.get(0).getNewCard();
 		playerList.get(0).getNewCard();
 		playerList.get(0).getNewCard();
 		playerList.get(0).getNewCard();
-		playerList.get(0).getNewCard();
-		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();*/
 
 		//////////////////////////////////////
 		
@@ -240,12 +241,7 @@ public class ReinforcementView{
 		CardExchangeView ccv=new CardExchangeView(player,this);
 		ccv.setVisible(true);
 		
-		//if (player.enforceExchangeCard()) {
-		//	leftArmies += player.addArmyForCard();
-		//	messageLable.setText("Your cards have exchanged with armies");
-		//} else if (player.isPossibleExchangeCard()) {
-		//	buttonPane.add(changeCardButton);				
-		//}
+		
 		updateLabels();
 	}
 /**
