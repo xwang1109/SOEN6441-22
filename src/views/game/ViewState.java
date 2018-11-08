@@ -20,12 +20,16 @@ public class ViewState extends JFrame {
 
 	private JPanel controlPanel = new JPanel();
 	private MapCountryPanel mapPanel = new MapCountryPanel();             //all the views need to share a table for map
-	
-	// Phase label implementation through observer pattern
-	class PhaseDisplay implements Observer {
-		private JLabel phaseLabel = new JLabel();
+	private PlayerWorldDomainView panel;
+	// Phase view implementation through observer pattern
+	class PhaseView implements Observer {
 		
-		public PhaseDisplay() {
+		private static final long serialVersionUID = 1L;
+		private JLabel phaseLabel = new JLabel();
+		private JLabel playerLabel = new JLabel();
+		private JLabel infoLabel = new JLabel();
+		
+		public PhaseView() {
 			doUpdateLabel();
 		}
 		
@@ -40,22 +44,29 @@ public class ViewState extends JFrame {
 		
 		private void doUpdateLabel() {
 			phaseLabel.setText(GameState.getInstance().getPhase().toString());
+			if(GameState.getInstance().getPlayerList().size()!=0) {
+				playerLabel.setText(Integer.toString(GameState.getInstance().getCurrentPlayer().getId()));
+			}
+			infoLabel.setText(GameState.getInstance().getPhaseState().getPhaseInfo());
 		}
 	}
-	PhaseDisplay phaseDisplay = new PhaseDisplay();
+	PhaseView phaseDisplay = new PhaseView();
 	
 	JLabel getPhaseLabel() {
 		return phaseDisplay.getLabel();
 	}
+	
 	
 	/**
 	 * Constructor of class ViewState to set the window of the game
 	 */
 	private ViewState() {
 		controlPanel = new JPanel();
-		this.setSize(1024,800);
-		
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		GameState.getInstance().addPhaseObserver(phaseDisplay);
+		panel = new PlayerWorldDomainView();
+		GameState.getInstance().addObserver(panel);
+		GameState.getInstance().addPhaseObserver(panel);
 	}
 	
 	static private ViewState instance = new ViewState();
@@ -83,7 +94,7 @@ public class ViewState extends JFrame {
 	public void showBasicView() {
 		clear();
 		new BasicView(controlPanel);
-		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		getContentPane().add(controlPanel, BorderLayout.CENTER);
 		setVisible(true);
 	}
 
@@ -93,8 +104,9 @@ public class ViewState extends JFrame {
 	public void showPlayerView() {
 		clear();
 		new PlayerSetupView(controlPanel,this);
-		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		getContentPane().add(controlPanel, BorderLayout.CENTER);
 		getContentPane().add(mapPanel, BorderLayout.SOUTH);
+		getContentPane().add(panel, BorderLayout.EAST);
 		setVisible(true);
 	}
 	
@@ -104,7 +116,8 @@ public class ViewState extends JFrame {
 	public void showReinforcementView() {
 		clear();
 		new ReinforcementView(controlPanel);
-		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		getContentPane().add(controlPanel, BorderLayout.CENTER);
+		getContentPane().add(panel, BorderLayout.EAST);
 		setVisible(true);
 	}
 	
@@ -114,7 +127,8 @@ public class ViewState extends JFrame {
 	public void showAttackView() {
 		clear();
 		new AttackView(controlPanel);
-		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		getContentPane().add(controlPanel, BorderLayout.CENTER);
+		getContentPane().add(panel,  BorderLayout.EAST);
 		setVisible(true);
 	}
 	
@@ -124,7 +138,8 @@ public class ViewState extends JFrame {
 	public void showFortificationView() {
 		clear();
 		new FortificationView(controlPanel);
-		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		getContentPane().add(controlPanel, BorderLayout.CENTER);
+		getContentPane().add(panel, BorderLayout.EAST);
 		setVisible(true);
 	}
 
@@ -134,7 +149,7 @@ public class ViewState extends JFrame {
 	public void showEndGameView() {
 		clear();
 		new EndGameView(controlPanel);
-		getContentPane().add(controlPanel, BorderLayout.NORTH);
+		getContentPane().add(controlPanel, BorderLayout.CENTER);
 		setVisible(true);
 	}
 	
@@ -144,5 +159,9 @@ public class ViewState extends JFrame {
 
 	public void setMapPanel(MapCountryPanel mapPanel) {
 		this.mapPanel = mapPanel;
+	}
+	
+	public void setWorldPanel(PlayerWorldDomainView panel) {
+		this.panel = panel;
 	}
 }

@@ -151,10 +151,6 @@ public class MapEditorView extends JFrame implements Observer{
 		fileMenu.add(saveMenuItem);
 		saveMenuItem.addActionListener(new MapEditorController(map,this));
 
-		
-		
-		
-		
 		this.mapCountryPanel = new MapCountryPanel();
 		mapCountryPanel.addCountryTableForMapEditor(map);
         getContentPane().add(mapCountryPanel, BorderLayout.CENTER);
@@ -210,23 +206,15 @@ public class MapEditorView extends JFrame implements Observer{
 	
 	@Override
 	public void update(Observable map, Object x) {
-		
 		getContentPane().remove(mapContinentPanel);
 		getContentPane().remove(mapCountryPanel);
-		
-		
 		this.mapContinentPanel = new MapContinentPanel();
 	    mapContinentPanel.addContinentTableForMapEditor((Map)map);
 		this.mapCountryPanel = new MapCountryPanel();
 		mapCountryPanel.addCountryTableForMapEditor((Map)map);
-		
         getContentPane().add(mapCountryPanel, BorderLayout.CENTER);
         getContentPane().add(mapContinentPanel, BorderLayout.LINE_END);
-
 		this.revalidate();
-		
-		
-		
 	}	
 
 }

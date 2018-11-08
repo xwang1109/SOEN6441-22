@@ -51,7 +51,7 @@ public class ReinforcementController implements ActionListener {
 	public void addArmy() {
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)) {
 			Country selectedCoutnry = starUpView.getSelectedCountry();
-			selectedCoutnry.AddArmy();
+			selectedCoutnry.AddArmy();			
 			if(starUpView.decreaseLeftArmies() == 0) {
 				if (starUpView.getPlayerCounter() < GameState.getInstance().getPlayerList().size()-1) {
 					starUpView.setPlayerCounter(starUpView.getPlayerCounter()+1);

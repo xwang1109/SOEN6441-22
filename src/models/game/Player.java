@@ -27,7 +27,7 @@ public class Player {
 	
 	/** The country list. */
 	private ArrayList<Country> countryList = new ArrayList<Country>();
-	
+	private ArrayList<Continent> continentList = new ArrayList<Continent>();
 	/** The card list. */
 	private ArrayList<Card> cardList = new ArrayList<Card>();
 	
@@ -81,7 +81,11 @@ public class Player {
 	 * @return the army number
 	 */
 	public int getArmyNumber() {
-		return armyList.size();
+		int num = 0;
+		for(Country c:this.countryList) {
+			num+=c.getNumOfArmies();
+		}
+		return num;
 	}
 	
 	/**
@@ -133,7 +137,9 @@ public class Player {
 		getArmyforCards = i;
 	}
 	
-	
+	public ArrayList<Continent> getContinentList(){
+		return this.continentList;
+	}
 	/**
 	 * Attack.
 	 *
