@@ -303,7 +303,9 @@ public class Player {
 		for(Country country: countryList){
 			if (country.getName() == from) {
 				source = country;
-			} else if (country.getName() == to) {
+			} 
+			
+			if (country.getName() == to) {
 				dest = country;
 			}
 		}
@@ -430,4 +432,15 @@ public class Player {
 		return false;
 	}	
 
+	/**
+	 * find out that if the player can attack
+	 */
+	public boolean conquer(Country country) {
+		if (country.getNumOfArmies() == 0) {
+			country.setOwner(this);
+			return true;
+		}
+		else return false;
+	}	
+	
 }

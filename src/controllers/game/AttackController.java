@@ -73,8 +73,7 @@ public class AttackController implements ActionListener {
 			Country toCountry = attackView.getSelecterdCountryTo();
 			int diceNumber = attackView.getAttacherDiceNumber();
 			
-			if(toCountry.getNumOfArmies() == 0) {
-				toCountry.setOwner(GameState.getInstance().getCurrentPlayer());
+			if (GameState.getInstance().getCurrentPlayer().conquer(toCountry)) {
 				if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer()))
 					StateView.getInstance().showEndGameView();
 				else
@@ -96,7 +95,7 @@ public class AttackController implements ActionListener {
 			}
 			break;
 		case AttackView.MoveArmiesStr:
-			//GameState.getInstance().fortify(attackView.getSelecterdCountryFrom().toString(), attackView.getSelecterdCountryTo().toString(), attackView.getArmiesNumberToMove());
+			//GameState.getInstance().fortify(attackView.getSelecterdCountryFrom().getName(), attackView.getSelecterdCountryTo().getName(), attackView.getArmiesNumberToMove());
 			GameState.getInstance().getCurrentPlayer().moveArmies(attackView.getSelecterdCountryFrom(), attackView.getSelecterdCountryTo(), attackView.getArmiesNumberToMove());
 			attackView.showSelectionState();
 			break;
@@ -110,11 +109,12 @@ public class AttackController implements ActionListener {
 			Country defenderCountry = attackView.getSelecterdCountryTo();
 			int diceNo = 0;
 			while(defenderCountry.getNumOfArmies()!=0 && attackerCountry.getNumOfArmies()>1) {
-				diceNo = doAttack();
+				diceNo = doAttack(attackerCountry, defenderCountry);
 			}
 							
-			if(defenderCountry.getNumOfArmies() == 0) {
-				defenderCountry.setOwner(GameState.getInstance().getCurrentPlayer());
+			//if(defenderCountry.getNumOfArmies() == 0) {
+			if (GameState.getInstance().getCurrentPlayer().conquer(defenderCountry)) {
+				//defenderCountry.setOwner(GameState.getInstance().getCurrentPlayer());
 				if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer()))
 					StateView.getInstance().showEndGameView();
 				else
@@ -139,11 +139,10 @@ public class AttackController implements ActionListener {
 		}
 	}
 	
-	public int doAttack() {
-		Country attackerCountry = attackView.getSelecterdCountryFrom();
-		Country defenderCountry = attackView.getSelecterdCountryTo();
-		int attackerDiceNumber = Math.min(3,defenderCountry.getNumOfArmies());
-		int defenderDiceNumber = Math.min(2,defenderCountry.getNumOfArmies());
+	public int doAttack(Country attackerCountry, Country defenderCountry) {
+
+		int attackerDiceNumber = Math.min(3,attackerCountry.getNumOfArmies());
+		int defenderDiceNumber = Math.min(2,Math.min(attackerCountry.getNumOfArmies(), defenderCountry.getNumOfArmies()));
 
 		Dice dice = new Dice();
 		int[] attackerDice = dice.diceRoll(attackerDiceNumber);
