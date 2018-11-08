@@ -1,6 +1,5 @@
 package models.game;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Arrays;
@@ -394,15 +393,13 @@ public class Player {
     		}
     		//getting next maximum item from array
     	  
-    		
-    	   //t
+    	   
     	   
     	}
     	 int[] result= {numberAttacerLoser,numberDefenderLoser};
     	 return result;
  
     }
-	
 	/**
 	 * find out that if the player can attack
 	 */
