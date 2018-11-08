@@ -138,6 +138,12 @@ public class AttackController implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Implement attack from one country to another
+	 * @param attackerCountry
+	 * @param defenderCountry
+	 * @return int
+	 */
 	public int doAttack(Country attackerCountry, Country defenderCountry) {
 
 		int attackerDiceNumber = Math.min(3,attackerCountry.getNumOfArmies());
