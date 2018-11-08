@@ -19,7 +19,7 @@ import views.game.BaseObserverFrame;
  * actions of assign and remove  all the countries, all the cards, all the armies to the player  
  * is possible to do.
  * @author Bingyang Yu ,Parisa khazaei
- * @version 1.0
+ * @version 2.0
  */
 public class Player {
 	
@@ -35,7 +35,7 @@ public class Player {
 	/** The army list. */
 	private ArrayList<Army> armyList = new ArrayList<Army>();
 	
-	/** The get armyfor cards. */
+	/** The get army for cards. */
 	private int getArmyforCards = 0; //number of times player is given army for cards
 	//the number of looser 
 	
@@ -151,7 +151,7 @@ public class Player {
 	/**
 	 * This method add armies to the player according to the reinforcement rules.
 	 *
-	 * @return the int
+	 * @return the number of armies after reinforcement phase.
 	 */
 	public int addReinforcementArmy() {
 		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
@@ -181,7 +181,7 @@ public class Player {
 	}
 	
 	/**
-	 * This method.
+	 * This method activated exchange card phase.
 	 *
 	 * @return true if player has to exchange card for army
 	 */
@@ -190,7 +190,7 @@ public class Player {
 	}
 	
 	/**
-	 * This method.
+	 * This method check the possibility of performing card exchange action.
 	 *
 	 * @return true if player has to exchange card for army
 	 */
@@ -201,7 +201,7 @@ public class Player {
 	}
 	
 	/**
-	 * This method.
+	 * This method get the type of each card.
 	 *
 	 * @return number of each card type
 	 */
@@ -262,7 +262,7 @@ public class Player {
 	
 	
 	/**
-	 * This method gets a random new car for the player
+	 * This method gets a random new card for the player
 	 *
 	 * 
 	 */
@@ -363,8 +363,7 @@ public class Player {
 	 */
 
 	public int[] attack(int[] attackerDice,int[] defenderDice) {
-  
-    	
+	
     	int numberAttacerLoser=0;
     	int numberDefenderLoser=0;
     	
@@ -376,7 +375,9 @@ public class Player {
     	
     	int j=attackerDice.length;
     	
-    		
+    	
+    	//for(int i=0; i<defenderDice.length; i++) {
+
     	for(int i=defenderDice.length-1; i>=0; i--) {
     		j=j-1; 
     		maxValueAttacker=attackerDice[j];
@@ -398,8 +399,18 @@ public class Player {
     	}
     	 int[] result= {numberAttacerLoser,numberDefenderLoser};
     	 return result;
-    	
-    	
+ 
     }
+	
+	/**
+	 * find out that if the player can attack
+	 */
+	public boolean isAttackPossible() {
+		for (Country c: countryList) {
+			if (c.hasAdjacentControlledByOthers())
+				return true;
+		}
+		return false;
+	}	
 
 }
