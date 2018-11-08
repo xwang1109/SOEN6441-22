@@ -95,8 +95,15 @@ public class MapTests  {
   public void testMapValidationMapNotConnected() {
 	  map.setAuthor("Xinyan");
 	  map.setImage("test.img");
-	  map.addCountry(new Country("Test1"));
-	  map.addCountry(new Country("Test2"));
+	  Continent c1 = new Continent("1",1);
+	  Continent c2 = new Continent("2",2);
+	  Country country1 = new Country("Test1");
+	  Country country2 = new Country("Test2");
+	  country1.setContinent(c1);
+	  country2.setContinent(c2);
+	  
+	  map.addCountry(country1);
+	  map.addCountry(country2);
 	  assertFalse(map.isConnected());
   }
    

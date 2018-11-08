@@ -39,8 +39,8 @@ public class Dice {
 	/**
 	 * Dice roll.
 	 *
-	 * @param numberofDices the numberof dices
-	 * @return the int[]
+	 * @param numberofDices the number of dices
+	 * @return the array of integer for Dice Value
 	 */
 	//this method assign random value to Dices.
 	 public int[] diceRoll(int numberofDices){
