@@ -27,6 +27,7 @@ public class GameStateTest {
 
 	@Before
 	public void setUp() throws Exception {
+		GameState.reset();
 		GameState.getInstance().loadMapFromFile (new File("res/001_I72_Ghtroc 720/001_I72_Ghtroc 720.map"));
 		//System.out.println(GameState.getInstance().getMap().getCountryList().size());
 	}

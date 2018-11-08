@@ -30,6 +30,7 @@ public class FortificationTest {
 	 */
 	@Before
 	public void setUp(){
+		GameState.reset();
 		GameState.getInstance().getPlayerList().add(player);
 		
 		countryFrom.setOwner(player);
