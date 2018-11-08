@@ -96,7 +96,8 @@ public class AttackController implements ActionListener {
 			}
 			break;
 		case AttackView.MoveArmiesStr:
-			GameState.getInstance().fortify(attackView.getSelecterdCountryFrom().toString(), attackView.getSelecterdCountryTo().toString(), attackView.getArmiesNumberToMove());
+			//GameState.getInstance().fortify(attackView.getSelecterdCountryFrom().toString(), attackView.getSelecterdCountryTo().toString(), attackView.getArmiesNumberToMove());
+			GameState.getInstance().getCurrentPlayer().moveArmies(attackView.getSelecterdCountryFrom(), attackView.getSelecterdCountryTo(), attackView.getArmiesNumberToMove());
 			attackView.showSelectionState();
 			break;
 		case AttackView.EndAttackPhaseStr:

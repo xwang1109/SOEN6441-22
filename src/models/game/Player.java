@@ -319,6 +319,20 @@ public class Player {
 		// error if move was invalid, made the biggest move
 		return realQt == qt;
 	}
+
+	/**
+	 * move armies during attack phase
+	 */
+	public void moveArmies(Country from, Country to, int qt) {
+		Country source = from, dest = to;
+		int realQt = Math.min( source.getNumOfArmies()-1, qt );
+				
+		// Move armies
+		for(int i = 0; i<realQt; i++){
+			source.decreaseArmy();
+			dest.increaseArmy();
+		}
+	}
 	
 	/**
 	 * To take input country, return which countries can be the valid destination of this country
