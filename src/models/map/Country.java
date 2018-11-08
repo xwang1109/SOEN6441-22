@@ -186,6 +186,18 @@ public class Country {
 	}
 	
 	/**
+	 * 
+	 */
+	public boolean hasAdjacentControlledByOthers() {
+		for(Country c:adjacentCountryList) {
+			if (!c.getOwner().equals(owner))
+				return true;
+		}
+		return false;
+			
+	}
+	
+	/**
 	 * Removes the adjacent country by ID.
 	 *
 	 * @param countryID the country ID
@@ -217,9 +229,7 @@ public class Country {
 	 */
 	public void decreaseArmy() {
 		if(armyList.size()>1){
-			Army army = armyList.get(1);
-			owner.getArmyList().remove(army);
-			armyList.remove(army);
+			armyList.remove(1);
 		}		
 	}
 	
@@ -230,4 +240,17 @@ public class Country {
 		Army army = new Army(owner);
 		armyList.add(army);
 	}
+	
+	/**
+	 * Remove a number of Armies from this country.
+	 */
+	public void removeArmies(int armiesNo) {
+		int armiesNumber = armiesNo;
+		while(armyList.size()>0 && armiesNumber>0){
+			Army army = armyList.get(0);
+			owner.getArmyList().remove(army);
+			armyList.remove(army);
+			armiesNumber--;
+		}		
+	}	
 }

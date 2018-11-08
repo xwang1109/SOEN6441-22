@@ -394,7 +394,8 @@ public class Player {
     		}
     		//getting next maximum item from array
     	  
-    	   
+    		
+    	   //t
     	   
     	}
     	 int[] result= {numberAttacerLoser,numberDefenderLoser};
