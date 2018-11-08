@@ -303,7 +303,9 @@ public class Player {
 		for(Country country: countryList){
 			if (country.getName() == from) {
 				source = country;
-			} else if (country.getName() == to) {
+			} 
+			
+			if (country.getName() == to) {
 				dest = country;
 			}
 		}
