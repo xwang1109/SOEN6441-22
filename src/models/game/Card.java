@@ -4,6 +4,8 @@ import java.util.Random;
 
 /**
  * The Class Card.
+ * @author Bingyang Yu
+ * @version 2.0
  */
 public class Card {
 	
