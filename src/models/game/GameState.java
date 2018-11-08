@@ -297,7 +297,10 @@ public class GameState extends Observable {
 	 * End turn for current player, and set the "currentPlayer" to next player
 	 */
 	public void endPlayerTurn() {
+	
 		currentPlayer = ++currentPlayer % playerList.size();
+		setChanged();
+		notifyObservers();
 	}
 
 	/**

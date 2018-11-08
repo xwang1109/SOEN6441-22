@@ -90,6 +90,15 @@ public class MapTests  {
 	  assertFalse(map.isValid());
 
   }
+  
+  @Test
+  public void testMapValidationMapNotConnected() {
+	  map.setAuthor("Xinyan");
+	  map.setImage("test.img");
+	  map.addCountry(new Country("Test1"));
+	  map.addCountry(new Country("Test2"));
+	  assertFalse(map.isConnected());
+  }
    
  
 }

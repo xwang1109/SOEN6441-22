@@ -154,6 +154,6 @@ public class Continent {
 	 * @return the player
 	 */
 	public Player checkOwnership() {
-		return null;
+		return this.owner;
 	}
 }
