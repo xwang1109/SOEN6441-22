@@ -50,6 +50,7 @@ public class AttackView {
 	private int armiesNumberToMove;
 	private boolean isActionListenerCountryActive = false;
 	private boolean isActionListenerDiceActive = false;
+	private boolean isActionListenerCountryLabelActive = false;
 	private Country selectedCountryFrom;
 	private Country selectedCountryTo;
 	private int attackerDiceNumber;
@@ -161,22 +162,26 @@ public class AttackView {
 		}
 		
         public void actionPerformed(ActionEvent event) {
-        	JComboBox comboBox = (JComboBox) event.getSource();
-            String selected = (String)comboBox.getSelectedItem();
-            Country selectedCountry = null;
-            for(Country c: GameState.getInstance().getMap().getCountryList()) {
-            	if (c.getName().equals(selected))
-            		selectedCountry = c; 
-            }
-            
-            //check if the owner of the selected country is the same as current player
-            boolean sameOwner = selectedCountry.getOwner() == GameState.getInstance().getCurrentPlayer();
-            
-            //if select a country and the owner is the current player,
-            //show the number of armies of this country
-            if ( selectedCountry != null && (sameOwner == needsSame) ) {
-            	label.setText(String.valueOf(selectedCountry.getNumOfArmies()));
-            }
+        	//if(isActionListenerCountryLabelActive) {
+	        	JComboBox comboBox = (JComboBox) event.getSource();
+	            String selected = (String)comboBox.getSelectedItem();
+	            if (selected != null) {
+		            Country selectedCountry = null;
+		            for(Country c: GameState.getInstance().getMap().getCountryList()) {
+		            	if (c.getName().equals(selected))
+		            		selectedCountry = c; 
+		            }
+		            
+		            //check if the owner of the selected country is the same as current player
+		            boolean sameOwner = selectedCountry.getOwner() == GameState.getInstance().getCurrentPlayer();
+		            
+		            //if select a country and the owner is the current player,
+		            //show the number of armies of this country
+		            if ( selectedCountry != null && (sameOwner == needsSame) ) {
+		            	label.setText(String.valueOf(selectedCountry.getNumOfArmies()));
+		            }
+	            }
+	        //}
         }
 	}
 	
@@ -215,41 +220,49 @@ public class AttackView {
 		targetDropBox.removeAllItems();
 		
 		//get list for drop down box
-		for(Country c: GameState.getInstance().getMap().getCountryList()) {
+        
+        isActionListenerCountryActive = false;
+//        isActionListenerCountryLabelActive = false;
+        for(Country c: GameState.getInstance().getMap().getCountryList()) {
         	if (c.getOwner() == GameState.getInstance().getCurrentPlayer() &&
         		c.getNumOfArmies() > 1 && c.hasAdjacentControlledByOthers())
         		fromDropBox.addItem(c.getName());
         }
+		isActionListenerCountryActive = true;
+//        isActionListenerCountryLabelActive = true;
 		
 		actionCountryInfoPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		actionCountryInfoPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		actionCountryInfoPanel.add(fromDropBox);
 		
+		
 		fromDropBox.addActionListener(new CountLabelListener(numberOfArmyInFromCountry, true));
 		
 		fromDropBox.addActionListener((ActionListener) new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-            	JComboBox comboBox = (JComboBox) event.getSource();
-                String selected = (String)comboBox.getSelectedItem();
-                Country selectedCountry = null;
-                for(Country c: GameState.getInstance().getMap().getCountryList()) {
-                	if (c.getName().equals(selected)) {
-                		selectedCountry = c; 
-                		selectedCountryFrom = c;                		
-                	}
-                }
-                
-                //get target countries for the drop down box, only show the adjacent countries of the "from country" which has different owner
-                isActionListenerCountryActive = false;
-                if(selectedCountry != null) {
-	                for( Country n: selectedCountry.getAdjacentCountryList()) {
-	                	if ( n.getOwner() != GameState.getInstance().getCurrentPlayer() ) {
-	                		targetDropBox.addItem(n.getName());
-	                	}
-	                }
-                }
-                isActionListenerCountryActive = true;
+	            	if (isActionListenerCountryActive) {
+		            	JComboBox comboBox = (JComboBox) event.getSource();
+		                String selected = (String)comboBox.getSelectedItem();
+		                Country selectedCountry = null;
+		                for(Country c: GameState.getInstance().getMap().getCountryList()) {
+		                	if (c.getName().equals(selected)) {
+		                		selectedCountry = c; 
+		                		selectedCountryFrom = c;                		
+		                	}
+		                }
+	                
+		                //get target countries for the drop down box, only show the adjacent countries of the "from country" which has different owner
+		                isActionListenerCountryActive = false;
+		                if(selectedCountry != null) {
+			                for( Country n: selectedCountry.getAdjacentCountryList()) {
+			                	if ( n.getOwner() != GameState.getInstance().getCurrentPlayer() ) {
+			                		targetDropBox.addItem(n.getName());
+			                	}
+			                }
+		                }
+		                isActionListenerCountryActive = true;
+	            	}
             }
          });
 		
@@ -260,34 +273,37 @@ public class AttackView {
 
 		targetDropBox.addActionListener((ActionListener) new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-            	JComboBox comboBox = (JComboBox) event.getSource();
-                String selected = (String)comboBox.getSelectedItem();
-                for(Country c: GameState.getInstance().getMap().getCountryList()) {
-                	if (c.getName().equals(selected)) {
-                		selectedCountryTo = c;                		
-                	}
-                }
-                if (isActionListenerCountryActive) { 
+                if (isActionListenerCountryActive) {
+                	JComboBox comboBox = (JComboBox) event.getSource();
+	                String selected = (String)comboBox.getSelectedItem();
+	                for(Country c: GameState.getInstance().getMap().getCountryList()) {
+	                	if (c.getName().equals(selected)) {
+	                		selectedCountryTo = c;                		
+	                	}
+	                }
+	 
                 	isActionListenerDiceActive = false;
 	                attackerDiceNumberDropBox.removeAllItems();
-	                for (int i=1; i<= Math.min(3,selectedCountryTo.getNumOfArmies()); i++)
+	                for (int i=1; i<= Math.min(3,selectedCountryFrom.getNumOfArmies()); i++)
 	                	attackerDiceNumberDropBox.addItem(i);
 	                attackerDiceNumberDropBox.revalidate();
 	                attackerDiceNumberDropBox.repaint();
 
 	                defenderDiceNumberDropBox.removeAllItems();
-	                for (int i=1; i<= Math.min(2,selectedCountryTo.getNumOfArmies()); i++)
+	                for (int i=1; i<= Math.min(2,Math.min(selectedCountryTo.getNumOfArmies(),selectedCountryFrom.getNumOfArmies())); i++)
 	                	defenderDiceNumberDropBox.addItem(i);
 	                defenderDiceNumberDropBox.revalidate();
 	                defenderDiceNumberDropBox.repaint();
 
 	                isActionListenerDiceActive = true;
-	                attackerDiceNumberDropBox.setSelectedIndex(0);
-	                defenderDiceNumberDropBox.setSelectedIndex(0);
+	                if (attackerDiceNumberDropBox.getItemCount()>0)
+	                	attackerDiceNumberDropBox.setSelectedIndex(0);
+	                if (defenderDiceNumberDropBox.getItemCount()>0)
+	                	defenderDiceNumberDropBox.setSelectedIndex(0);
                 }
             }
          });
-
+        
 		JPanel actionNumberOfArmy = new JPanel();
 		actionInforPanel.add(actionNumberOfArmy);
 		actionNumberOfArmy.setLayout(new GridLayout(2, 1));
@@ -342,6 +358,7 @@ public class AttackView {
 		JLabel label_1 = new JLabel("");
 		actionCountryInfoPanel.add(label_1);
 		actionButtonPanel.add(actionButton);
+		actionButtonPanel.setLayout(new GridLayout(2, 1));
 		
 		actionButtonPanel.add(endAttBtn);
 		actionButtonPanel.add(allOutButton);

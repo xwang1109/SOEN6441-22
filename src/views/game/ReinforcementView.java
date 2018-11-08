@@ -208,18 +208,18 @@ public class ReinforcementView{
 		controlPanel.add(mapPane);
 		
 		///////test change cards///////
-		//playerList.get(0).getNewCard();
-		//playerList.get(0).getNewCard();
-		//playerList.get(0).getNewCard();
-		//playerList.get(0).getNewCard();
-		//playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();
 
 		//////////////////////////////////////
 		
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)){
 			playerCounter = 0;
 			player = playerList.get(playerCounter);		
-//			leftArmies = player.getArmyNumber();
+
 			leftArmies = player.getLeftArmyNumber();		
 		}
 		

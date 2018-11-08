@@ -18,7 +18,7 @@ import views.game.BaseObserverFrame;
  * actions of assign and remove  all the countries, all the cards, all the armies to the player  
  * is possible to do.
  * @author Bingyang Yu ,Parisa khazaei
- * @version 1.0
+ * @version 2.0
  */
 public class Player {
 	
@@ -34,7 +34,7 @@ public class Player {
 	/** The army list. */
 	private ArrayList<Army> armyList = new ArrayList<Army>();
 	
-	/** The get armyfor cards. */
+	/** The get army for cards. */
 	private int getArmyforCards = 0; //number of times player is given army for cards
 	//the number of looser 
 	
@@ -156,7 +156,7 @@ public class Player {
 	/**
 	 * This method add armies to the player according to the reinforcement rules.
 	 *
-	 * @return the int
+	 * @return the number of armies after reinforcement phase.
 	 */
 	public int addReinforcementArmy() {
 		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
@@ -186,7 +186,7 @@ public class Player {
 	}
 	
 	/**
-	 * This method.
+	 * This method activated exchange card phase.
 	 *
 	 * @return true if player has to exchange card for army
 	 */
@@ -195,7 +195,7 @@ public class Player {
 	}
 	
 	/**
-	 * This method.
+	 * This method check the possibility of performing card exchange action.
 	 *
 	 * @return true if player has to exchange card for army
 	 */
@@ -206,7 +206,7 @@ public class Player {
 	}
 	
 	/**
-	 * This method.
+	 * This method get the type of each card.
 	 *
 	 * @return number of each card type
 	 */
@@ -267,7 +267,7 @@ public class Player {
 	
 	
 	/**
-	 * This method gets a random new car for the player
+	 * This method gets a random new card for the player
 	 *
 	 * 
 	 */
@@ -325,6 +325,20 @@ public class Player {
 		// error if move was invalid, made the biggest move
 		return realQt == qt;
 	}
+
+	/**
+	 * move armies during attack phase
+	 */
+	public void moveArmies(Country from, Country to, int qt) {
+		Country source = from, dest = to;
+		int realQt = Math.min( source.getNumOfArmies()-1, qt );
+				
+		// Move armies
+		for(int i = 0; i<realQt; i++){
+			source.decreaseArmy();
+			dest.increaseArmy();
+		}
+	}
 	
 	/**
 	 * To take input country, return which countries can be the valid destination of this country
@@ -368,38 +382,53 @@ public class Player {
 	 */
 
 	public int[] attack(int[] attackerDice,int[] defenderDice) {
-  
-    	
+	
     	int numberAttacerLoser=0;
     	int numberDefenderLoser=0;
     	
-    	for(int i=0; i<defenderDice.length; i++) {
-    		
-    		int maxValueAttacker=Arrays.stream(attackerDice).max().getAsInt();
-    		int maxValueDefender=Arrays.stream(defenderDice).max().getAsInt();
+    	int maxValueAttacker=0;
+    	int maxValueDefender=0;
+    	
+    	Arrays.sort(attackerDice);
+    	Arrays.sort(defenderDice);
+    	
+    	int j=attackerDice.length;
+    	
+    	
+    	//for(int i=0; i<defenderDice.length; i++) {
+
+    	for(int i=defenderDice.length-1; i>=0; i--) {
+    		j=j-1; 
+    		maxValueAttacker=attackerDice[j];
+    		maxValueDefender=defenderDice[i];
     		
     		//this step defines which player will lose his army.
     		if (maxValueDefender>=maxValueAttacker) {
     		
     			
-    			numberAttacerLoser=numberAttacerLoser++;
+    			numberAttacerLoser=numberAttacerLoser+1;
     		}
     		else {
-    			numberDefenderLoser=numberDefenderLoser++;
+    			numberDefenderLoser=numberDefenderLoser+1;
     		}
-    		//getting next maximum item from array
-    	   int indexArrAtc= Arrays.binarySearch(attackerDice, maxValueAttacker);
-    	   int indexArrDfr= Arrays.binarySearch(defenderDice, maxValueDefender);
-    	   
-    	   attackerDice[indexArrAtc]=0;
-    	   defenderDice[indexArrDfr]=0;
+    		
+    	  
     	   
     	   
     	}
     	 int[] result= {numberAttacerLoser,numberDefenderLoser};
     	 return result;
-    	
-    	
+ 
     }
+	/**
+	 * find out that if the player can attack
+	 */
+	public boolean isAttackPossible() {
+		for (Country c: countryList) {
+			if (c.hasAdjacentControlledByOthers())
+				return true;
+		}
+		return false;
+	}	
 
 }
