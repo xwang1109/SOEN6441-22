@@ -479,7 +479,7 @@ public class AttackView {
 		
 		JComboBox armiesNumber = new JComboBox();
 		actionValuePanel.add(armiesNumber);
-		for (int i=minArmies; i<selectedCountryFrom.getNumOfArmies(); i++)
+		for (int i=minArmies; i<=selectedCountryFrom.getNumOfArmies(); i++)
 			armiesNumber.addItem(i);
 		
 		armiesNumber.addActionListener((ActionListener) new ActionListener() {

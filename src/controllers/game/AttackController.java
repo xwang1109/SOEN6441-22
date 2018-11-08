@@ -79,25 +79,35 @@ public class AttackController implements ActionListener {
 				else
 					attackView.showMoveArmiesState(diceNumber);
 			}
-			else if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
+			else {
+				if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
 				// current player ended his/her turn.
 				GameState.getInstance().endPlayerTurn();
 				StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 				
 				GameState.getInstance().setPhase(Phase.REINFORCEMENT);
 				StateView.getInstance().showReinforcementView();					
-			}
-			else if(GameState.getInstance().getCurrentPlayer().isAttackPossible())
-				attackView.showSelectionState();
-			else {
-				GameState.getInstance().setPhase(Phase.FORTIFICATION);
-				StateView.getInstance().showFortificationView();
+				}
+				else {
+					if(GameState.getInstance().getCurrentPlayer().isAttackPossible())
+						attackView.showSelectionState();
+					else {
+						GameState.getInstance().setPhase(Phase.FORTIFICATION);
+						StateView.getInstance().showFortificationView();
+					}
+				}
 			}
 			break;
 		case AttackView.MoveArmiesStr:
 			//GameState.getInstance().fortify(attackView.getSelecterdCountryFrom().getName(), attackView.getSelecterdCountryTo().getName(), attackView.getArmiesNumberToMove());
 			GameState.getInstance().getCurrentPlayer().moveArmies(attackView.getSelecterdCountryFrom(), attackView.getSelecterdCountryTo(), attackView.getArmiesNumberToMove());
-			attackView.showSelectionState();
+			if(GameState.getInstance().getCurrentPlayer().isAttackPossible())
+				attackView.showSelectionState();
+			else {
+				GameState.getInstance().setPhase(Phase.FORTIFICATION);
+				StateView.getInstance().showFortificationView();
+			}
+				
 			break;
 		case AttackView.EndAttackPhaseStr:
 			GameState.getInstance().setPhase(Phase.FORTIFICATION);
@@ -120,19 +130,23 @@ public class AttackController implements ActionListener {
 				else
 					attackView.showMoveArmiesState(diceNo);
 			}
-			else if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
+			else {
+				if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
 				// current player ended his/her turn.
 				GameState.getInstance().endPlayerTurn();
 				StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 				
 				GameState.getInstance().setPhase(Phase.REINFORCEMENT);
 				StateView.getInstance().showReinforcementView();					
-			}
-			else if(GameState.getInstance().getCurrentPlayer().isAttackPossible())
-				attackView.showSelectionState();
-			else {
-				GameState.getInstance().setPhase(Phase.FORTIFICATION);
-				StateView.getInstance().showFortificationView();
+				}
+				else {
+					if(GameState.getInstance().getCurrentPlayer().isAttackPossible())
+						attackView.showSelectionState();
+					else {
+						GameState.getInstance().setPhase(Phase.FORTIFICATION);
+						StateView.getInstance().showFortificationView();
+					}
+				}
 			}
 			
 			break;
