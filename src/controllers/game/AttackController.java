@@ -18,6 +18,7 @@ import views.game.StateView;
  * The Class AttackController. player perform attacks according to the rule of risk
  * @author Bingyang Yu
  * @author Mehrnaz
+ * @author Lin Li
  * @version 2.0
  */
 public class AttackController implements ActionListener {

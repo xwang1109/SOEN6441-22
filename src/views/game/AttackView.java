@@ -25,6 +25,7 @@ import models.map.Country;
  * class AttackView is the view for attack phase
  * @author Bingyang Yu
  * @author Mehrnaz
+ * @author Lin Li
  * @version 2.0
 */
 public class AttackView {
