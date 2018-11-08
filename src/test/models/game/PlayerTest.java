@@ -34,6 +34,17 @@ public class PlayerTest {
 		assertTrue(p.conquer(c));
 	}
 	
+	/**
+	 * test it is attack possible
+	 */
+	@Test
+	public void testAttackPossible() {
+		Country c = new Country("Test Country");
+		Player p2 = new Player();
+		c.setOwner(p2);
+		assertFalse(p.isAttackPossible());
+	}
+	
 	
 
 }
