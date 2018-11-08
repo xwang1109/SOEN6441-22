@@ -16,10 +16,10 @@ import javax.swing.SwingConstants;
 
 import controllers.game.AttackController;
 import controllers.game.FortificationController;
+import models.game.GameState;
 import models.game.Player;
+import models.game.GameState.Phase;
 import models.map.Country;
-import models.map.GameState;
-import models.map.GameState.Phase;
 
 /**
  * class AttackView is the view for attack phase
@@ -146,7 +146,7 @@ public class AttackView {
 		JPanel dataColumn = new JPanel();
 		informationPanel.add(dataColumn);
 		dataColumn.setLayout(new GridLayout(0, 1));
-		dataColumn.add(ViewState.getInstance().getPhaseLabel()); // observer
+		dataColumn.add(StateView.getInstance().getPhaseLabel()); // observer
 		
 		JLabel currentPlayerIndicator = new JLabel(String.valueOf(GameState.getInstance().getCurrentPlayer().getId()));
 		dataColumn.add(currentPlayerIndicator);
@@ -389,22 +389,25 @@ public class AttackView {
 		JLabel attackerDice1 = new JLabel(String.valueOf(attackerDice[0]));
 		actionDiceInfoPanel.add(attackerDice1);
 
+		JLabel attackerDice2 = new JLabel("");
+		actionDiceInfoPanel.add(attackerDice2);
 		if(attackerDice.length>1) {
-			JLabel attackerDice2 = new JLabel(String.valueOf(attackerDice[1]));
-			actionDiceInfoPanel.add(attackerDice2);
+			attackerDice2.setText(String.valueOf(attackerDice[1]));
 		}
 
+		JLabel attackerDice3 = new JLabel("");
+		actionDiceInfoPanel.add(attackerDice3);
 		if(attackerDice.length>2) {
-			JLabel attackerDice3 = new JLabel(String.valueOf(attackerDice[2]));
-			actionDiceInfoPanel.add(attackerDice3);
+			attackerDice3.setText(String.valueOf(attackerDice[2]));
 		}
 		
 		JLabel defenderDice1 = new JLabel(String.valueOf(defenderDice[0]));
 		actionDiceInfoPanel.add(defenderDice1);				
 		
+		JLabel defenderDice2 = new JLabel("");
+		actionDiceInfoPanel.add(defenderDice2);			
 		if(defenderDice.length>1) {
-			JLabel defenderDice2 = new JLabel(String.valueOf(defenderDice[1]));
-			actionDiceInfoPanel.add(defenderDice2);			
+			defenderDice2.setText(String.valueOf(defenderDice[1]));
 		}
 
 		

@@ -1,4 +1,4 @@
-package models.map;
+package models.game;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import models.game.Army;
-import models.game.Player;
+import models.map.Continent;
+import models.map.Country;
+import models.map.Map;
 
 /**
  * class GameState to store and pass the current state of the game
@@ -46,6 +47,37 @@ public class GameState extends Observable {
 			setChanged();
 			notifyObservers();		
 		}
+		
+		public String getPhaseInfo() {
+			String phaseInfo = "";
+			
+			switch(this.phase) {
+			case SETUP:
+				phaseInfo =  "Assign initial armies to your countries";
+				break;
+			case REINFORCEMENT:
+				phaseInfo = "<html>"+
+							"Exchaneg armies using cards<br>"+
+							"Assign armies to your country"+
+							"</html>";
+				break;
+			case ATTACK:
+				phaseInfo = "<html>"+
+							"Attack your neighboring countries"+
+							"</html>";
+				break;
+				
+			case FORTIFICATION:
+				phaseInfo = "<html>"+
+						"Move armies between your country"+
+						"</html>";
+				break;
+			default:
+				break;
+			
+			}
+			return phaseInfo;
+		}
 	}
 	
 	private PhaseState phaseState = new PhaseState();
@@ -55,6 +87,10 @@ public class GameState extends Observable {
 	 */
 	public Phase getPhase() { 
 		return phaseState.getPhase(); 
+	}
+	
+	public PhaseState getPhaseState() {
+		return phaseState;
 	}
 	
 	/**
@@ -250,6 +286,10 @@ public class GameState extends Observable {
 	 * @return Player
 	 */
 	public Player getCurrentPlayer() {
+		if(playerList.isEmpty()) {
+			return null;
+		}
+		
 		return playerList.get(currentPlayer);
 	}
 
@@ -274,5 +314,9 @@ public class GameState extends Observable {
 		// query the map
 		return getCurrentPlayer().getValidDestination(selectedCountry);
 	}
-
+	
+	public static void reset() {
+		instance = new GameState();
+	}
+	
 }

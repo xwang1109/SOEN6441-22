@@ -9,11 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import models.game.Card;
+import models.game.GameState;
 import models.game.Player;
 import models.game.Card.CardType;
 import models.map.Continent;
 import models.map.Country;
-import models.map.GameState;
 /**
  * This class tests reinforcement functions in Player model class
  * @author Mehrnaz
@@ -33,7 +33,7 @@ public class ReinforcementTests {
 		//player1 owns 10 countries 
 		//player1 owns a continent with control value 4
 		//player1 owns 3 INFANTRY cards
-		
+		GameState.reset();
 		GameState.getInstance().getPlayerList().add(player1);
 		GameState.getInstance().getPlayerList().add(player2);
 

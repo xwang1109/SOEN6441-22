@@ -8,11 +8,11 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import models.game.Dice;
+import models.game.GameState;
+import models.game.GameState.Phase;
 import models.map.Country;
-import models.map.GameState;
-import models.map.GameState.Phase;
 import views.game.AttackView;
-import views.game.ViewState;
+import views.game.StateView;
 
 /**
  * The Class AttackController. player perform attacks according to the rule of risk
@@ -48,7 +48,7 @@ public class AttackController implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 		
 		switch ( e.getActionCommand() ) {
 		case AttackView.RollDiceStr:
@@ -73,35 +73,35 @@ public class AttackController implements ActionListener {
 			Country toCountry = attackView.getSelecterdCountryTo();
 			int diceNumber = attackView.getAttacherDiceNumber();
 			
-			if(toCountry.getNumOfArmies() == 0) {
-				toCountry.setOwner(GameState.getInstance().getCurrentPlayer());
+			if (GameState.getInstance().getCurrentPlayer().conquer(toCountry)) {
 				if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer()))
-					ViewState.getInstance().showEndGameView();
+					StateView.getInstance().showEndGameView();
 				else
 					attackView.showMoveArmiesState(diceNumber);
 			}
 			else if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
 				// current player ended his/her turn.
 				GameState.getInstance().endPlayerTurn();
-				ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+				StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 				
 				GameState.getInstance().setPhase(Phase.REINFORCEMENT);
-				ViewState.getInstance().showReinforcementView();					
+				StateView.getInstance().showReinforcementView();					
 			}
 			else if(GameState.getInstance().getCurrentPlayer().isAttackPossible())
 				attackView.showSelectionState();
 			else {
 				GameState.getInstance().setPhase(Phase.FORTIFICATION);
-				ViewState.getInstance().showFortificationView();
+				StateView.getInstance().showFortificationView();
 			}
 			break;
 		case AttackView.MoveArmiesStr:
-			GameState.getInstance().fortify(attackView.getSelecterdCountryFrom().toString(), attackView.getSelecterdCountryTo().toString(), attackView.getArmiesNumberToMove());
+			//GameState.getInstance().fortify(attackView.getSelecterdCountryFrom().getName(), attackView.getSelecterdCountryTo().getName(), attackView.getArmiesNumberToMove());
+			GameState.getInstance().getCurrentPlayer().moveArmies(attackView.getSelecterdCountryFrom(), attackView.getSelecterdCountryTo(), attackView.getArmiesNumberToMove());
 			attackView.showSelectionState();
 			break;
 		case AttackView.EndAttackPhaseStr:
 			GameState.getInstance().setPhase(Phase.FORTIFICATION);
-			ViewState.getInstance().showFortificationView();
+			StateView.getInstance().showFortificationView();
 			break;
 
 		case AttackView.AllOutStr:
@@ -109,40 +109,40 @@ public class AttackController implements ActionListener {
 			Country defenderCountry = attackView.getSelecterdCountryTo();
 			int diceNo = 0;
 			while(defenderCountry.getNumOfArmies()!=0 && attackerCountry.getNumOfArmies()>1) {
-				diceNo = doAttack();
+				diceNo = doAttack(attackerCountry, defenderCountry);
 			}
 							
-			if(defenderCountry.getNumOfArmies() == 0) {
-				defenderCountry.setOwner(GameState.getInstance().getCurrentPlayer());
+			//if(defenderCountry.getNumOfArmies() == 0) {
+			if (GameState.getInstance().getCurrentPlayer().conquer(defenderCountry)) {
+				//defenderCountry.setOwner(GameState.getInstance().getCurrentPlayer());
 				if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer()))
-					ViewState.getInstance().showEndGameView();
+					StateView.getInstance().showEndGameView();
 				else
 					attackView.showMoveArmiesState(diceNo);
 			}
 			else if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
 				// current player ended his/her turn.
 				GameState.getInstance().endPlayerTurn();
-				ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+				StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 				
 				GameState.getInstance().setPhase(Phase.REINFORCEMENT);
-				ViewState.getInstance().showReinforcementView();					
+				StateView.getInstance().showReinforcementView();					
 			}
 			else if(GameState.getInstance().getCurrentPlayer().isAttackPossible())
 				attackView.showSelectionState();
 			else {
 				GameState.getInstance().setPhase(Phase.FORTIFICATION);
-				ViewState.getInstance().showFortificationView();
+				StateView.getInstance().showFortificationView();
 			}
 			
 			break;
 		}
 	}
 	
-	public int doAttack() {
-		Country attackerCountry = attackView.getSelecterdCountryFrom();
-		Country defenderCountry = attackView.getSelecterdCountryTo();
-		int attackerDiceNumber = Math.min(3,defenderCountry.getNumOfArmies());
-		int defenderDiceNumber = Math.min(2,defenderCountry.getNumOfArmies());
+	public int doAttack(Country attackerCountry, Country defenderCountry) {
+
+		int attackerDiceNumber = Math.min(3,attackerCountry.getNumOfArmies());
+		int defenderDiceNumber = Math.min(2,Math.min(attackerCountry.getNumOfArmies(), defenderCountry.getNumOfArmies()));
 
 		Dice dice = new Dice();
 		int[] attackerDice = dice.diceRoll(attackerDiceNumber);

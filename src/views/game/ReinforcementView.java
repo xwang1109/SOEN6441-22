@@ -25,10 +25,10 @@ import controllers.game.ReinforcementController;
 import controllers.map.MapEditorStartController;
 import models.game.Player;
 import models.game.Card.CardType;
+import models.game.GameState.Phase;
 import models.game.Card;
+import models.game.GameState;
 import models.map.Country;
-import models.map.GameState;
-import models.map.GameState.Phase;
 import views.map.MapCountryPanel;
 
 import javax.swing.JTextPane;
@@ -183,7 +183,7 @@ public class ReinforcementView{
 		cavalrycardNumberLabel = new JLabel("");
 		artillerycardNumberLabel = new JLabel("");
 
-		labelValuePane.add(ViewState.getInstance().getPhaseLabel());		
+		labelValuePane.add(StateView.getInstance().getPhaseLabel());		
 		labelValuePane.add(playerLabel);
 		labelValuePane.add(leftArmyLabel);
 		labelValuePane.add(infantrycardNumberLabel);

@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import models.game.GameState;
+import models.game.GameState.Phase;
 import models.map.Country;
-import models.map.GameState;
-import models.map.GameState.Phase;
-import views.game.ViewState;
+import views.game.StateView;
 
 /**
  * class FortificationController to receive player action and call methods from model
@@ -52,10 +52,10 @@ public class FortificationController implements ActionListener {
 			GameState.getInstance().endPlayerTurn();
 						
 			//remember to refresh the map view all the time
-			ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 			
 			GameState.getInstance().setPhase(Phase.REINFORCEMENT);
-			ViewState.getInstance().showReinforcementView();		
+			StateView.getInstance().showReinforcementView();		
 			
 		} else {
 			System.out.println("Invalid reinforcement");

@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import models.game.GameState;
 import models.game.Player;
 import models.map.Country;
-import models.map.GameState;
 
 public class GameStateTest {
 
@@ -27,6 +27,7 @@ public class GameStateTest {
 
 	@Before
 	public void setUp() throws Exception {
+		GameState.reset();
 		GameState.getInstance().loadMapFromFile (new File("res/001_I72_Ghtroc 720/001_I72_Ghtroc 720.map"));
 		//System.out.println(GameState.getInstance().getMap().getCountryList().size());
 	}

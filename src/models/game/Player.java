@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 
 import models.map.Continent;
 import models.map.Country;
-import models.map.GameState;
 import views.game.BaseObserverFrame;
 
 
@@ -27,7 +26,7 @@ public class Player {
 	
 	/** The country list. */
 	private ArrayList<Country> countryList = new ArrayList<Country>();
-	
+	private ArrayList<Continent> continentList = new ArrayList<Continent>();
 	/** The card list. */
 	private ArrayList<Card> cardList = new ArrayList<Card>();
 	
@@ -81,7 +80,11 @@ public class Player {
 	 * @return the army number
 	 */
 	public int getArmyNumber() {
-		return armyList.size();
+		int num = 0;
+		for(Country c:this.countryList) {
+			num+=c.getNumOfArmies();
+		}
+		return num;
 	}
 	
 	/**
@@ -133,7 +136,9 @@ public class Player {
 		getArmyforCards = i;
 	}
 	
-	
+	public ArrayList<Continent> getContinentList(){
+		return this.continentList;
+	}
 	/**
 	 * Attack.
 	 *
@@ -298,7 +303,9 @@ public class Player {
 		for(Country country: countryList){
 			if (country.getName() == from) {
 				source = country;
-			} else if (country.getName() == to) {
+			} 
+			
+			if (country.getName() == to) {
 				dest = country;
 			}
 		}
@@ -318,6 +325,20 @@ public class Player {
 		
 		// error if move was invalid, made the biggest move
 		return realQt == qt;
+	}
+
+	/**
+	 * move armies during attack phase
+	 */
+	public void moveArmies(Country from, Country to, int qt) {
+		Country source = from, dest = to;
+		int realQt = Math.min( source.getNumOfArmies()-1, qt );
+				
+		// Move armies
+		for(int i = 0; i<realQt; i++){
+			source.decreaseArmy();
+			dest.increaseArmy();
+		}
 	}
 	
 	/**
@@ -411,4 +432,15 @@ public class Player {
 		return false;
 	}	
 
+	/**
+	 * find out that if the player can attack
+	 */
+	public boolean conquer(Country country) {
+		if (country.getNumOfArmies() == 0) {
+			country.setOwner(this);
+			return true;
+		}
+		else return false;
+	}	
+	
 }
