@@ -1,5 +1,6 @@
 package models.game;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Arrays;
@@ -367,26 +368,31 @@ public class Player {
     	int numberAttacerLoser=0;
     	int numberDefenderLoser=0;
     	
-    	for(int i=0; i<defenderDice.length; i++) {
+    	int maxValueAttacker=0;
+    	int maxValueDefender=0;
+    	
+    	Arrays.sort(attackerDice);
+    	Arrays.sort(defenderDice);
+    	
+    	int j=attackerDice.length;
+    	
     		
-    		int maxValueAttacker=Arrays.stream(attackerDice).max().getAsInt();
-    		int maxValueDefender=Arrays.stream(defenderDice).max().getAsInt();
+    	for(int i=defenderDice.length-1; i>=0; i--) {
+    		j=j-1; 
+    		maxValueAttacker=attackerDice[j];
+    		maxValueDefender=defenderDice[i];
     		
     		//this step defines which player will lose his army.
     		if (maxValueDefender>=maxValueAttacker) {
     		
     			
-    			numberAttacerLoser=numberAttacerLoser++;
+    			numberAttacerLoser=numberAttacerLoser+1;
     		}
     		else {
-    			numberDefenderLoser=numberDefenderLoser++;
+    			numberDefenderLoser=numberDefenderLoser+1;
     		}
     		//getting next maximum item from array
-    	   int indexArrAtc= Arrays.binarySearch(attackerDice, maxValueAttacker);
-    	   int indexArrDfr= Arrays.binarySearch(defenderDice, maxValueDefender);
-    	   
-    	   attackerDice[indexArrAtc]=0;
-    	   defenderDice[indexArrDfr]=0;
+    	  
     	   
     	   
     	}
