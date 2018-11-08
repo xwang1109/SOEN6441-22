@@ -34,7 +34,7 @@ public class Player {
 	/** The army list. */
 	private ArrayList<Army> armyList = new ArrayList<Army>();
 	
-	/** The get armyfor cards. */
+	/** The get army for cards. */
 	private int getArmyforCards = 0; //number of times player is given army for cards
 	//the number of looser 
 	
