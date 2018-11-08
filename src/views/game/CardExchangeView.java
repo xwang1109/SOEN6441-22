@@ -22,44 +22,17 @@ import models.game.Card;
 import models.game.Player;
 import models.game.Card.CardType;
 
-/**
- * The Class CardExchangeView. This class is to create a pop up window for player to exchange card in reinforcement phase.
- * @author Bingyang Yu
- * @version 2.0
- */
 public class CardExchangeView extends BaseObserverFrame  {
 	
-	/** The main panel. */
 	private JPanel 	mainPanel = new JPanel();
-	
-	/** The cardpanel. */
 	private JPanel cardpanel=new JPanel(new GridLayout(0,2));
-	
-	/** The cards. */
 	List<Card> cards ;
-	
-	/** The card labels. */
 	List<JLabel> cardLabels;
-    
-    /** The toggle buttons. */
     List<JToggleButton> toggleButtons;
-	
-	/** The exchangebutton. */
 	private JButton exchangebutton;
-	
-	/** The originalview. */
 	ReinforcementView originalview;
+	private JButton returnbutton=new JButton("Return");;
 	
-	/** The returnbutton. */
-	private JButton returnbutton=new JButton("Return");
-	
-	/**
-	 * Instantiates a new card exchange frame.
-	 *
-	 * @param player the player
-	 * @param reinforcementView the reinforcement view
-	 * @throws HeadlessException the headless exception
-	 */
 	public CardExchangeView(Player player, ReinforcementView reinforcementView) throws HeadlessException {
 		this.player = player;
 		this.originalview = reinforcementView;
@@ -73,13 +46,9 @@ public class CardExchangeView extends BaseObserverFrame  {
 		
 		
 	}
-	
-	/** This class is to update the card exchange view.
-	 * @see views.game.BaseObserverFrame#update()
-	 */
 	public void update()
 	{
-	
+	//	this.setVisible(false);
 		this.mainPanel.removeAll();
 		this.mainPanel.revalidate();
 		this.mainPanel.repaint();
@@ -90,16 +59,13 @@ public class CardExchangeView extends BaseObserverFrame  {
 		
 		this.init();
 		this.originalview.updateLabels();
-	
+	//	this.setVisible(true);
 	}
 	
 	
-	/**
-	 * Instantiates the card exchange view
-	 */
 	public void init()
 	{
-	
+	//	this.removeAll();
 		
 		this.mainPanel.setLayout((new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS)));
 		returnbutton.addActionListener(new ActionListener() {
@@ -112,7 +78,7 @@ public class CardExchangeView extends BaseObserverFrame  {
         		cardpanel.revalidate();
         		cardpanel.repaint();
         		CardExchangeView.super.dispose();
-        		
+        		//mainPanel.getParent().setVisible(false);
         		originalview.updateLabels();
         		originalview.enable();
             }
@@ -125,11 +91,11 @@ public class CardExchangeView extends BaseObserverFrame  {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				// TODO Auto-generated method stub
 				List<Card> checkedcards = new ArrayList<Card>();
 				for(int i =0; i<toggleButtons.size();i++)
 				{
-					if(toggleButtons.get(i).isSelected())                //if the toggle is checked, then record the corresponding card
+					if(toggleButtons.get(i).isSelected())//if the toggle is checked, then record the corresponding card
 					{
 						checkedcards.add(cards.get(i));
 					}
@@ -175,7 +141,7 @@ public class CardExchangeView extends BaseObserverFrame  {
 			cardLabels.add(cardlabel);
 			JToggleButton toggle=new JToggleButton();
 			toggleButtons.add(toggle);
-			//this is to make the check boxes only have 3 max to be checked
+			//this is to make the checkboxs only have 3 max to be checked
 			toggle.addChangeListener(new ChangeListener() {
 
 				@Override

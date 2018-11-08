@@ -21,15 +21,29 @@ public class Dice {
 		
 	}
 	//this method assign random value to Dices.
-	 public int[] diceRoll(int numberofDices){
+	 public int[] attackerDiceRandomFill(int numberAttackerDice){
 
-		 	int[] dice = new int[numberofDices];
-		    Random random = new Random();
+		 	int[] attackerDice = new int[numberAttackerDice];
+		    Random randAttcker = new Random();
 		    
-		    for(int i=0;i<dice.length;i++)
+		    for(int i=0;i<attackerDice.length;i++)
 		    {
-		    	dice[i] = 1 + random.nextInt(6);
+		    	
+		    	attackerDice[i] = randAttcker.nextInt(6-1);
+		    	
 		    }
-		    return dice;
+		    return attackerDice;
+		    }
+	 public int[] defenderDiceRandomFill(int numberDefenderDice){
+		 	
+		 int[] defenderDice = new int[numberDefenderDice];
+		    Random randDefender = new Random();
+		    
+		    for(int i=0;i<defenderDice.length;i++)
+		    {
+		    	defenderDice[i] = randDefender.nextInt(6-1);
+		    	
+		    }
+		    return defenderDice;
 		    }
 }
