@@ -127,7 +127,7 @@ public class ViewState extends JFrame {
 	public void showAttackView() {
 		clear();
 		new AttackView(controlPanel);
-		getContentPane().add(controlPanel, BorderLayout.CENTER);
+		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		getContentPane().add(panel,  BorderLayout.EAST);
 		setVisible(true);
 	}
@@ -138,7 +138,7 @@ public class ViewState extends JFrame {
 	public void showFortificationView() {
 		clear();
 		new FortificationView(controlPanel);
-		getContentPane().add(controlPanel, BorderLayout.CENTER);
+		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		getContentPane().add(panel, BorderLayout.EAST);
 		setVisible(true);
 	}
@@ -149,7 +149,7 @@ public class ViewState extends JFrame {
 	public void showEndGameView() {
 		clear();
 		new EndGameView(controlPanel);
-		getContentPane().add(controlPanel, BorderLayout.CENTER);
+		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		setVisible(true);
 	}
 	
