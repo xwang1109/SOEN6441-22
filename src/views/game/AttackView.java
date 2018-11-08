@@ -220,13 +220,16 @@ public class AttackView {
 		targetDropBox.removeAllItems();
 		
 		//get list for drop down box
+        
         isActionListenerCountryActive = false;
-        isActionListenerCountryLabelActive = false;
-		for(Country c: GameState.getInstance().getMap().getCountryList()) {
+//        isActionListenerCountryLabelActive = false;
+        for(Country c: GameState.getInstance().getMap().getCountryList()) {
         	if (c.getOwner() == GameState.getInstance().getCurrentPlayer() &&
         		c.getNumOfArmies() > 1 && c.hasAdjacentControlledByOthers())
         		fromDropBox.addItem(c.getName());
         }
+		isActionListenerCountryActive = true;
+//        isActionListenerCountryLabelActive = true;
 		
 		actionCountryInfoPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		actionCountryInfoPanel.setLayout(new GridLayout(0, 2, 0, 0));
@@ -250,7 +253,7 @@ public class AttackView {
 		                }
 	                
 		                //get target countries for the drop down box, only show the adjacent countries of the "from country" which has different owner
-//		                isActionListenerCountryActive = false;
+		                isActionListenerCountryActive = false;
 		                if(selectedCountry != null) {
 			                for( Country n: selectedCountry.getAdjacentCountryList()) {
 			                	if ( n.getOwner() != GameState.getInstance().getCurrentPlayer() ) {
@@ -258,7 +261,7 @@ public class AttackView {
 			                	}
 			                }
 		                }
-//		                isActionListenerCountryActive = true;
+		                isActionListenerCountryActive = true;
 	            	}
             }
          });
@@ -287,21 +290,19 @@ public class AttackView {
 	                attackerDiceNumberDropBox.repaint();
 
 	                defenderDiceNumberDropBox.removeAllItems();
-	                for (int i=1; i<= Math.min(2,selectedCountryFrom.getNumOfArmies()); i++)
+	                for (int i=1; i<= Math.min(2,Math.min(selectedCountryTo.getNumOfArmies(),selectedCountryFrom.getNumOfArmies())); i++)
 	                	defenderDiceNumberDropBox.addItem(i);
 	                defenderDiceNumberDropBox.revalidate();
 	                defenderDiceNumberDropBox.repaint();
 
 	                isActionListenerDiceActive = true;
-	                //if (defenderDiceNumberDropBox)
-	                attackerDiceNumberDropBox.setSelectedIndex(0);
-	                defenderDiceNumberDropBox.setSelectedIndex(0);
+	                if (attackerDiceNumberDropBox.getItemCount()>0)
+	                	attackerDiceNumberDropBox.setSelectedIndex(0);
+	                if (defenderDiceNumberDropBox.getItemCount()>0)
+	                	defenderDiceNumberDropBox.setSelectedIndex(0);
                 }
             }
          });
-		
-        isActionListenerCountryActive = true;
-        isActionListenerCountryLabelActive = true;
         
 		JPanel actionNumberOfArmy = new JPanel();
 		actionInforPanel.add(actionNumberOfArmy);
@@ -357,6 +358,7 @@ public class AttackView {
 		JLabel label_1 = new JLabel("");
 		actionCountryInfoPanel.add(label_1);
 		actionButtonPanel.add(actionButton);
+		actionButtonPanel.setLayout(new GridLayout(2, 1));
 		
 		actionButtonPanel.add(endAttBtn);
 		actionButtonPanel.add(allOutButton);
