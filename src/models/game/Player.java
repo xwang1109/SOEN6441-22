@@ -18,7 +18,7 @@ import views.game.BaseObserverFrame;
  * actions of assign and remove  all the countries, all the cards, all the armies to the player  
  * is possible to do.
  * @author Bingyang Yu ,Parisa khazaei
- * @version 1.0
+ * @version 2.0
  */
 public class Player {
 	
@@ -150,7 +150,7 @@ public class Player {
 	/**
 	 * This method add armies to the player according to the reinforcement rules.
 	 *
-	 * @return the int
+	 * @return the number of armies after reinforcement phase.
 	 */
 	public int addReinforcementArmy() {
 		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
@@ -180,7 +180,7 @@ public class Player {
 	}
 	
 	/**
-	 * This method.
+	 * This method activated exchange card phase.
 	 *
 	 * @return true if player has to exchange card for army
 	 */
@@ -189,7 +189,7 @@ public class Player {
 	}
 	
 	/**
-	 * This method.
+	 * This method check the possibility of performing card exchange action.
 	 *
 	 * @return true if player has to exchange card for army
 	 */
@@ -200,7 +200,7 @@ public class Player {
 	}
 	
 	/**
-	 * This method.
+	 * This method get the type of each card.
 	 *
 	 * @return number of each card type
 	 */
@@ -261,7 +261,7 @@ public class Player {
 	
 	
 	/**
-	 * This method gets a random new car for the player
+	 * This method gets a random new card for the player
 	 *
 	 * 
 	 */
