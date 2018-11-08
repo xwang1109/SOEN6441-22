@@ -21,6 +21,7 @@ import models.map.Map;
  * This class is to show the player world domination view
  * It is an observer
  * @author Xinyan Wang
+ * @version 2.0
  *
  */
 public class PlayerWorldDomainView extends JScrollPane implements Observer {
