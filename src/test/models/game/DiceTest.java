@@ -17,7 +17,9 @@ public void setupTest() {
 		Dice diceRollTest=new Dice();
 		diceRoll=diceRollTest.diceRoll(5);
 	}
-
+/*
+ * it is true if the value is between 1 & 6 for Dice
+ */
 @Test
 public void validDiceTestValue() {
 	int a=diceRoll[2];
