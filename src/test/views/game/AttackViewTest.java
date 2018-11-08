@@ -1,23 +1,23 @@
-package test.models.game;
-
-import static org.junit.Assert.assertTrue;
+package test.views.game;
 
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
+
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
 
 import models.game.GameState;
 import models.game.Player;
 import models.map.Country;
 
 /**
- * This class tests attack functions of the game
+ * This class tests attack view of the game
  * @author Lin Li
  *
  */
-public class AttackTest {
+
+public class AttackViewTest {
 	
 	Player player0 = new Player();
 	Player player1 = new Player();
@@ -54,39 +54,25 @@ public class AttackTest {
 		
 		attackerCountry.setName("attackerCountryStr");
 		defenderCountry.setName("defenderCountryStr");
-	}
-	
-	/**
-	 * test for attack of Conquer
-	 */
-	@Test
-	public void testAttackConquer(){
-		int ArmyNumberDefenderCountry = defenderCountry.getNumOfArmies();
 		
-		// Player0 attacks player1, until player1 has no army left in the defenderCountry
-		defenderCountry.removeArmies(ArmyNumberDefenderCountry);		
-		player0.conquer(defenderCountry);
-		assertTrue(defenderCountry.getOwner()==player0);		
 	}
 	
 
-	
 	/**
-	 * test for attack of valid move after conquering
+	 * test for attack of attacker validation
 	 */
 	@Ignore
-	public void testValidMoveAfterConquering(){
+	public void testAttackerValidation(){
+		
 		
 	}
 	
 	/**
-	 * test for attack of end of game
+	 * test for attack of defender validation
 	 */
 	@Ignore
-	public void testEndOfGame(){
+	public void testDefenderValidation(){
 		
 	}
-	
-	
 
 }
