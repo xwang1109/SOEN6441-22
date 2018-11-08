@@ -17,12 +17,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import models.game.Army;
+import models.game.GameState;
 import models.game.Player;
 import models.map.Continent;
 import models.map.Country;
-import models.map.GameState;
 import models.map.Map;
-import views.game.ViewState;
+import views.game.StateView;
 
 
 /**
@@ -106,7 +106,7 @@ public class GameStartController implements ActionListener {
 			
 		}
 		else {
-			JOptionPane.showMessageDialog(ViewState.getInstance(), "not a valid map");
+			JOptionPane.showMessageDialog(StateView.getInstance(), "not a valid map");
 		}
 
 	}
@@ -123,10 +123,10 @@ public class GameStartController implements ActionListener {
 		GameState.getInstance().assignInitialArmy();
 
 		//refresh the table for map of all players
-		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 		
 		
-		ViewState.getInstance().showReinforcementView();
+		StateView.getInstance().showReinforcementView();
 
 		/*if ( true ) { // TODO need a map... GameState.getInstance().isMapLoaded() ) {
 			// Do something about players

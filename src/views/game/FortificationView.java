@@ -14,9 +14,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controllers.game.FortificationController;
+import models.game.GameState;
 import models.game.Player;
 import models.map.Country;
-import models.map.GameState;
 import views.map.MapCountryPanel;
 import javax.swing.JSplitPane;
 import java.awt.FlowLayout;
@@ -58,7 +58,7 @@ public class FortificationView {
 		JPanel dataColumn = new JPanel();
 		informationPanel.add(dataColumn);
 		dataColumn.setLayout(new GridLayout(0, 1));
-		dataColumn.add(ViewState.getInstance().getPhaseLabel());
+		dataColumn.add(StateView.getInstance().getPhaseLabel());
 		
 		JLabel currentPlayerIndicator = new JLabel(String.valueOf(GameState.getInstance().getCurrentPlayer().getId()));
 		dataColumn.add(currentPlayerIndicator);
