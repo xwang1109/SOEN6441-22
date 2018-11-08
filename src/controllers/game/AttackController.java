@@ -107,7 +107,7 @@ public class AttackController implements ActionListener {
 		case AttackView.AllOutStr:
 			Country attackerCountry = attackView.getSelecterdCountryFrom();
 			Country defenderCountry = attackView.getSelecterdCountryTo();
-			int diceNo;
+			int diceNo = 0;
 			while(defenderCountry.getNumOfArmies()!=0 && attackerCountry.getNumOfArmies()>1) {
 				diceNo = doAttack();
 			}
@@ -145,7 +145,7 @@ public class AttackController implements ActionListener {
 		int defenderDiceNumber = Math.min(2,defenderCountry.getNumOfArmies());
 
 		Dice dice = new Dice();
-		int[] attackerattackerDiceNumberDice = dice.diceRoll(attackerDiceNumber);
+		int[] attackerDice = dice.diceRoll(attackerDiceNumber);
 		int[] defenderDice = dice.diceRoll(defenderDiceNumber);
 		int[] attackResult = GameState.getInstance().getCurrentPlayer().attack(attackerDice, defenderDice);
 		attackerCountry.removeArmies(attackResult[0]);
