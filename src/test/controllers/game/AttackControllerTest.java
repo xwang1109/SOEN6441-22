@@ -1,8 +1,8 @@
-package test.views.game;
+package test.controllers.game;
+
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-
-import javax.swing.JComboBox;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -10,21 +10,18 @@ import org.junit.Ignore;
 import models.game.GameState;
 import models.game.Player;
 import models.map.Country;
-import views.game.AttackView;
 
 /**
  * This class tests attack view of the game
  * @author Lin Li
  *
  */
-
-public class AttackViewTest {
+public class AttackControllerTest {
 	
 	Player player0 = new Player();
 	Player player1 = new Player();
 	Country attackerCountry = new Country("attackerCountryStr");
 	Country defenderCountry = new Country("defenderCountryStr");
-	AttackView av = new AttackView(null);
 	
 	/**
 	 * Set up before test
@@ -56,24 +53,10 @@ public class AttackViewTest {
 		
 		attackerCountry.setName("attackerCountryStr");
 		defenderCountry.setName("defenderCountryStr");
-		
 	}
-	
 
-	/**
-	 * test for attack of attacker validation
-	 */
 	@Ignore
-	public void testAttackerValidation(){
-		
-		
-	}
-	
-	/**
-	 * test for attack of defender validation
-	 */
-	@Ignore
-	public void testDefenderValidation(){
+	public void test() {
 		
 	}
 

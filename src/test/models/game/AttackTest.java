@@ -74,19 +74,29 @@ public class AttackTest {
 	/**
 	 * test for attack of valid move after conquering
 	 */
-	@Ignore
+	@Test
 	public void testValidMoveAfterConquering(){
+		int ArmyNumberDefenderCountry = defenderCountry.getNumOfArmies();
+		
+		// Player0 attacks player1, until player1 has no army left in the defenderCountry
+		defenderCountry.removeArmies(ArmyNumberDefenderCountry);		
+		player0.conquer(defenderCountry);
+		player0.moveArmies(attackerCountry, defenderCountry, 5);
+		
+		assertTrue(defenderCountry.getNumOfArmies()==5);
 		
 	}
 	
 	/**
 	 * test for attack of end of game
 	 */
-	@Ignore
+	@Test
 	public void testEndOfGame(){
-		
-	}
-	
-	
+		int ArmyNumberDefenderCountry = defenderCountry.getNumOfArmies();	
 
+		// Player0 attacks player1, until player1 has no army left in the defenderCountry
+		defenderCountry.removeArmies(ArmyNumberDefenderCountry);		
+		player0.conquer(defenderCountry);
+		assertTrue(GameState.getInstance().getMap().mapOwner(player0));				
+	}
 }
