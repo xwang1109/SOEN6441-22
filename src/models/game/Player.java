@@ -391,7 +391,7 @@ public class Player {
     		else {
     			numberDefenderLoser=numberDefenderLoser+1;
     		}
-    		//getting next maximum item from array
+    		
     	  
     	   
     	   
