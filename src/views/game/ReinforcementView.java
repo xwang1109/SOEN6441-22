@@ -209,11 +209,11 @@ public class ReinforcementView{
 		controlPanel.add(mapPane);
 		
 		///////test change cards///////
+		/*playerList.get(0).getNewCard();
 		playerList.get(0).getNewCard();
 		playerList.get(0).getNewCard();
 		playerList.get(0).getNewCard();
-		playerList.get(0).getNewCard();
-		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();*/
 
 		//////////////////////////////////////
 		

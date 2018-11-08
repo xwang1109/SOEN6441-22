@@ -239,7 +239,7 @@ public class Player {
 	/**
 	 * This method remove a card from cardList of player.
 	 *
-	 * @param cardTypeCode NEED to add more info
+	 * @param cardTypeCode 
 	 */
 	public void removeCard(int cardTypeCode) {
 		for(Card card: cardList){
