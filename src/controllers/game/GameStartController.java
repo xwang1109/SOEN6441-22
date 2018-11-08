@@ -128,13 +128,7 @@ public class GameStartController implements ActionListener {
 		
 		StateView.getInstance().showReinforcementView();
 
-		/*if ( true ) { // TODO need a map... GameState.getInstance().isMapLoaded() ) {
-			// Do something about players
-			ViewState.getInstance().showReinforcementView();
-		} else {
-			// TODO do a popup
-			System.out.println("Issue with parsing the map");
-		}*/
+		
 	}
 
 

@@ -64,9 +64,9 @@ public class ReinforcementController implements ActionListener {
 					starUpView.setPlayerCounter(0);
 					starUpView.setLeftArmies(GameState.getInstance().getPlayerList().get(starUpView.getPlayerCounter()).addReinforcementArmy());
 					starUpView.showPlayer();
-					if(starUpView.getPlayer().getCardList().size()>4)//if there are more or equal to 5 cards, force to change card
+					if(starUpView.getPlayer().getCardList().size()>4)  //if there are more or equal to 5 cards, force to change card
 					{
-						starUpView.exchangeCard();;
+						starUpView.exchangeCard();
 
 					}
 				}
