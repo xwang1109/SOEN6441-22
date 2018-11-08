@@ -15,7 +15,7 @@ import views.map.MapCountryPanel;
  * class ViewState to switching between different views of the game
  * @author Lin Li
  */
-public class ViewState extends JFrame {
+public class StateView extends JFrame {
 	private static final long serialVersionUID = 7243006502142830314L;
 
 	private JPanel controlPanel = new JPanel();
@@ -60,7 +60,7 @@ public class ViewState extends JFrame {
 	/**
 	 * Constructor of class ViewState to set the window of the game
 	 */
-	private ViewState() {
+	private StateView() {
 		controlPanel = new JPanel();
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		GameState.getInstance().addPhaseObserver(phaseDisplay);
@@ -69,13 +69,13 @@ public class ViewState extends JFrame {
 		GameState.getInstance().addPhaseObserver(panel);
 	}
 	
-	static private ViewState instance = new ViewState();
+	static private StateView instance = new StateView();
 	
 	/**
 	 * Get the instance of view state
 	 * @return ViewState
 	 */
-	static public ViewState getInstance() {
+	static public StateView getInstance() {
 		return instance;
 	}
 	

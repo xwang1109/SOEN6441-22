@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 import controllers.map.*;
 import models.map.*;
-import views.game.ViewState;
+import views.game.StateView;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;

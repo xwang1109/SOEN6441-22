@@ -1,5 +1,5 @@
 
-import views.game.ViewState;
+import views.game.StateView;
 
 import java.io.*;
 
@@ -9,7 +9,7 @@ public class Risk {
 	
 	public static void main(String[] args) {
 		
-		ViewState vs = ViewState.getInstance();
+		StateView vs = StateView.getInstance();
 		vs.showBasicView();
 	}	
 }

@@ -47,7 +47,7 @@ public class PlayerWorldDomainView extends JScrollPane implements Observer {
 		
 		this.revalidate();
 		this.repaint();
-		ViewState.getInstance().getContentPane().add(this, BorderLayout.EAST);
+		StateView.getInstance().getContentPane().add(this, BorderLayout.EAST);
 	
 	}
 	/**

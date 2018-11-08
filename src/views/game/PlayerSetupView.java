@@ -29,7 +29,7 @@ public class PlayerSetupView {
 	 * @param controlPanel the control panel
 	 * @param frame the frame
 	 */
-	public PlayerSetupView(JPanel controlPanel,ViewState frame) {
+	public PlayerSetupView(JPanel controlPanel,StateView frame) {
 		
 		FlowLayout fl_controlPanel = (FlowLayout) controlPanel.getLayout();
 		fl_controlPanel.setAlignment(FlowLayout.LEADING);

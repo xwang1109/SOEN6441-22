@@ -183,7 +183,7 @@ public class ReinforcementView{
 		cavalrycardNumberLabel = new JLabel("");
 		artillerycardNumberLabel = new JLabel("");
 
-		labelValuePane.add(ViewState.getInstance().getPhaseLabel());		
+		labelValuePane.add(StateView.getInstance().getPhaseLabel());		
 		labelValuePane.add(playerLabel);
 		labelValuePane.add(leftArmyLabel);
 		labelValuePane.add(infantrycardNumberLabel);

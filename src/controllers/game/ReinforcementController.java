@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 
 import views.game.ReinforcementView;
-import views.game.ViewState;
+import views.game.StateView;
 import models.game.GameState;
 import models.game.Player;
 import models.game.GameState.Phase;
@@ -42,7 +42,7 @@ public class ReinforcementController implements ActionListener {
 			starUpView.exchangeCard();
 			break;
 		case "Finish Attack":
-			ViewState.getInstance().showAttackView();
+			StateView.getInstance().showAttackView();
 		}
 	}
 /**
@@ -78,14 +78,14 @@ public class ReinforcementController implements ActionListener {
 			selectedCoutnry.AddArmy();
 			if(starUpView.decreaseLeftArmies() == 0) {
 				GameState.getInstance().setPhase(Phase.ATTACK);
-				ViewState.getInstance().showAttackView();
+				StateView.getInstance().showAttackView();
 			} else {
 				starUpView.showLeftArmies();
 			}
 		}
 
 		//refresh the table for map
-		ViewState.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 				
 	}
 }
