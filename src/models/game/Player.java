@@ -362,11 +362,10 @@ public class Player {
 	 */
 
 	public int[] attack(int[] attackerDice,int[] defenderDice) {
-  
-    	
+	
     	int numberAttacerLoser=0;
     	int numberDefenderLoser=0;
-    	
+    	/*
     	for(int i=0; i<defenderDice.length; i++) {
     		
     		int maxValueAttacker=Arrays.stream(attackerDice).max().getAsInt();
@@ -389,11 +388,27 @@ public class Player {
     	   defenderDice[indexArrDfr]=0;
     	   
     	   
+    	}*/
+    	int[] result = new int[2];
+		result[1]=1;
+    	if (defenderDice.length==2) {
+    		result[0]=1;
     	}
-    	 int[] result= {numberAttacerLoser,numberDefenderLoser};
+    	else {
+    		result[0]=0;
+    	}
     	 return result;
-    	
-    	
     }
+	
+	/**
+	 * find out that if the player can attack
+	 */
+	public boolean isAttackPossible() {
+		for (Country c: countryList) {
+			if (c.hasAdjacentControlledByOthers())
+				return true;
+		}
+		return false;
+	}	
 
 }
