@@ -293,6 +293,7 @@ public class AttackView {
 	                defenderDiceNumberDropBox.repaint();
 
 	                isActionListenerDiceActive = true;
+	                //if (defenderDiceNumberDropBox)
 	                attackerDiceNumberDropBox.setSelectedIndex(0);
 	                defenderDiceNumberDropBox.setSelectedIndex(0);
                 }
