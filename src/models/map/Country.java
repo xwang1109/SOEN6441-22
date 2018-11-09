@@ -238,6 +238,7 @@ public class Country {
 	 */
 	public void increaseArmy() {
 		Army army = new Army(owner);
+		owner.getArmyList().add(army);
 		armyList.add(army);
 	}
 	

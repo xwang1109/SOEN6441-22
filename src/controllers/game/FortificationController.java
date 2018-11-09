@@ -15,6 +15,7 @@ import views.game.StateView;
  * class FortificationController to receive player action and call methods from model
  * @author Lin Li
  * @see ViewState.getInstance(), GameState.getInstance()
+ * @version 2.0
  */
 public class FortificationController implements ActionListener {
 	

@@ -18,7 +18,8 @@ import views.game.StateView;
  * The Class AttackController. player perform attacks according to the rule of risk
  * @author Bingyang Yu
  * @author Mehrnaz
- * @version 1.0
+ * @author Lin Li
+ * @version 2.0
  */
 public class AttackController implements ActionListener {
 
@@ -35,11 +36,9 @@ public class AttackController implements ActionListener {
 	 * @param qtTextField 
 	 * @param destDropBox 
 	 */
-//	public AttackController(JComboBox fromDropBox, JComboBox<String> destDropBox, JTextField qtTextField, AttackView attackView) {
+
 	public AttackController(AttackView attackView) {
-		//this.fromDropBox = fromDropBox;
-		//this.destDropBox = destDropBox;
-		//this.qtTextField = qtTextField;
+		
 		this.attackView = attackView;
 	}
 
@@ -153,6 +152,12 @@ public class AttackController implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Implement attack from one country to another
+	 * @param attackerCountry
+	 * @param defenderCountry
+	 * @return int
+	 */
 	public int doAttack(Country attackerCountry, Country defenderCountry) {
 
 		int attackerDiceNumber = Math.min(3,attackerCountry.getNumOfArmies());

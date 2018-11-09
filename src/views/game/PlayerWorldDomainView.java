@@ -17,15 +17,23 @@ import models.game.Player;
 import models.map.Continent;
 import models.map.Country;
 import models.map.Map;
-
+/**
+ * This class is to show the player world domination view
+ * It is an observer
+ * @author Xinyan Wang
+ * @version 2.0
+ *
+ */
 public class PlayerWorldDomainView extends JScrollPane implements Observer {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -2418047363323959194L;
 	private JTable table;
 
+	
+	/**
+	 * Constructor for this class
+	 */
 	public PlayerWorldDomainView() {
 		
 		table = new JTable();
@@ -33,6 +41,10 @@ public class PlayerWorldDomainView extends JScrollPane implements Observer {
 		addWorldDomainTable(GameState.getInstance());
 	}
 	
+	/**
+	 * To get the table
+	 * @return The table contains the world domination info
+	 */
 	public JTable getWorldDomainTable() {
 		return this.table;
 	}

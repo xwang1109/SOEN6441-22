@@ -14,6 +14,7 @@ import models.map.Map;
 /**
  * class GameState to store and pass the current state of the game
  * @author Lin Li, Parisa khazaei
+ * @version 2.0
  */
 public class GameState extends Observable {
 
@@ -297,7 +298,10 @@ public class GameState extends Observable {
 	 * End turn for current player, and set the "currentPlayer" to next player
 	 */
 	public void endPlayerTurn() {
+	
 		currentPlayer = ++currentPlayer % playerList.size();
+		setChanged();
+		notifyObservers();
 	}
 
 	/**

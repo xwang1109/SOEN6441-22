@@ -25,6 +25,7 @@ import views.game.StateView;
  * The Class PlayerSetupController. 
  * @see views.game.PlayerSetupView
  * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+ * @version 2.0
  */
 public class PlayerSetupController implements ActionListener{
 	
@@ -50,7 +51,7 @@ public class PlayerSetupController implements ActionListener{
 		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
 		int returnValue = jfc.showOpenDialog(null);
-		// int returnValue = jfc.showSaveDialog(null);
+		
 
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = jfc.getSelectedFile();
@@ -60,14 +61,7 @@ public class PlayerSetupController implements ActionListener{
 			StateView.getInstance().showPlayerView();
 		}
 
-		/*
-		if ( true ) { // TODO need a map... GameState.getInstance().isMapLoaded() ) {
-			// Do something about players
-			ViewState.getInstance().showPlayerView();
-		} else {
-			// TODO do a popup
-			System.out.println("Issue with parsing the map");
-		}*/
+		
 	}
 	
 

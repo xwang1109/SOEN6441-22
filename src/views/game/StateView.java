@@ -13,7 +13,9 @@ import views.map.MapCountryPanel;
 
 /**
  * class ViewState to switching between different views of the game
- * @author Lin Li
+ * @author Lin Li,Yanxin
+ * @version 2.0
+ * 
  */
 public class StateView extends JFrame {
 	private static final long serialVersionUID = 7243006502142830314L;

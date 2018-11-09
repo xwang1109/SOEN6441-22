@@ -25,6 +25,8 @@ import models.map.Country;
  * class AttackView is the view for attack phase
  * @author Bingyang Yu
  * @author Mehrnaz
+ * @author Lin Li
+ * @version 2.0
 */
 public class AttackView {
 	
@@ -162,7 +164,7 @@ public class AttackView {
 		}
 		
         public void actionPerformed(ActionEvent event) {
-        	//if(isActionListenerCountryLabelActive) {
+        	
 	        	JComboBox comboBox = (JComboBox) event.getSource();
 	            String selected = (String)comboBox.getSelectedItem();
 	            if (selected != null) {
@@ -181,10 +183,13 @@ public class AttackView {
 		            	label.setText(String.valueOf(selectedCountry.getNumOfArmies()));
 		            }
 	            }
-	        //}
+	       
         }
 	}
 	
+	/**
+	 * Let player to select the countries, number of armies, etc, in the attack phase
+	 */
 	public void showSelectionState() {
 			
 		clearAction();
@@ -222,14 +227,14 @@ public class AttackView {
 		//get list for drop down box
         
         isActionListenerCountryActive = false;
-//        isActionListenerCountryLabelActive = false;
+
         for(Country c: GameState.getInstance().getMap().getCountryList()) {
         	if (c.getOwner() == GameState.getInstance().getCurrentPlayer() &&
         		c.getNumOfArmies() > 1 && c.hasAdjacentControlledByOthers())
         		fromDropBox.addItem(c.getName());
         }
 		isActionListenerCountryActive = true;
-//        isActionListenerCountryLabelActive = true;
+
 		
 		actionCountryInfoPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		actionCountryInfoPanel.setLayout(new GridLayout(0, 2, 0, 0));
@@ -365,6 +370,13 @@ public class AttackView {
 	}
 
 
+	/**
+	 * After player chooses from which country to attack, the target, and number of dice, show the result of dice play
+	 * @param attackerDice
+	 * @param defenderDice
+	 * @param attackerLost
+	 * @param defenderLost
+	 */
 	public void showResolutionState(int[] attackerDice, int[] defenderDice, int attackerLost, int defenderLost) {
 		clearAction();
 
@@ -441,6 +453,10 @@ public class AttackView {
 		
 	}
 
+	/**
+	 * After conquering, move army
+	 * @param minArmies
+	 */
 	public void showMoveArmiesState(int minArmies) {
 		clearAction();
 

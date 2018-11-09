@@ -33,7 +33,7 @@ public class ReinforcementTests {
 		//player1 owns 10 countries 
 		//player1 owns a continent with control value 4
 		//player1 owns 3 INFANTRY cards
-		
+		GameState.reset();
 		GameState.getInstance().getPlayerList().add(player1);
 		GameState.getInstance().getPlayerList().add(player2);
 

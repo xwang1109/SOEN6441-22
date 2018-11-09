@@ -7,19 +7,41 @@
 package models.game;
 import java.util.Random;
 
+/**
+ * The Class Dice.
+ * @author  Lin
+ * @version 2.0
+ */
 public class Dice {
+	
+	/** The number of dots. */
 	private int numberOfDots;
 	
 	
 
 	
+	/**
+	 * Gets the number of dots.
+	 *
+	 * @return the number of dots
+	 */
 	public int getNumberOfDots() {
 		return numberOfDots;
 	}
 
+	/**
+	 * Instantiates a new dice.
+	 */
 	public Dice() {
 		
 	}
+	
+	/**
+	 * Dice roll.
+	 *
+	 * @param numberofDices the number of dices
+	 * @return the array of integer for Dice Value
+	 */
 	//this method assign random value to Dices.
 	 public int[] diceRoll(int numberofDices){
 
