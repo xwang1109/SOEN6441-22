@@ -93,8 +93,7 @@ public class ReinforcementView{
 		return leftArmies;
 	}
 	public int decreaseLeftArmies() {
-		leftArmies--;
-		return leftArmies;
+		return --leftArmies;
 	}
 	public void setLeftArmies(int leftArmies) {
 		this.leftArmies = leftArmies;
@@ -217,13 +216,12 @@ public class ReinforcementView{
 		//////////////////////////////////////
 		
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)){
-			playerCounter = 0;
-			player = playerList.get(playerCounter);		
-
-			leftArmies = player.getLeftArmyNumber();		
+			GameState.getInstance().setFirstPlayer();	
+		} else {
+			GameState.getInstance().getCurrentPlayer().addReinforcementArmy();
 		}
-		
 		showPlayer();
+
 	}
 /**
  * Refresh the number of armies left to assign to countries
@@ -273,6 +271,7 @@ public class ReinforcementView{
  */
 	public void updateLabels() {
 		playerLabel.setText(Integer.toString(player.getId()));
+		mapPanel.addCountryTableForReinforcement(player);
 		
 		leftArmies=player.getLeftArmyNumber();
 		leftArmyLabel.setText(Integer.toString(leftArmies));
@@ -298,7 +297,8 @@ public class ReinforcementView{
  * to place his given armies one by one on his countries
  */
 	public void showPlayer() {
-		player = playerList.get(playerCounter);
+		player = GameState.getInstance().getCurrentPlayer();		
+		leftArmies = player.getLeftArmyNumber();
 		countryList = player.getCountryList();
 		mapPanel.addCountryTableForReinforcement(player);
 		updateLabels();

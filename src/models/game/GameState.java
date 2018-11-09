@@ -301,6 +301,25 @@ public class GameState extends Observable {
 	}
 
 	/**
+	 * Initial first Player for RoundRobin
+	 * @return Player
+	 */
+	public void setFirstPlayer() {
+		currentPlayer = 0;
+	}
+	
+	/**
+	 * End turn for current player and set the "currentPlayer" to next player in setUp Phase
+	 */
+	public boolean setUpRoundRobin() {
+		if(currentPlayer < playerList.size()-1) {
+			currentPlayer++;
+			return true;
+		}
+		else return false;
+	}
+	
+	/**
 	 * Find all possible destination countries for the parameter country, and store them in an ArrayList
 	 * @param selectedCountry
 	 * @return ArrayList

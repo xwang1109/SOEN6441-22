@@ -50,32 +50,25 @@ public class ReinforcementController implements ActionListener {
  * 
  */
 	public void addArmy() {
-		if (GameState.getInstance().getPhase().equals(Phase.SETUP)) {
-			Country selectedCoutnry = starUpView.getSelectedCountry();
-			selectedCoutnry.AddArmy();			
+		Country selectedCoutnry = starUpView.getSelectedCountry();
+		selectedCoutnry.AddArmy();	
+		if (GameState.getInstance().getPhase().equals(Phase.SETUP)) {		
 			if(starUpView.decreaseLeftArmies() == 0) {
-				if (starUpView.getPlayerCounter() < GameState.getInstance().getPlayerList().size()-1) {
-					starUpView.setPlayerCounter(starUpView.getPlayerCounter()+1);
-					starUpView.setLeftArmies(GameState.getInstance().getPlayerList().get(starUpView.getPlayerCounter()).getLeftArmyNumber());
-					starUpView.showPlayer();
-				}
-				else {
+				if (!GameState.getInstance().setUpRoundRobin()) {
 					GameState.getInstance().setPhase(Phase.REINFORCEMENT);
-					starUpView.setPlayerCounter(0);
-					starUpView.setLeftArmies(GameState.getInstance().getPlayerList().get(starUpView.getPlayerCounter()).addReinforcementArmy());
+					GameState.getInstance().setFirstPlayer();
+					GameState.getInstance().getCurrentPlayer().addReinforcementArmy();
+					//starUpView.changeToReinforcement();
 					starUpView.showPlayer();
-					if(starUpView.getPlayer().getCardList().size()>4)//if there are more or equal to 5 cards, force to change card
-					{
-						starUpView.exchangeCard();;
-
+					if(GameState.getInstance().getCurrentPlayer().getCardList().size() > 4) { //if there are more or equal to 5 cards, force to change card
+						starUpView.exchangeCard();
 					}
 				}
+				starUpView.showPlayer();
 			} else {
 				starUpView.showLeftArmies();
 			}
 		} else if (GameState.getInstance().getPhase().equals(Phase.REINFORCEMENT)) {
-			Country selectedCoutnry = starUpView.getSelectedCountry();
-			selectedCoutnry.AddArmy();
 			if(starUpView.decreaseLeftArmies() == 0) {
 				GameState.getInstance().setPhase(Phase.ATTACK);
 				StateView.getInstance().showAttackView();

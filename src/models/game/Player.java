@@ -155,14 +155,13 @@ public class Player {
 	/**
 	 * This method add armies to the player according to the reinforcement rules.
 	 *
-	 * @return the number of armies after reinforcement phase.
 	 */
-	public int addReinforcementArmy() {
+	public void addReinforcementArmy() {
 		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
 			Army army = new Army(this);
 			armyList.add(army);
 		}
-		return CalculateReinforcementArmyNumber();
+		//return CalculateReinforcementArmyNumber();
 	}
 
 	/**
