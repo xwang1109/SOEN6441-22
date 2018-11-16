@@ -154,10 +154,11 @@ public class Player {
 	
 	/**
 	 * This method add armies to the player according to the reinforcement rules.
+	 * @param reinforcementArmyNumber TODO
 	 *
 	 */
-	public void addReinforcementArmy() {
-		for(int i=0; i<CalculateReinforcementArmyNumber(); i++) {
+	public void addReinforcementArmy(int reinforcementArmyNumber) {
+		for(int i=0; i<reinforcementArmyNumber; i++) {
 			Army army = new Army(this);
 			armyList.add(army);
 		}
@@ -394,9 +395,7 @@ public class Player {
     	
     	int j=attackerDice.length;
     	
-    	
-    	
-
+   
     	for(int i=defenderDice.length-1; i>=0; i--) {
     		j=j-1; 
     		maxValueAttacker=attackerDice[j];
@@ -404,17 +403,12 @@ public class Player {
     		
     		//this step defines which player will lose his army.
     		if (maxValueDefender>=maxValueAttacker) {
-    		
-    			
     			numberAttacerLoser=numberAttacerLoser+1;
     		}
     		else {
     			numberDefenderLoser=numberDefenderLoser+1;
     		}
-    		
-    	  
-    	   
-    	   
+    		  	     	   
     	}
     	 int[] result= {numberAttacerLoser,numberDefenderLoser};
     	 return result;

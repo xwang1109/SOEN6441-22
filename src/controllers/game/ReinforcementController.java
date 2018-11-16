@@ -57,7 +57,7 @@ public class ReinforcementController implements ActionListener {
 				if (!GameState.getInstance().setUpRoundRobin()) {
 					GameState.getInstance().setPhase(Phase.REINFORCEMENT);
 					GameState.getInstance().setFirstPlayer();
-					GameState.getInstance().getCurrentPlayer().addReinforcementArmy();
+					GameState.getInstance().getCurrentPlayer().addReinforcementArmy(GameState.getInstance().getCurrentPlayer().CalculateReinforcementArmyNumber());
 					//starUpView.changeToReinforcement();
 					starUpView.showPlayer();
 					if(GameState.getInstance().getCurrentPlayer().getCardList().size() > 4) { //if there are more or equal to 5 cards, force to change card

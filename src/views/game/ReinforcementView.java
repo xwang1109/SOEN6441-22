@@ -220,7 +220,7 @@ public class ReinforcementView{
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)){
 			GameState.getInstance().setFirstPlayer();	
 		} else {
-			GameState.getInstance().getCurrentPlayer().addReinforcementArmy();
+			GameState.getInstance().getCurrentPlayer().addReinforcementArmy(GameState.getInstance().getCurrentPlayer().CalculateReinforcementArmyNumber());
 		}
 		showPlayer();
 
