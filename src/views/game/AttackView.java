@@ -227,12 +227,14 @@ public class AttackView {
 		//get list for drop down box
         
         isActionListenerCountryActive = false;
-
+        fromDropBox.removeAllItems();
         for(Country c: GameState.getInstance().getMap().getCountryList()) {
         	if (c.getOwner() == GameState.getInstance().getCurrentPlayer() &&
         		c.getNumOfArmies() > 1 && c.hasAdjacentControlledByOthers())
         		fromDropBox.addItem(c.getName());
         }
+        fromDropBox.revalidate();
+        fromDropBox.repaint();
 		isActionListenerCountryActive = true;
 
 		
@@ -260,11 +262,14 @@ public class AttackView {
 		                //get target countries for the drop down box, only show the adjacent countries of the "from country" which has different owner
 		                isActionListenerCountryActive = false;
 		                if(selectedCountry != null) {
+		                	targetDropBox.removeAllItems();
 			                for( Country n: selectedCountry.getAdjacentCountryList()) {
 			                	if ( n.getOwner() != GameState.getInstance().getCurrentPlayer() ) {
 			                		targetDropBox.addItem(n.getName());
 			                	}
 			                }
+			                targetDropBox.revalidate();
+			                targetDropBox.repaint();
 		                }
 		                isActionListenerCountryActive = true;
 	            	}
@@ -495,7 +500,7 @@ public class AttackView {
 		
 		JComboBox armiesNumber = new JComboBox();
 		actionValuePanel.add(armiesNumber);
-		for (int i=minArmies; i<=selectedCountryFrom.getNumOfArmies(); i++)
+		for (int i=minArmies; i<selectedCountryFrom.getNumOfArmies(); i++)
 			armiesNumber.addItem(i);
 		
 		armiesNumber.addActionListener((ActionListener) new ActionListener() {

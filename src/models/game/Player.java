@@ -425,7 +425,7 @@ public class Player {
 	 */
 	public boolean isAttackPossible() {
 		for (Country c: countryList) {
-			if (c.hasAdjacentControlledByOthers())
+			if (c.getNumOfArmies() > 1 && c.hasAdjacentControlledByOthers())
 				return true;
 		}
 		return false;

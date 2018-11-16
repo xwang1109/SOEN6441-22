@@ -23,9 +23,8 @@ import views.game.StateView;
  */
 public class AttackController implements ActionListener {
 
-	private JComboBox<String> fromDropBox = new JComboBox<String>();
-	private JComboBox<String> destDropBox = new JComboBox<String>();
-	private JTextField qtTextField = new JTextField();
+	Country attackerCountry;
+	Country defenderCountry;
 	private AttackView attackView;
 	
 	/**
@@ -48,14 +47,15 @@ public class AttackController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
-		
+
+		attackerCountry = attackView.getSelecterdCountryFrom();
+		defenderCountry = attackView.getSelecterdCountryTo();
+
 		switch ( e.getActionCommand() ) {
 		case AttackView.RollDiceStr:
 			if (attackView.getAttacherDiceNumber()!=0 && attackView.getDefenderDiceNumber()!=0) {
 				int attackerDiceNumber = attackView.getAttacherDiceNumber();
 				int defenderDiceNumber = attackView.getDefenderDiceNumber();
-				Country attackerCountry = attackView.getSelecterdCountryFrom();
-				Country defenderCountry = attackView.getSelecterdCountryTo();
 
 				Dice dice = new Dice();
 				int[] attackerDice = dice.diceRoll(attackerDiceNumber);
@@ -65,38 +65,14 @@ public class AttackController implements ActionListener {
 				defenderCountry.removeArmies(attackResult[1]);
 				attackView.showResolutionState(attackerDice, defenderDice, attackResult[0], attackResult[1]);
 			}
+			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 			break;
 			
 		case AttackView.ContinueStr:
-			Country fromCountry = attackView.getSelecterdCountryFrom();
-			Country toCountry = attackView.getSelecterdCountryTo();
-			int diceNumber = attackView.getAttacherDiceNumber();
-			
-			if (GameState.getInstance().getCurrentPlayer().conquer(toCountry)) {
-				if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer()))
-					StateView.getInstance().showEndGameView();
-				else
-					attackView.showMoveArmiesState(diceNumber);
-			}
-			else {
-				if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
-				// current player ended his/her turn.
-				GameState.getInstance().endPlayerTurn();
-				StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
-				
-				GameState.getInstance().setPhase(Phase.REINFORCEMENT);
-				StateView.getInstance().showReinforcementView();					
-				}
-				else {
-					if(GameState.getInstance().getCurrentPlayer().isAttackPossible())
-						attackView.showSelectionState();
-					else {
-						GameState.getInstance().setPhase(Phase.FORTIFICATION);
-						StateView.getInstance().showFortificationView();
-					}
-				}
-			}
+//			int diceNumber = attackView.getAttacherDiceNumber();
+			checkNextStep();
 			break;
+			
 		case AttackView.MoveArmiesStr:
 			//GameState.getInstance().fortify(attackView.getSelecterdCountryFrom().getName(), attackView.getSelecterdCountryTo().getName(), attackView.getArmiesNumberToMove());
 			GameState.getInstance().getCurrentPlayer().moveArmies(attackView.getSelecterdCountryFrom(), attackView.getSelecterdCountryTo(), attackView.getArmiesNumberToMove());
@@ -106,48 +82,21 @@ public class AttackController implements ActionListener {
 				GameState.getInstance().setPhase(Phase.FORTIFICATION);
 				StateView.getInstance().showFortificationView();
 			}
-				
+			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());				
 			break;
+			
 		case AttackView.EndAttackPhaseStr:
 			GameState.getInstance().setPhase(Phase.FORTIFICATION);
 			StateView.getInstance().showFortificationView();
 			break;
 
 		case AttackView.AllOutStr:
-			Country attackerCountry = attackView.getSelecterdCountryFrom();
-			Country defenderCountry = attackView.getSelecterdCountryTo();
 			int diceNo = 0;
 			while(defenderCountry.getNumOfArmies()!=0 && attackerCountry.getNumOfArmies()>1) {
 				diceNo = doAttack(attackerCountry, defenderCountry);
 			}
-							
-			//if(defenderCountry.getNumOfArmies() == 0) {
-			if (GameState.getInstance().getCurrentPlayer().conquer(defenderCountry)) {
-				//defenderCountry.setOwner(GameState.getInstance().getCurrentPlayer());
-				if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer()))
-					StateView.getInstance().showEndGameView();
-				else
-					attackView.showMoveArmiesState(diceNo);
-			}
-			else {
-				if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
-				// current player ended his/her turn.
-				GameState.getInstance().endPlayerTurn();
-				StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
-				
-				GameState.getInstance().setPhase(Phase.REINFORCEMENT);
-				StateView.getInstance().showReinforcementView();					
-				}
-				else {
-					if(GameState.getInstance().getCurrentPlayer().isAttackPossible())
-						attackView.showSelectionState();
-					else {
-						GameState.getInstance().setPhase(Phase.FORTIFICATION);
-						StateView.getInstance().showFortificationView();
-					}
-				}
-			}
-			
+			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());			
+			checkNextStep();							
 			break;
 		}
 	}
@@ -158,7 +107,7 @@ public class AttackController implements ActionListener {
 	 * @param defenderCountry
 	 * @return int
 	 */
-	public int doAttack(Country attackerCountry, Country defenderCountry) {
+	private int doAttack(Country attackerCountry, Country defenderCountry) {
 
 		int attackerDiceNumber = Math.min(3,attackerCountry.getNumOfArmies());
 		int defenderDiceNumber = Math.min(2,Math.min(attackerCountry.getNumOfArmies(), defenderCountry.getNumOfArmies()));
@@ -172,4 +121,39 @@ public class AttackController implements ActionListener {
 		return attackerDiceNumber;
 	}
 
+	
+	private void checkNextStep() {
+		if (GameState.getInstance().getCurrentPlayer().conquer(defenderCountry)) {
+			if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer()))
+				StateView.getInstance().showEndGameView();
+			else
+//				attackView.showMoveArmiesState(fromCountry.getNumOfArmies()<=diceNumber ? diceNumber-1 : diceNumber);
+				attackView.showMoveArmiesState(1);
+		}
+		else {
+			// in case that attacker lost the country
+			if (defenderCountry.getNumOfArmies() == 0) {
+				defenderCountry.setOwner(attackerCountry.getOwner());
+				attackerCountry.getOwner().moveArmies(defenderCountry, attackerCountry, 1);
+			}
+			
+			if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
+			// current player ended his/her turn.
+			GameState.getInstance().endPlayerTurn();
+			GameState.getInstance().setPhase(Phase.REINFORCEMENT);
+			StateView.getInstance().showReinforcementView();					
+			}
+			else {
+				if(GameState.getInstance().getCurrentPlayer().isAttackPossible())
+					attackView.showSelectionState();
+				else {
+					GameState.getInstance().setPhase(Phase.FORTIFICATION);
+					StateView.getInstance().showFortificationView();
+				}
+			}				
+		}		
+	}
+
+	
+	
 }
