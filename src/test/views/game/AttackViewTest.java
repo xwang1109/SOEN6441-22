@@ -1,11 +1,15 @@
 package test.views.game;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import models.game.GameState;
 import models.game.Player;
@@ -24,7 +28,7 @@ public class AttackViewTest {
 	Player player1 = new Player();
 	Country attackerCountry = new Country("attackerCountryStr");
 	Country defenderCountry = new Country("defenderCountryStr");
-	AttackView av = new AttackView(null);
+
 	
 	/**
 	 * Set up before test
@@ -33,8 +37,9 @@ public class AttackViewTest {
 	public void setUp(){
 		GameState.reset();
 		
-		GameState.getInstance().getPlayerList().add(player0);
-		GameState.getInstance().getPlayerList().add(player1);
+		GameState.getInstance().assignInitialPlayers(2);
+		Player player0 = GameState.getInstance().getPlayerList().get(0);
+		Player player1 = GameState.getInstance().getPlayerList().get(1);
 		
 		attackerCountry.setOwner(player0);
 		defenderCountry.setOwner(player1);
@@ -63,18 +68,37 @@ public class AttackViewTest {
 	/**
 	 * test for attack of attacker validation
 	 */
-	@Ignore
+	@Test
 	public void testAttackerValidation(){
-		
-		
+		assertTrue(GameState.getInstance().getCurrentPlayer() == attackerCountry.getOwner());		
 	}
-	
+
+
 	/**
 	 * test for attack of defender validation
 	 */
 	@Ignore
 	public void testDefenderValidation(){
-		
+		assertTrue(GameState.getInstance().getCurrentPlayer() == attackerCountry.getOwner());
 	}
 
+	/**
+	 * test for attack of attacker validation
+	 */
+	@Test
+	public void testAttackNeighbour(){
+		assertTrue(attackerCountry.getAdjacentCountryList().contains(defenderCountry));		
+	}
+	
+	/**
+	 * test for attack of attacker validation
+	 */
+	@Ignore
+	public void testAttackerArmyNumberValidation(){
+		assertTrue(attackerCountry.getAdjacentCountryList().contains(defenderCountry));
+
+		// validate > 1 army on source
+		// validate > 1 army sent
+		
+	}
 }
