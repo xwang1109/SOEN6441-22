@@ -16,9 +16,14 @@ public class Cheater implements Strategy{
 	}
 
 	@Override
-	public int attackPhase(Player player) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void attackPhase(Player player) {
+		for(Country c:player.getCountryList()) {
+			for(Country adjCountry: c.getAdjacentCountryList()) {
+				 if(adjCountry.getOwner().getId()!=player.getId()) {
+					 adjCountry.setOwner(player);
+				 }
+			}			
+		}
 	}
 
 	@Override
