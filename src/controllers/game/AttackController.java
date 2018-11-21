@@ -107,7 +107,7 @@ public class AttackController implements ActionListener {
 	 * @param defenderCountry
 	 * @return int
 	 */
-	private int doAttack(Country attackerCountry, Country defenderCountry) {
+	public int doAttack(Country attackerCountry, Country defenderCountry) {
 
 		int attackerDiceNumber = Math.min(3,attackerCountry.getNumOfArmies());
 		int defenderDiceNumber = Math.min(2,Math.min(attackerCountry.getNumOfArmies(), defenderCountry.getNumOfArmies()));
@@ -122,10 +122,12 @@ public class AttackController implements ActionListener {
 	}
 
 	
-	private void checkNextStep() {
+	public void checkNextStep() {
 		if (GameState.getInstance().getCurrentPlayer().conquer(defenderCountry)) {
-			if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer()))
+			if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer())) {
+				GameState.getInstance().setPhase(Phase.FINISHED);
 				StateView.getInstance().showEndGameView();
+			}
 			else
 //				attackView.showMoveArmiesState(fromCountry.getNumOfArmies()<=diceNumber ? diceNumber-1 : diceNumber);
 				attackView.showMoveArmiesState(1);

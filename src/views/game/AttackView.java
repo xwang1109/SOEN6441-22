@@ -35,9 +35,7 @@ public class AttackView {
 	 */
 	public final static String EndAttackPhaseStr =  "End Attack Phase";
 	public final static String RollDiceStr =  "ROLL THE DICE!";
-	//public final static String RollAgainStr =  "Roll Dice Again";
 	public final static String MoveArmiesStr =  "Move Armies";
-	//public final static String MoreAttackStr =  "More Attack";
 	public final static String StopAttackStr =  "Stop Attack";
 	public final static String ContinueStr =  "Continue!";
 	public final static String AllOutStr =  "All Out Mode";

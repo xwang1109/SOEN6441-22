@@ -16,7 +16,6 @@ public class Human implements Strategy{
 	@Override
 	public void fortificationPhase(Player player) {
 		// TODO Auto-generated method stub
-		// Nothing to do, just needs to show fortificationView
 	}
 
 }
