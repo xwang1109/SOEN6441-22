@@ -27,9 +27,9 @@ public class Benevolent implements Strategy{
 	}
 
 	@Override
-	public int attackPhase(Player player) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void attackPhase(Player player) {
+		// do not attack
+		return;
 	}
 
 	@Override
@@ -74,5 +74,5 @@ public class Benevolent implements Strategy{
 		}
 		
 	}
-
+	
 }

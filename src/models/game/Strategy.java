@@ -19,7 +19,7 @@ public interface Strategy {
 	 * @param player current player who is in attack phase
 	 * @return 
 	 */
-	public int attackPhase(Player player);
+	public void attackPhase(Player player);
 	
 	
 	/**

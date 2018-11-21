@@ -9,9 +9,8 @@ public class Human implements Strategy{
 	}
 
 	@Override
-	public int attackPhase(Player player) {
+	public void attackPhase(Player player) {
 		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
