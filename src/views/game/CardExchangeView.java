@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,13 +23,14 @@ import javax.swing.event.ChangeListener;
 import models.game.Card;
 import models.game.Player;
 import models.game.Card.CardType;
+import javax.swing.JFrame;
 
 /**
  * The Class CardExchangeView. This class is to create a pop up window for player to exchange card in reinforcement phase.
  * @author Bingyang Yu
  * @version 2.0
  */
-public class CardExchangeView extends BaseObserverFrame  {
+public class CardExchangeView extends JFrame implements Observer {
 	
 	/** The main panel. */
 	private JPanel 	mainPanel = new JPanel();
@@ -44,27 +47,27 @@ public class CardExchangeView extends BaseObserverFrame  {
     /** The toggle buttons. */
     List<JToggleButton> toggleButtons;
 	
-	/** The exchangebutton. */
+	/** The exchangeButton. */
 	private JButton exchangebutton;
 	
-	/** The originalview. */
+	/** The originalView. */
 	ReinforcementView originalview;
 	
-	/** The returnbutton. */
+	/** The returnButton. */
 	private JButton returnbutton=new JButton("Return");
+	
+	//new add
+	private Player player;
 	
 	/**
 	 * Instantiates a new card exchange frame.
 	 *
-	 * @param player the player
-	 * @param reinforcementView the reinforcement view
 	 * @throws HeadlessException the headless exception
 	 */
-	public CardExchangeView(Player player, ReinforcementView reinforcementView) throws HeadlessException {
+	public CardExchangeView(Player player,ReinforcementView reinforcementView)  {
 		this.player = player;
 		this.originalview = reinforcementView;
-		this.originalview.disable();
-		player.attachObserver(this);
+		this.originalview.disable(); 
 		this.setSize(300,500);
 		getContentPane().add(mainPanel, BorderLayout.NORTH);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -72,25 +75,6 @@ public class CardExchangeView extends BaseObserverFrame  {
 		this.init();
 		
 		
-	}
-	
-	/** This class is to update the card exchange view.
-	 * @see views.game.BaseObserverFrame#update()
-	 */
-	public void update()
-	{
-	
-		this.mainPanel.removeAll();
-		this.mainPanel.revalidate();
-		this.mainPanel.repaint();
-
-		this.cardpanel.removeAll();
-		this.cardpanel.revalidate();
-		this.cardpanel.repaint();
-		
-		this.init();
-		this.originalview.updateLabels();
-	
 	}
 	
 	
@@ -122,7 +106,7 @@ public class CardExchangeView extends BaseObserverFrame  {
 		
 		exchangebutton.setVisible(false);
 		exchangebutton.addActionListener(new ActionListener() {
-
+        //应该写一个??
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
@@ -246,6 +230,23 @@ public class CardExchangeView extends BaseObserverFrame  {
 
 			
 		}
+		
+	}
+	/** This class is to update the card exchange view.*/
+	 
+	@Override
+	public void update(Observable o, Object arg) {
+		
+		this.mainPanel.removeAll();
+		this.mainPanel.revalidate();
+		this.mainPanel.repaint();
+
+		this.cardpanel.removeAll();
+		this.cardpanel.revalidate();
+		this.cardpanel.repaint();
+		
+		this.init();
+		this.originalview.updateLabels();
 		
 	}
 	

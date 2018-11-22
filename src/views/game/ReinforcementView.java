@@ -209,21 +209,22 @@ public class ReinforcementView{
 		controlPanel.add(mapPane);
 		
 		///////test change cards///////
-		/*playerList.get(0).getNewCard();
 		playerList.get(0).getNewCard();
 		playerList.get(0).getNewCard();
 		playerList.get(0).getNewCard();
-		playerList.get(0).getNewCard();*/
+		playerList.get(0).getNewCard();
+		playerList.get(0).getNewCard();
 
 		//////////////////////////////////////
 		
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)){
-			GameState.getInstance().setFirstPlayer();	
-		} else {
-			GameState.getInstance().getCurrentPlayer().addReinforcementArmy(GameState.getInstance().getCurrentPlayer().CalculateReinforcementArmyNumber());
-		}
-		showPlayer();
+			playerCounter = 0;
+			player = playerList.get(playerCounter);		
 
+			leftArmies = player.getLeftArmyNumber();		
+		}
+		
+		showPlayer();
 	}
 /**
  * Refresh the number of armies left to assign to countries
@@ -238,6 +239,7 @@ public class ReinforcementView{
  */
 	public void exchangeCard() {
 		CardExchangeView ccv=new CardExchangeView(player,this);
+		this.player.addObserver(ccv);
 		ccv.setVisible(true);
 		
 		

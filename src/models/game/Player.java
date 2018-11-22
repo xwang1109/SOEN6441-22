@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Observable;
 
 import javax.swing.JFrame;
 
 import models.map.Continent;
 import models.map.Country;
-import views.game.BaseObserverFrame;
+
 
 
 /**
@@ -19,7 +20,7 @@ import views.game.BaseObserverFrame;
  * @author Bingyang Yu ,Parisa khazaei
  * @version 2.0
  */
-public class Player {
+public class Player extends Observable {
 	
 	/** The id. */
 	private int id;
@@ -43,14 +44,7 @@ public class Player {
 //		this.setStrategy(strategy);
 //	}
 
-	private List<BaseObserverFrame> observerList=new ArrayList<BaseObserverFrame>();
 	
-	
-
-	public void attachObserver(BaseObserverFrame frame)
-	{
-		observerList.add(frame);
-	}
 	
 	/**
 	 * Gets the id.
@@ -133,9 +127,9 @@ public class Player {
 	}
 	
 	/**
-	 * Sets the armyfor cards.
+	 * Sets the army for cards.
 	 *
-	 * @param i the new armyfor cards
+	 * @param i the new army for cards
 	 */
 	public void setArmyforCards(int i) {
 		getArmyforCards = i;
@@ -250,7 +244,9 @@ public class Player {
 		for(Card card: cardList){
 			if (card.getCardType().getCardTypeCode() == cardTypeCode) {
 				cardList.remove(card);	
-				notifyObservers();
+				
+				setChanged();
+				notifyObservers(this);
 				return;
 			}
 		}
@@ -265,7 +261,8 @@ public class Player {
 		
 		cardList.removeAll(toremovecards);
 		
-		notifyObservers();
+		setChanged();
+		notifyObservers(this);
 
 	}
 	
@@ -279,7 +276,9 @@ public class Player {
 	{
 		Card c=new Card(this);
 		this.cardList.add(c);
-		notifyObservers();
+		
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	/**
@@ -287,14 +286,14 @@ public class Player {
 	 *
 	 * 
 	 */
-	private void notifyObservers()
+	/*private void notifyObservers()
 	{
 		for(BaseObserverFrame frame:this.observerList)
 		{
 			frame.update();
 		}
 	}
-	
+	*/
 	/**
 	 * Execute the fortification move
 	 * return true if the fortification order was executed

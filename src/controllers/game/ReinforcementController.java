@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
+import views.game.CardExchangeView;
 import views.game.ReinforcementView;
 import views.game.StateView;
 import models.game.GameState;
@@ -22,6 +23,8 @@ import models.map.Country;
 public class ReinforcementController implements ActionListener {
 
 	private ReinforcementView starUpView;
+	private CardExchangeView exchangeview;
+	private Player player;
 /**
  * Constructor of the class which initialize the view  	
  * @param view ReinforcementView
