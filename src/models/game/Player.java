@@ -37,11 +37,11 @@ public class Player {
 	private int getArmyforCards = 0; //number of times player is given army for cards
 	//the number of looser 
 	
-	private Strategy strategy;
+	//private Strategy strategy;
 	
-	public Player(Strategy strategy) {
-		this.setStrategy(strategy);
-	}
+//	public Player(Strategy strategy) {
+//		this.setStrategy(strategy);
+//	}
 
 	private List<BaseObserverFrame> observerList=new ArrayList<BaseObserverFrame>();
 	
