@@ -6,7 +6,6 @@ package models.game;
 */
 public interface Strategy {
 
-	
 	/**
 	 * Reinforcement phase should be implemented in different behaviors
 	 * @param player current player who is in reinforcement phase

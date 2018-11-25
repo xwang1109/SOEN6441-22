@@ -194,8 +194,8 @@ public class AttackView {
 		endAttBtn.setEnabled(true);
 		
 		
-		JComboBox attackerDiceNumberDropBox = new JComboBox();
-		JComboBox defenderDiceNumberDropBox = new JComboBox();		
+		final JComboBox attackerDiceNumberDropBox = new JComboBox();
+		final JComboBox defenderDiceNumberDropBox = new JComboBox();		
 		
 
 		JPanel actionInforPanel = new JPanel();

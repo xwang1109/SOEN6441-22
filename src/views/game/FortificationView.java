@@ -100,7 +100,7 @@ public class FortificationView {
 		fortificationPanel.add(fortificationButtonPanel);
 				
 		Player player = GameState.getInstance().getCurrentPlayer(); //get current player
-		ArrayList<Country> countryList = player.getCountryList(); //get country list of current player
+		final ArrayList<Country> countryList = player.getCountryList(); //get country list of current player
 		
 		// create drop-down list for all the countries owned by current player
 		for (Country country:countryList) {

@@ -121,6 +121,8 @@ public class StateView extends JFrame {
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
 		getContentPane().add(panel, BorderLayout.EAST);
 		setVisible(true);
+		
+		
 	}
 	
 	/**

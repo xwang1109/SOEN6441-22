@@ -38,13 +38,31 @@ public class Player extends Observable {
 	private int getArmyforCards = 0; //number of times player is given army for cards
 	//the number of looser 
 	
-	//private Strategy strategy;
+private Strategy strategy;
 	
-//	public Player(Strategy strategy) {
-//		this.setStrategy(strategy);
-//	}
+	public Player(Strategy strategy) {
+		this.strategy=strategy;
+	}
+	
+	public Player() {
+		this.strategy=new Human();
+	}
 
+	public void doStrategyAttack()
+	{
+		strategy.attackPhase(this);
+	}
 	
+	public void doStrategyReinforcement()
+	{
+		strategy.reinforcementPhase(this);
+	}
+
+	public void doStrategyfortification()
+	{
+		strategy.fortificationPhase(this);
+	}
+
 	
 	/**
 	 * Gets the id.
@@ -215,7 +233,36 @@ public class Player extends Observable {
 		}
 		return cardTypeNumber;
 	}
-	
+	/**
+	 * This method automatically exchange 3 cards for army
+	 */
+	public void autoExchangeCardforArmy() {
+		
+		if(this.getCardList().size()<=4){//if with less than 5 cards, don't do this
+			return;
+		}
+		
+		//first give them the army
+		int armyForCard = (getArmyforCards += 1) * 5;
+		
+		for(int i=0; i<armyForCard; i++) {
+			Army army = new Army(this);
+			armyList.add(army);
+		}
+		//now remove the cards, either remove 3 of them with the same type, or remove one of each
+		int[] cardTypeNumber = cardTypeNumber();
+		for (int counter=0; counter<3; counter++) {
+			if (cardTypeNumber[counter]>=3){
+				for (int i=0; i<3; i++){
+					removeCard(counter);
+				}
+				return;
+			}
+		}
+		removeCard(0);removeCard(1);removeCard(2);
+		
+		
+	}
 		
 	/**
 	 * This method exchange 3 cards for army.
@@ -386,7 +433,10 @@ public class Player extends Observable {
 	 * @return it returns an array with value of number of looser army for both players
 	 */
 
+	
 	public int[] attack(int[] attackerDice,int[] defenderDice) {
+		
+		
 	
     	int numberAttacerLoser=0;
     	int numberDefenderLoser=0;
@@ -440,12 +490,12 @@ public class Player extends Observable {
 		else return false;
 	}
 
-//	public Strategy getStrategy() {
-//		return strategy;
-//	}
-//
-//	public void setStrategy(Strategy strategy) {
-//		this.strategy = strategy;
-//	}	
-	
+	public Strategy getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(Strategy strategy) {
+		this.strategy = strategy;
+	}
+
 }

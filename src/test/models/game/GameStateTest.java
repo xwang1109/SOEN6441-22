@@ -39,7 +39,7 @@ public class GameStateTest {
 	@Test
 	public void testRandomAssignCountry() {
 		List<Country> testCountryList = GameState.getInstance().getMap().getCountryList();
-		GameState.getInstance().assignInitialPlayers(2);
+		GameState.getInstance().assignInitialPlayers(2,null);
 		List<Player> testPlayerList = GameState.getInstance().getPlayerList();
 		GameState.getInstance().randomAssignCountry();
 		for(int i = 0; i < testCountryList.size(); i++) {

@@ -35,6 +35,12 @@ public class GameStartController implements ActionListener {
 	/** The number of player. */
 	private JComboBox numberOfPlayer;
 	
+
+	/** Strategy of eachplayer. */
+	private List<JComboBox> playerTypeComboBoxList ;
+	
+	
+	
 	/** The selected file. */
 	private File selectedFile;
 	
@@ -52,9 +58,10 @@ public class GameStartController implements ActionListener {
 	 * @param selectedFile player selected map file. Format: .map
 	 * @param frame the frame of the entire program.
 	 */
-	public GameStartController(JComboBox numberOfPlayer,File selectedFile,JFrame frame) {
+	public GameStartController(JComboBox numberOfPlayer,List<JComboBox> playerTypeComboBoxList, File selectedFile,JFrame frame) {
 		
            this.numberOfPlayer = numberOfPlayer;
+           this.playerTypeComboBoxList=playerTypeComboBoxList;
            this.selectedFile = selectedFile;
            this.frame = frame;
            
@@ -97,8 +104,10 @@ public class GameStartController implements ActionListener {
 	 * this method is triggered by "Start" button. Players are created and countries are randomly assigned.
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
-	public GameStartController(JComboBox numberOfPlayer) {
+	public GameStartController(JComboBox numberOfPlayer,List<JComboBox> playerTypeComboBoxList) {
 		this.numberOfPlayer = numberOfPlayer;
+        this.playerTypeComboBoxList=playerTypeComboBoxList;
+
 		File selectedFile = GameState.getInstance().getSelectedFile();
 		boolean result = GameState.getInstance().loadMapFromFile(selectedFile);
 
@@ -115,8 +124,9 @@ public class GameStartController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		int num = (Integer)numberOfPlayer.getSelectedItem();
-		
-		GameState.getInstance().assignInitialPlayers(num);  
+	
+
+		GameState.getInstance().assignInitialPlayers(num,playerTypeComboBoxList);  
 		
 		GameState.getInstance().randomAssignCountry();
 		

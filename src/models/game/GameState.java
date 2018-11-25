@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JComboBox;
+
 import models.map.Continent;
 import models.map.Country;
 import models.map.Map;
@@ -266,13 +268,28 @@ public class GameState extends Observable {
 	 * Take user selection, set number of players
 	 * @param num
 	 */
-	public void assignInitialPlayers(int num) {
+	public void assignInitialPlayers(int num, List<JComboBox> playerTypeComboBoxList) {
 		assert(playerList.size() == 0); // shouldn't be called with an initialized player list, for future debug
 		
 		playerList.clear(); // clear player list to make sure no previous record is there
 		for(int i = 0; i < num; i++) {
 			Player p = new Player();
 			p.setId(i);
+			JComboBox comboBox=playerTypeComboBoxList.get(i);
+			String type=(String)comboBox.getSelectedItem();
+			switch (type){
+				case "Human":
+					p.setStrategy(new Human());
+					break;
+				case "Aggressive":
+					p.setStrategy(new Aggressive());
+					break;
+				case "Benevolent":
+					p.setStrategy(new Human());
+					break;
+				case "Cheater":
+					p.setStrategy(new Cheater());
+			}
 			playerList.add(p);
 		}
 		setChanged();

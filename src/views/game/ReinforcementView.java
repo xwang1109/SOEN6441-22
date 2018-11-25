@@ -26,6 +26,7 @@ import controllers.map.MapEditorStartController;
 import models.game.Player;
 import models.game.Card.CardType;
 import models.game.GameState.Phase;
+import models.game.Human;
 import models.game.Card;
 import models.game.GameState;
 import models.map.Country;
@@ -113,6 +114,7 @@ public class ReinforcementView{
  * 
  */
 	public ReinforcementView  (JPanel controlPanel) {
+		
 		
 		gameState = GameState.getInstance();
 		playerList = gameState.getPlayerList();
@@ -225,6 +227,32 @@ public class ReinforcementView{
 		}
 		
 		showPlayer();
+		
+		if(GameState.getInstance().getPhase().equals(Phase.REINFORCEMENT)) {
+			Player currentPlayer= GameState.getInstance().getCurrentPlayer();
+
+			if(currentPlayer.getCardList().size() > 4) { 
+				//if there are more or equal to 5 cards, force to automatically change card
+				
+				currentPlayer.autoExchangeCardforArmy();
+			}
+				//automatically do the three parts by calling strategy functions
+			
+			GameState.getInstance().setPhase(Phase.REINFORCEMENT);
+			currentPlayer.doStrategyReinforcement();
+			GameState.getInstance().setPhase(Phase.ATTACK);
+			currentPlayer.doStrategyAttack();
+			GameState.getInstance().setPhase(Phase.FORTIFICATION);
+			currentPlayer.doStrategyfortification();
+			GameState.getInstance().endPlayerTurn();
+			
+			//remember to refresh the map view all the time
+			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+			
+			GameState.getInstance().setPhase(Phase.REINFORCEMENT);
+			StateView.getInstance().showReinforcementView();	
+		}
+
 	}
 /**
  * Refresh the number of armies left to assign to countries
