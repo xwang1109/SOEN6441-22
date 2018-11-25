@@ -59,7 +59,7 @@ public class FortificationController implements ActionListener {
 			StateView.getInstance().showReinforcementView();		
 			
 		} else {
-			System.out.println("Invalid reinforcement");
+			System.out.println("Invalid fortification");
 		}
 	}
 }

@@ -15,7 +15,9 @@ import javax.swing.SwingConstants;
 
 import controllers.game.FortificationController;
 import models.game.GameState;
+import models.game.Human;
 import models.game.Player;
+import models.game.GameState.Phase;
 import models.map.Country;
 import views.map.MapCountryPanel;
 import javax.swing.JSplitPane;
@@ -42,6 +44,22 @@ public class FortificationView {
 	 * @param JPanel controlPanel
 	 */
 	public FortificationView(JPanel controlPanel) {
+		
+		GameState.getInstance().setPhase(Phase.FORTIFICATION);
+		Player currentPlayer= GameState.getInstance().getCurrentPlayer();
+		currentPlayer.doStrategyfortification();
+		
+		if(!(currentPlayer.getStrategy() instanceof Human))	{//if not human, directly finish and jump to reinforcement
+			GameState.getInstance().endPlayerTurn();
+
+			//remember to refresh the map view all the time
+			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+			GameState.getInstance().setPhase(Phase.REINFORCEMENT);
+			StateView.getInstance().showReinforcementView();	
+		
+		}
+		
+		
 		controlPanel.setLayout(new GridLayout(0, 2));
 		JPanel informationPanel = new JPanel();
 		controlPanel.add(informationPanel);

@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import controllers.game.AttackController;
 import controllers.game.FortificationController;
 import models.game.GameState;
+import models.game.Human;
 import models.game.Player;
 import models.game.GameState.Phase;
 import models.map.Country;
@@ -102,24 +103,39 @@ public class AttackView {
 	 * @param controlPanel
 	 */
 	public AttackView(JPanel controlPanel) {
-		// Prepare this view layout ; info, middle panel that changes, end phase button
-		controlPanel.setLayout(new GridLayout(0,3));
+		//do strategy first, may not need to create the view if not human
+		GameState.getInstance().setPhase(Phase.ATTACK);
+		Player currentPlayer= GameState.getInstance().getCurrentPlayer();
+		currentPlayer.doStrategyAttack();
 		
-		//prepare the three panels
-		prepareInformationPanel(controlPanel);
+		if(!(currentPlayer.getStrategy() instanceof Human))	{//if not human, directly jump to attack, other wise wait
+			GameState.getInstance().setPhase(Phase.FORTIFICATION);
+			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+			StateView.getInstance().showFortificationView();
+		}	
+		else//if human, show the view
+		{
+			// Prepare this view layout ; info, middle panel that changes, end phase button
+			controlPanel.setLayout(new GridLayout(0,3));
+			
+			//prepare the three panels
+			prepareInformationPanel(controlPanel);
+			
+			actionPanel = new JPanel();
+			controlPanel.add(actionPanel);
+			actionPanel.setLayout(new GridLayout(3, 1));
+			
+			JPanel rightPanel = new JPanel();
+			endAttBtn = new JButton(EndAttackPhaseStr);
+			endAttBtn.setVerticalAlignment(SwingConstants.BOTTOM);
+			endAttBtn.addActionListener(new AttackController(this));
+			//rightPanel.add(endAttBtn);
+			controlPanel.add(rightPanel);
+	
+			showSelectionState();
 		
-		actionPanel = new JPanel();
-		controlPanel.add(actionPanel);
-		actionPanel.setLayout(new GridLayout(3, 1));
+		}
 		
-		JPanel rightPanel = new JPanel();
-		endAttBtn = new JButton(EndAttackPhaseStr);
-		endAttBtn.setVerticalAlignment(SwingConstants.BOTTOM);
-		endAttBtn.addActionListener(new AttackController(this));
-		//rightPanel.add(endAttBtn);
-		controlPanel.add(rightPanel);
-
-		showSelectionState();
 		
 	}
 	
