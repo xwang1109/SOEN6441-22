@@ -68,7 +68,7 @@ public class Random implements Strategy{
 		HashMap <Country, ArrayList<Country>> connectedCountryList = new HashMap<Country, ArrayList<Country>>();
 		
 		for (Country c:player.getCountryList()) {
-			if(c.getNumOfArmies()>1) {
+			if(c.getNumOfArmies()>0) {
 				ArrayList<Country> destination = player.getValidDestination(c);
 				for (int i=0; i<destination.size(); i++) {
 					connectedCountryList.put(c, destination);				

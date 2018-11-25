@@ -2,6 +2,8 @@ package models.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import models.map.Country;
 
 public class Aggressive implements Strategy{
@@ -87,7 +89,7 @@ public class Aggressive implements Strategy{
 		HashMap <Country, ArrayList<Country>> connectedCountryList = new HashMap<Country, ArrayList<Country>>();
 		
 		for (Country c:player.getCountryList()) {
-			if(c.getNumOfArmies()>1) {
+			if(c.getNumOfArmies()>0) {
 				ArrayList<Country> destination = player.getValidDestination(c);
 				for (int i=0; i<destination.size(); i++) {
 					connectedCountryList.put(c, destination);				
@@ -96,10 +98,10 @@ public class Aggressive implements Strategy{
 		}	
 
 		int max = Integer.MIN_VALUE;
-		ArrayList<Country> fromCountries = null;
+		List<Country> fromCountries = new ArrayList<Country>();
 		Country toCountry = null;
 		
-		for(Country f: (Country[])connectedCountryList.keySet().toArray()) {
+		for(Country f: connectedCountryList.keySet()) {
 			for(Country t: connectedCountryList.get(f)) {
 				if(t.hasAdjacentControlledByOthers() && t.getNumOfArmies()>max) {
 					fromCountries.add(f);

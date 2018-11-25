@@ -38,7 +38,7 @@ public class Benevolent implements Strategy{
 		HashMap <Country, ArrayList<Country>> connectedCountryList = new HashMap<Country, ArrayList<Country>>();
 		
 		for (Country c:player.getCountryList()) {
-			if(c.getNumOfArmies()>1) {
+			if(c.getNumOfArmies()>0) {
 				ArrayList<Country> destination = player.getValidDestination(c);
 				for (int i=0; i<destination.size(); i++) {
 					connectedCountryList.put(c, destination);				
@@ -50,7 +50,7 @@ public class Benevolent implements Strategy{
 		ArrayList<Country> fromCountries = null;
 		Country toCountry = null;
 		
-		for(Country f: (Country[])connectedCountryList.keySet().toArray()) {
+		for(Country f: connectedCountryList.keySet()) {
 			for(Country t: connectedCountryList.get(f)) {
 				if(t.getNumOfArmies()<min) {
 					fromCountries.add(f);
