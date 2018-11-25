@@ -63,6 +63,7 @@ public class PlayerSetupView {
 			playerType.addItem("Human");
 			playerType.addItem("Aggressive");
 			playerType.addItem("Benevolent");
+			playerType.addItem("Random");
 			playerType.addItem("Cheater");
 			playerType.setSelectedIndex(0);
 			playerTypeComboBoxList.add(playerType);
@@ -95,6 +96,7 @@ public class PlayerSetupView {
 					playerType.addItem("Human");
 					playerType.addItem("Aggressive");
 					playerType.addItem("Benevolent");
+					playerType.addItem("Random");
 					playerType.addItem("Cheater");
 					
 					playerType.setSelectedIndex(0);

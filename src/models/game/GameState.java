@@ -285,7 +285,10 @@ public class GameState extends Observable {
 					p.setStrategy(new Aggressive());
 					break;
 				case "Benevolent":
-					p.setStrategy(new Human());
+					p.setStrategy(new Benevolent());
+					break;
+				case "Random":
+					p.setStrategy(new Random());
 					break;
 				case "Cheater":
 					p.setStrategy(new Cheater());
