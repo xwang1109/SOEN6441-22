@@ -5,6 +5,11 @@ import models.map.Country;
 public class Cheater implements Strategy{
 
 	@Override
+	public String toString() {
+		return "Cheater";
+	}
+	
+	@Override
 	public void reinforcementPhase(Player player) {
 		// TODO Auto-generated method stub
 		for (Country c:player.getCountryList()){

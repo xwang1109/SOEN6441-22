@@ -8,6 +8,11 @@ import models.map.Country;
 public class Benevolent implements Strategy{
 
 	@Override
+	public String toString() {
+		return "Benevolent";
+	}
+	
+	@Override
 	public void reinforcementPhase(Player player) {
 		// TODO Auto-generated method stub
 		int reinforcementArmyNumber = player.CalculateReinforcementArmyNumber();

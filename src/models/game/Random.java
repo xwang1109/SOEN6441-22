@@ -8,6 +8,11 @@ import models.map.Country;
 public class Random implements Strategy{
 
 	@Override
+	public String toString() {
+		return "Random";
+	}
+	
+	@Override
 	public void reinforcementPhase(Player player) {
 		// TODO Auto-generated method stub
 		int reinforcementArmyNumber = (int) (1 + (Math.random() * player.CalculateReinforcementArmyNumber()));

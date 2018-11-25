@@ -8,6 +8,13 @@ import models.map.Country;
 
 public class Aggressive implements Strategy{
 
+	
+	@Override
+	public String toString() {
+		return "Aggressive";
+	}
+
+
 	@Override
 	public void reinforcementPhase(Player player) {
 		// TODO Auto-generated method stub
