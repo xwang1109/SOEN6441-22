@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -73,7 +74,7 @@ public class PlayerWorldDomainView extends JScrollPane implements Observer {
 		Map map = gs.getMap();
 		int totalCountries = map.getCountryNumber();
 		
-		ArrayList<Player> playerList = gs.getPlayerList();
+		List<Player> playerList = gs.getPlayerList();
 		String[][] mapData = new String[playerList.size()][4];
 		
 		for(int i=0;i<playerList.size();i++) {

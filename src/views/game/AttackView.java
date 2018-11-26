@@ -109,9 +109,22 @@ public class AttackView {
 		currentPlayer.doStrategyAttack();
 		
 		if(!(currentPlayer.getStrategy() instanceof Human))	{//if not human, directly jump to attack, other wise wait
+			
+			if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer())) {
+				GameState.getInstance().setPhase(Phase.FINISHED);
+				StateView.getInstance().showEndGameView();
+			}
+			else if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
+				// current player ended his/her turn.
+				GameState.getInstance().endPlayerTurn();
+				GameState.getInstance().setPhase(Phase.REINFORCEMENT);
+				StateView.getInstance().showReinforcementView();					
+			}
+			else {
 			GameState.getInstance().setPhase(Phase.FORTIFICATION);
 			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 			StateView.getInstance().showFortificationView();
+			}
 		}	
 		else//if human, show the view
 		{
