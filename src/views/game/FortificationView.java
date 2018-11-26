@@ -58,106 +58,106 @@ public class FortificationView {
 			StateView.getInstance().showReinforcementView();	
 		
 		}
-		
-		
-		controlPanel.setLayout(new GridLayout(0, 2));
-		JPanel informationPanel = new JPanel();
-		controlPanel.add(informationPanel);
-		
-		JPanel labelColumn = new JPanel();
-		informationPanel.add(labelColumn);
-		labelColumn.setLayout(new GridLayout(0, 1));
-		
-		JLabel phaseTextLabel = new JLabel("Phase: ");
-		labelColumn.add(phaseTextLabel);
-		
-		JLabel currentPlayerTextLabel = new JLabel("Current Player: ");
-		labelColumn.add(currentPlayerTextLabel);
-		
-		JPanel dataColumn = new JPanel();
-		informationPanel.add(dataColumn);
-		dataColumn.setLayout(new GridLayout(0, 1));
-		dataColumn.add(StateView.getInstance().getPhaseLabel());
-		
-		JLabel currentPlayerIndicator = new JLabel(String.valueOf(GameState.getInstance().getCurrentPlayer().getId()));
-		dataColumn.add(currentPlayerIndicator);
-		
-		JPanel fortificationPanel = new JPanel();
-		controlPanel.add(fortificationPanel);
-		fortificationPanel.setLayout(new GridLayout(0, 3, 0, 0));
-		
-		JPanel fortificationInfoPanel = new JPanel();
-		fortificationPanel.add(fortificationInfoPanel);
-		fortificationInfoPanel.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		// text shown to guide user to select from which country the armies should go out
-		JTextArea textFrom = new JTextArea("From Country:");
-		fortificationInfoPanel.add(textFrom);
-		
-		// text shown to guide user to select destination country
-		JTextArea textTo = new JTextArea("To Country:");
-		fortificationInfoPanel.add(textTo);
-		
-		// declare quantity fields
-		JTextArea textQuantity = new JTextArea("Number of Armies:");
-		fortificationInfoPanel.add(textQuantity);
-		
-		JPanel fortificationPanel_1 = new JPanel();
-		fortificationPanel.add(fortificationPanel_1);
-		fortificationPanel_1.setLayout(new GridLayout(3, 1, 0, 0));
-		
-		// initialized before handler
-		fortificationPanel_1.add(fromDropDown);
-		fortificationPanel_1.add(toDropDown);
-		
-		quantity = new JTextField(5);
-		fortificationPanel_1.add(quantity);
-		quantity.setColumns(10);
-		
-		JPanel fortificationButtonPanel = new JPanel();
-		fortificationPanel.add(fortificationButtonPanel);
-				
-		Player player = GameState.getInstance().getCurrentPlayer(); //get current player
-		final ArrayList<Country> countryList = player.getCountryList(); //get country list of current player
-		
-		// create drop-down list for all the countries owned by current player
-		for (Country country:countryList) {
-			fromDropDown.addItem(country.getName());
-		}
-		
-		fromDropDown.addActionListener((ActionListener) new ActionListener() {
-			public void actionPerformed(ActionEvent event){
-                JComboBox<String> comboBox = (JComboBox<String>) event.getSource();
-                String selected = (String)comboBox.getSelectedItem();
-            	Country selectedCountry = null;
-                for(Country c:countryList) {
-                	if (c.getName().equals(selected))
-                		selectedCountry = c; 
-                }
-                
-                // get valid destinations
-                ArrayList<Country> destinationCountryList = GameState.getInstance().getValidDestination(selectedCountry);
-                                
-                toDropDown.removeAllItems(); // clear the to combobox
-                
-                // add all possible destinations (belong to current player and there is a path) to the toDropDown JComboBox
-                for (Country country:destinationCountryList) {
-        			toDropDown.addItem(country.getName());
-        		}
-                
-                // by default show the maximum number of armies that can be moved, but also able to use user input
-                if (selectedCountry != null) {
-                	quantity.setText(String.valueOf(Math.max(0,selectedCountry.getNumOfArmies()-1)));
-                }               	
-        	}
-		});
+		else// if this is human, draw the tables to do fortification
+		{
+			controlPanel.setLayout(new GridLayout(0, 2));
+			JPanel informationPanel = new JPanel();
+			controlPanel.add(informationPanel);
 			
-		// callback to fortification controller
-		JButton executeFortification = new JButton("Fortify!");
-		executeFortification.setVerticalAlignment(SwingConstants.BOTTOM);
-		executeFortification.addActionListener(new FortificationController(fromDropDown, toDropDown, quantity));
-		
-		fortificationButtonPanel.add(executeFortification);
-		
+			JPanel labelColumn = new JPanel();
+			informationPanel.add(labelColumn);
+			labelColumn.setLayout(new GridLayout(0, 1));
+			
+			JLabel phaseTextLabel = new JLabel("Phase: ");
+			labelColumn.add(phaseTextLabel);
+			
+			JLabel currentPlayerTextLabel = new JLabel("Current Player: ");
+			labelColumn.add(currentPlayerTextLabel);
+			
+			JPanel dataColumn = new JPanel();
+			informationPanel.add(dataColumn);
+			dataColumn.setLayout(new GridLayout(0, 1));
+			dataColumn.add(StateView.getInstance().getPhaseLabel());
+			
+			JLabel currentPlayerIndicator = new JLabel(String.valueOf(GameState.getInstance().getCurrentPlayer().getId()));
+			dataColumn.add(currentPlayerIndicator);
+			
+			JPanel fortificationPanel = new JPanel();
+			controlPanel.add(fortificationPanel);
+			fortificationPanel.setLayout(new GridLayout(0, 3, 0, 0));
+			
+			JPanel fortificationInfoPanel = new JPanel();
+			fortificationPanel.add(fortificationInfoPanel);
+			fortificationInfoPanel.setLayout(new GridLayout(0, 1, 0, 0));
+			
+			// text shown to guide user to select from which country the armies should go out
+			JTextArea textFrom = new JTextArea("From Country:");
+			fortificationInfoPanel.add(textFrom);
+			
+			// text shown to guide user to select destination country
+			JTextArea textTo = new JTextArea("To Country:");
+			fortificationInfoPanel.add(textTo);
+			
+			// declare quantity fields
+			JTextArea textQuantity = new JTextArea("Number of Armies:");
+			fortificationInfoPanel.add(textQuantity);
+			
+			JPanel fortificationPanel_1 = new JPanel();
+			fortificationPanel.add(fortificationPanel_1);
+			fortificationPanel_1.setLayout(new GridLayout(3, 1, 0, 0));
+			
+			// initialized before handler
+			fortificationPanel_1.add(fromDropDown);
+			fortificationPanel_1.add(toDropDown);
+			
+			quantity = new JTextField(5);
+			fortificationPanel_1.add(quantity);
+			quantity.setColumns(10);
+			
+			JPanel fortificationButtonPanel = new JPanel();
+			fortificationPanel.add(fortificationButtonPanel);
+					
+			Player player = GameState.getInstance().getCurrentPlayer(); //get current player
+			final ArrayList<Country> countryList = player.getCountryList(); //get country list of current player
+			
+			// create drop-down list for all the countries owned by current player
+			for (Country country:countryList) {
+				fromDropDown.addItem(country.getName());
+			}
+			
+			fromDropDown.addActionListener((ActionListener) new ActionListener() {
+				public void actionPerformed(ActionEvent event){
+	                JComboBox<String> comboBox = (JComboBox<String>) event.getSource();
+	                String selected = (String)comboBox.getSelectedItem();
+	            	Country selectedCountry = null;
+	                for(Country c:countryList) {
+	                	if (c.getName().equals(selected))
+	                		selectedCountry = c; 
+	                }
+	                
+	                // get valid destinations
+	                ArrayList<Country> destinationCountryList = GameState.getInstance().getValidDestination(selectedCountry);
+	                                
+	                toDropDown.removeAllItems(); // clear the to combobox
+	                
+	                // add all possible destinations (belong to current player and there is a path) to the toDropDown JComboBox
+	                for (Country country:destinationCountryList) {
+	        			toDropDown.addItem(country.getName());
+	        		}
+	                
+	                // by default show the maximum number of armies that can be moved, but also able to use user input
+	                if (selectedCountry != null) {
+	                	quantity.setText(String.valueOf(Math.max(0,selectedCountry.getNumOfArmies()-1)));
+	                }               	
+	        	}
+			});
+				
+			// callback to fortification controller
+			JButton executeFortification = new JButton("Fortify!");
+			executeFortification.setVerticalAlignment(SwingConstants.BOTTOM);
+			executeFortification.addActionListener(new FortificationController(fromDropDown, toDropDown, quantity));
+			
+			fortificationButtonPanel.add(executeFortification);
+		}
 	}
 }

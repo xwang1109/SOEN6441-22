@@ -212,13 +212,15 @@ public class ReinforcementView{
 //		playerList.get(0).getNewCard();
 
 		//////////////////////////////////////
-		showPlayer();//the strategy behaviour is in the showPlayer function
 
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)){
 			playerCounter = 0;
 			player = playerList.get(playerCounter);		
 			leftArmies = player.getLeftArmyNumber();	
 		}
+		showPlayer();//the strategy behaviour is in the showPlayer function
+
+		
 	}
 /**
  * Refresh the number of armies left to assign to countries
@@ -320,7 +322,6 @@ public class ReinforcementView{
 				}
 			}			
 	
-			GameState.getInstance().setPhase(Phase.REINFORCEMENT);
 			currentPlayer.doStrategyReinforcement();
 			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 
