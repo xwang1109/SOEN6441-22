@@ -1,5 +1,8 @@
 package models.game;
 
+import java.util.List;
+import java.util.Random;
+
 import models.map.Country;
 
 public class Cheater implements Strategy{
@@ -43,5 +46,16 @@ public class Cheater implements Strategy{
 			}
 		}			
 	}
-
+	@Override
+	public void setupPhase(Player player) {
+		// TODO Auto-generated method stub
+		int leftArmy=player.getLeftArmyNumber();
+		for(int i=0; i<leftArmy;i++)
+		{
+			Random rand = new Random();
+		    List<Country> playerCountrylist=player.getCountryList();
+			Country randomCountry = player.getCountryList().get(rand.nextInt(playerCountrylist.size()));
+			randomCountry.AddArmy();	
+		}
+	}
 }

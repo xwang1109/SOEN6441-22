@@ -11,6 +11,7 @@ import java.awt.event.FocusListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -157,19 +158,14 @@ public class ReinforcementView{
 		leftArmyLabelTitle = new JLabel("Left Armies:");
 		leftArmyLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		
-		
 		infantrycardNumberLabelTitle = new JLabel("Number Of Infantry Cards:");
 		infantrycardNumberLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-
 		cavalrycardNumberLabelTitle = new JLabel("Number Of Cavary Cards:");
 		cavalrycardNumberLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-
 		artillerycardNumberLabelTitle = new JLabel("Number Of Artilery Cards:");
 		artillerycardNumberLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
-		
 		
 		labelPane.add(phaseLabelTitle);
 		labelPane.add(playerLabelTitle);
@@ -178,7 +174,6 @@ public class ReinforcementView{
 		labelPane.add(cavalrycardNumberLabelTitle);
 		labelPane.add(artillerycardNumberLabelTitle);
 
-		
 		JPanel labelValuePane = new JPanel(new GridLayout(0,1));
 		playerLabel = new JLabel("");
 		leftArmyLabel = new JLabel("");
@@ -192,7 +187,6 @@ public class ReinforcementView{
 		labelValuePane.add(infantrycardNumberLabel);
 		labelValuePane.add(cavalrycardNumberLabel);
 		labelValuePane.add(artillerycardNumberLabel);
-
 
 		JPanel mapPane = new JPanel(new GridLayout(0,1));
 		mapPane.add(mapPanel);
@@ -218,41 +212,13 @@ public class ReinforcementView{
 //		playerList.get(0).getNewCard();
 
 		//////////////////////////////////////
-		
+		showPlayer();//the strategy behaviour is in the showPlayer function
+
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)){
 			playerCounter = 0;
 			player = playerList.get(playerCounter);		
-
-			leftArmies = player.getLeftArmyNumber();		
+			leftArmies = player.getLeftArmyNumber();	
 		}
-		
-		showPlayer();
-		
-		if(GameState.getInstance().getPhase().equals(Phase.REINFORCEMENT)) {
-			Player currentPlayer= GameState.getInstance().getCurrentPlayer();
-			if(currentPlayer.getCardList().size() > 4) { 
-			//if there are more or equal to 5 cards, force to automatically change card
-				if(!(currentPlayer.getStrategy() instanceof Human))	{
-					currentPlayer.autoExchangeCardforArmy();
-				}
-				else
-				{
-					exchangeCard();
-				}
-			}			
-	
-			GameState.getInstance().setPhase(Phase.REINFORCEMENT);
-			currentPlayer.doStrategyReinforcement();
-			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
-
-			if(!(currentPlayer.getStrategy() instanceof Human))	{//if not human, directly jump to attack, other wise wait
-				GameState.getInstance().setPhase(Phase.ATTACK);
-				StateView.getInstance().showAttackView();
-			}	
-				
-				
-		}
-
 	}
 /**
  * Refresh the number of armies left to assign to countries
@@ -324,6 +290,50 @@ public class ReinforcementView{
  * to place his given armies one by one on his countries
  */
 	public void showPlayer() {
+		
+		if (GameState.getInstance().getPhase().equals(Phase.SETUP)){
+			Player currentPlayer= GameState.getInstance().getCurrentPlayer();
+			currentPlayer.doStrategySetup();
+			
+			if(!(currentPlayer.getStrategy() instanceof Human))	{
+				Boolean isLastPlayer=!GameState.getInstance().setUpRoundRobin();
+			
+				if (isLastPlayer) {//if this is the last player to setup, directly jump to reinforcement
+					GameState.getInstance().setPhase(Phase.REINFORCEMENT);
+					GameState.getInstance().setFirstPlayer();
+					//starUpView.showPlayer();
+					StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());		
+					StateView.getInstance().showReinforcementView();
+				}
+			}
+		}
+		
+		if(GameState.getInstance().getPhase().equals(Phase.REINFORCEMENT)) {
+			Player currentPlayer= GameState.getInstance().getCurrentPlayer();
+			if(currentPlayer.getCardList().size() > 4) { 
+			//if there are more or equal to 5 cards, force to automatically change card
+				if(!(currentPlayer.getStrategy() instanceof Human))	{
+					currentPlayer.autoExchangeCardforArmy();
+				}
+				else{
+					exchangeCard();
+				}
+			}			
+	
+			GameState.getInstance().setPhase(Phase.REINFORCEMENT);
+			currentPlayer.doStrategyReinforcement();
+			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+
+			if(!(currentPlayer.getStrategy() instanceof Human))	{//if not human, directly jump to attack, other wise wait
+				GameState.getInstance().setPhase(Phase.ATTACK);
+				StateView.getInstance().showAttackView();
+			}	
+				
+				
+		}
+		
+		
+		
 		player = GameState.getInstance().getCurrentPlayer();		
 		leftArmies = player.getLeftArmyNumber();
 		countryList = player.getCountryList();
@@ -339,6 +349,9 @@ public class ReinforcementView{
 		comboBox.repaint();
 		isActionListenerActive = true;
 		comboBox.setSelectedIndex(0);
+		
+		
+		
 	}
 	public void disable()
 	{

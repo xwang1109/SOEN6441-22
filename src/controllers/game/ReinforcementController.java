@@ -65,43 +65,16 @@ public class ReinforcementController implements ActionListener {
 				if (isLastPlayer) {//if this is the last player to setup, directly jump to reinforcement
 					GameState.getInstance().setPhase(Phase.REINFORCEMENT);
 					GameState.getInstance().setFirstPlayer();
-					
-					starUpView.showPlayer();
-					
-					StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
-						
+					//starUpView.showPlayer();
+					StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());		
 					StateView.getInstance().showReinforcementView();		
 					
 				}
 				else//if this is not the last player, check if next player is human
 				{
-					Player nextPlayer=GameState.getInstance().getCurrentPlayer();
-				
-					while(!(nextPlayer.getStrategy() instanceof Human)&&(!isLastPlayer))//if not human, hack for setup
-					{
-						Player currentPlayer= GameState.getInstance().getCurrentPlayer();
-						int leftArmy=currentPlayer.getLeftArmyNumber();
-						for(int i=0; i<leftArmy;i++)
-						{
-							Random rand = new Random();
-						    List<Country> playerCountrylist=currentPlayer.getCountryList();
-							Country randomCountry = currentPlayer.getCountryList().get(rand.nextInt(playerCountrylist.size()));
-							randomCountry.AddArmy();	
-						}
-						
-						//currentPlayer.doStrategyReinforcement();
-						isLastPlayer=!GameState.getInstance().setUpRoundRobin();
-						nextPlayer=GameState.getInstance().getCurrentPlayer();
-					}
-					if(isLastPlayer)//jump to next view
-					{
-						GameState.getInstance().setFirstPlayer();						
-						GameState.getInstance().setPhase(Phase.REINFORCEMENT);
-						StateView.getInstance().showReinforcementView();	
-					}
+					starUpView.showPlayer();
 				}
 				
-				starUpView.showPlayer();
 			} else {
 				starUpView.showLeftArmies();
 			}

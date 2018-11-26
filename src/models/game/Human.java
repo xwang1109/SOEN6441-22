@@ -23,4 +23,10 @@ public class Human implements Strategy{
 		// TODO Auto-generated method stub
 	}
 
+	@Override
+	public void setupPhase(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

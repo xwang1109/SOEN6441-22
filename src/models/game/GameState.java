@@ -101,7 +101,7 @@ public class GameState extends Observable {
 	 * @param phase
 	 */
 	public void setPhase(Phase phase) { 
-		System.out.println("Player "+this.getCurrentPlayer()+":"+this.getCurrentPlayer().getStrategy()+" changed to Phase "+ phase.name());
+		System.out.println("Player "+this.getCurrentPlayer().getId()+":"+this.getCurrentPlayer().getStrategy()+" changed to Phase "+ phase.name());
 		phaseState.setPhase(phase);	
 	}
 

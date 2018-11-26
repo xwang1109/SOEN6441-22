@@ -47,7 +47,12 @@ private Strategy strategy;
 	public Player() {
 		this.strategy=new Human();
 	}
-
+	
+	public void doStrategySetup()
+	{
+		strategy.setupPhase(this);
+	}
+	
 	public void doStrategyAttack()
 	{
 		strategy.attackPhase(this);
