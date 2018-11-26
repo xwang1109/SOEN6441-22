@@ -21,15 +21,28 @@ import models.map.Map;
 public class GameState extends Observable {
 
 	private File selectedFile;
-	private  Map map;
+	private Map map;
 	
 	private int currentPlayer;
 	private ArrayList<Player> playerList = new ArrayList<Player>();	// hold players
-
 	private ArrayList<Country> destinationCountryList;	// hold phase to switch between map info and current state
+	
+	private int turns=1;
+	 private int MAX_TURNS;
 
 	
-	
+	public int getTurns() {
+		return turns;
+	}
+
+	public void setTurns(int turns) {
+		this.turns = turns;
+	}
+
+	public int getMAX_TURNS() {
+		return MAX_TURNS;
+	}
+
 	public enum Phase
 	{
 		SETUP,
@@ -321,6 +334,7 @@ public class GameState extends Observable {
 	public void endPlayerTurn() {
 	
 		currentPlayer = ++currentPlayer % playerList.size();
+		turns++;
 		setChanged();
 		notifyObservers();
 	}
