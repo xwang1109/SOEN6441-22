@@ -125,7 +125,7 @@ public class GameStartController implements ActionListener {
 
 		int num = (Integer)numberOfPlayer.getSelectedItem();
 	
-
+		
 		GameState.getInstance().assignInitialPlayers(num,playerTypeComboBoxList);  
 		
 		GameState.getInstance().randomAssignCountry();

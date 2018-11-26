@@ -1,6 +1,7 @@
 package models.game;
 import java.util.List;
 
+import models.game.GameState.Phase;
 import models.map.Map;
 public class Tournament {
 
@@ -45,11 +46,42 @@ public class Tournament {
 	public void run()
 	{
 		//todo: run the games
-		
+		for(Map map:maps)
+		{
+			for(int i=0;i<this.numOfGames;i++)
+			{
+				GameState.getInstance().setPlayerList(players);  
+				GameState.getInstance().setMap(map);
+				
+				GameState.getInstance().randomAssignCountry();
+				GameState.getInstance().assignInitialArmy();
+				
+				for(Player p:players){
+					GameState.getInstance().setPhase(Phase.SETUP);
+
+					p.doStrategySetup();
+				}
+				//todo check who wins
+				for(int currentTurn=0;currentTurn<turns;currentTurn++)
+				{
+					for(Player p:players){
+						GameState.getInstance().setPhase(Phase.REINFORCEMENT);
+						p.doStrategyReinforcement();
+						GameState.getInstance().setPhase(Phase.ATTACK);
+						p.doStrategyAttack();
+						GameState.getInstance().setPhase(Phase.FORTIFICATION);
+						p.doStrategyfortification();
+						GameState.getInstance().endPlayerTurn();
+					}
+				}
+			}
+		}
+
 		report();
 	}
 	private String report()
 	{
+		//todo
 		return null;
 	}
 	
