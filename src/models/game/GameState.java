@@ -336,7 +336,11 @@ public class GameState extends Observable {
 	 * End turn for current player, and set the "currentPlayer" to next player
 	 */
 	public void endPlayerTurn() {
-	
+		
+		Player p=GameState.getInstance().getCurrentPlayer();
+		System.out.println("Player "+currentPlayer+" finishes turn "+turns+" with "+
+		p.getArmyNumber()+" army and "+p.getCountryList().size()+" country"
+		);
 		currentPlayer = ++currentPlayer % playerList.size();
 		turns++;
 		setChanged();
