@@ -47,8 +47,8 @@ import javax.swing.border.EtchedBorder;
  * @version 2.0
  */
 public class ReinforcementView{
-	private ArrayList<Player> playerList;
-	private ArrayList<Country> countryList;
+	private List<Player> playerList;
+	private List<Country> countryList;
 	private Player player;
 	private int playerCounter;
 	private GameState gameState;
