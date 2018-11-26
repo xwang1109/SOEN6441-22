@@ -155,7 +155,8 @@ public class TournamentSetupView extends JFrame {
 		
 		JButton selectFileButton=new JButton("Choose map 1");
 		JLabel mapPath1 = new JLabel("");
-
+		Map map=new Map();
+		maps.add(map);
 		selectFileButton.addActionListener(new TournamentChooseMapListener(maps,0,mapPath1) );
 
 		
