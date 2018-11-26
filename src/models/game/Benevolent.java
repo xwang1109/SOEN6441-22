@@ -54,7 +54,7 @@ public class Benevolent implements Strategy{
 		}	
 		
 		int min = Integer.MAX_VALUE;
-		ArrayList<Country> fromCountries = null;
+		List<Country> fromCountries = new ArrayList<Country>();
 		Country toCountry = null;
 		
 		for(Country f: connectedCountryList.keySet()) {
