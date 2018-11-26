@@ -24,8 +24,8 @@ public class GameState extends Observable {
 	private Map map;
 	
 	private int currentPlayer;
-	private ArrayList<Player> playerList = new ArrayList<Player>();	// hold players
-	private ArrayList<Country> destinationCountryList;	// hold phase to switch between map info and current state
+	private List<Player> playerList = new ArrayList<Player>();	// hold players
+	private List<Country> destinationCountryList;	// hold phase to switch between map info and current state
 	
 	private int turns=1;
 	 private int MAX_TURNS;
@@ -177,20 +177,24 @@ public class GameState extends Observable {
 		this.selectedFile = selectedFile;
 	}
 	
+	public void setMap(Map map) {
+		this.map = map;
+	}
+
 	/**
 	 * Public method to get the array list of players
 	 * @return ArrayList
 	 */
-	public ArrayList<Player> getPlayerList() {
+	public List<Player> getPlayerList() {
 		return playerList;
 	}
 	
 	/**
 	 * Public method to set the array list of players
-	 * @param playerList
+	 * @param players
 	 */
-	public void setPlayerList(ArrayList<Player> playerList) {
-		this.playerList = playerList;
+	public void setPlayerList(List<Player> players) {
+		this.playerList = players;
 		this.currentPlayer = 0;
 	}
 	
