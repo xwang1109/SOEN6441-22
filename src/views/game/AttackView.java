@@ -145,13 +145,44 @@ public class AttackView {
 		JLabel currentPlayerTextLabel = new JLabel("Current Player: ");
 		labelColumn.add(currentPlayerTextLabel);
 		
+		JLabel ruleInfoLabel = new JLabel("Rule Information: ");
+		labelColumn.add(ruleInfoLabel);
+		
 		JPanel dataColumn = new JPanel();
 		informationPanel.add(dataColumn);
 		dataColumn.setLayout(new GridLayout(0, 1));
 		dataColumn.add(StateView.getInstance().getPhaseLabel()); // observer
 		
+		
 		JLabel currentPlayerIndicator = new JLabel(String.valueOf(GameState.getInstance().getCurrentPlayer().getId()));
 		dataColumn.add(currentPlayerIndicator);
+		
+		
+		JLabel ruleInfoDisplay=new JLabel(StateView.getInstance().getRuleInfoLabel().getText());
+
+		dataColumn.add(ruleInfoDisplay);
+		
+		
+		 String attackInfoRule="In the attack phase"+
+				 "the player may choose one of the countries he owns that contains two or more armies, and declare an attack on"+
+		 		"an adjacent country that is owned by another player. A battle is then simulated by the attacker rolling at most 3"+ 
+		 		"dice (which should not be more than the number of armies contained in the attacking country) and the defender"+
+		 		"rolling at most 2 dice (which should not be more than the number of armies contained in the attacking country)."+
+		 		"The outcome of the attack is determined by comparing the defenders best dice roll with the attackers best dice"+ 
+		 		"roll. If the defender rolls greater or equal to the attacker then the attacker loses an army otherwise the defender"+ 
+		 		"loses an army. If the defender rolled two dice then his other dice roll is compared to the attacker's second best\n"+
+		 		"dice roll and a second army is lost by the attacker or defender in the same way. The attacker can choose to\n"+
+		 		"continue attacking until either all his armies or all the defending armies have been eliminated. If all the defender's\n"+ 
+		 		"armies are eliminated the attacker captures the territory. The attacking player must then place a number of armies\n"+
+		 		"in the conquered country which is greater or equal than the number of dice that was used in the attack that\n"+
+		 		"resulted in conquering the country. A player may do as any attacks as he wants during his turn. Once he declares\n"+ 
+		 		"that he will not attack anymore (or cannot attack because none of his countries that have an adjacent country\n"+
+		 		"controlled by another player is containing more than one army), the fortification phase begins</html>";
+		 		
+		
+		ruleInfoLabel.setToolTipText(attackInfoRule);
+		String str=ruleInfoLabel.getToolTipText();
+		System.out.print(str);
 	}
 
 	class CountLabelListener implements ActionListener {

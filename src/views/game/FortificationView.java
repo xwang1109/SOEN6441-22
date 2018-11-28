@@ -42,19 +42,24 @@ public class FortificationView {
 	 * @param JPanel controlPanel
 	 */
 	public FortificationView(JPanel controlPanel) {
-		controlPanel.setLayout(new GridLayout(0, 2));
+		//controlPanel.setLayout(new GridLayout(0, 2));
 		JPanel informationPanel = new JPanel();
 		controlPanel.add(informationPanel);
+		informationPanel.setLayout(new GridLayout(0, 2));
+
 		
 		JPanel labelColumn = new JPanel();
 		informationPanel.add(labelColumn);
-		labelColumn.setLayout(new GridLayout(0, 1));
+		labelColumn.setLayout(new GridLayout(0, 1,0,0));
 		
 		JLabel phaseTextLabel = new JLabel("Phase: ");
 		labelColumn.add(phaseTextLabel);
 		
 		JLabel currentPlayerTextLabel = new JLabel("Current Player: ");
 		labelColumn.add(currentPlayerTextLabel);
+		
+		JLabel ruleInfoLabel = new JLabel("Rule Information: ");
+		labelColumn.add(ruleInfoLabel);
 		
 		JPanel dataColumn = new JPanel();
 		informationPanel.add(dataColumn);
@@ -63,6 +68,21 @@ public class FortificationView {
 		
 		JLabel currentPlayerIndicator = new JLabel(String.valueOf(GameState.getInstance().getCurrentPlayer().getId()));
 		dataColumn.add(currentPlayerIndicator);
+		
+		JLabel ruleInfoDisplay=new JLabel(StateView.getInstance().getRuleInfoLabel().getText());
+		dataColumn.add(ruleInfoDisplay);
+		
+		String fortificationInfoRule=" <html>In the fortification<br/>" + 
+		 		"phase, the player may move any number of armies from one of his owed countries to the other, provided that<br/>" + 
+		 		"there is a path between these two countries that is composed of countries that he owns. Only one such move is<br/>" + 
+		 		"allowed per fortification phase. Once the move is made or the player forfeits his fortification phase, the player’s<br/>" + 
+		 		"turn ends and it is now the next player’s turn. Any player than does not control at least one country is removed<br/>" + 
+		 		"from the game. The game ends at any time one of the players owns all the countries in the map. </html>";
+
+		ruleInfoDisplay.setToolTipText(fortificationInfoRule);
+		String str=ruleInfoLabel.getToolTipText();
+		System.out.print(str);
+		
 		
 		JPanel fortificationPanel = new JPanel();
 		controlPanel.add(fortificationPanel);

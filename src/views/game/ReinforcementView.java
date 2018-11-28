@@ -74,6 +74,8 @@ public class ReinforcementView{
 	JLabel infantrycardNumberLabelTitle;	
 	JLabel cavalrycardNumberLabelTitle;
 	JLabel artillerycardNumberLabelTitle;
+	
+	JLabel ruleInfoLabel;
 
 	JPanel buttonPane;
 	private JButton exchangeCardViewButton;
@@ -168,6 +170,9 @@ public class ReinforcementView{
 		artillerycardNumberLabelTitle = new JLabel("Number Of Artilery Cards:");
 		artillerycardNumberLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		
+		JLabel ruleInfoLabelTitle = new JLabel("Rule Information: ");
+		ruleInfoLabelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		
 		
 		labelPane.add(phaseLabelTitle);
 		labelPane.add(playerLabelTitle);
@@ -175,7 +180,7 @@ public class ReinforcementView{
 		labelPane.add(infantrycardNumberLabelTitle);
 		labelPane.add(cavalrycardNumberLabelTitle);
 		labelPane.add(artillerycardNumberLabelTitle);
-
+		labelPane.add(ruleInfoLabelTitle);
 		
 		JPanel labelValuePane = new JPanel(new GridLayout(0,1));
 		playerLabel = new JLabel("");
@@ -183,14 +188,25 @@ public class ReinforcementView{
 		infantrycardNumberLabel = new JLabel("");
 		cavalrycardNumberLabel = new JLabel("");
 		artillerycardNumberLabel = new JLabel("");
-
+		ruleInfoLabel=new JLabel("the number of players is determined");
+		ruleInfoLabel.setText(StateView.getInstance().getRuleInfoLabel().getText());
+		
+		String StartUpInfoRule="the number of players is determined, then all the countries"+
+				"are randomly assigned to the players. Then the turn-based main play phase begins, in which all players are given"+
+				"a turn in a round-robin fashion.";
+		ruleInfoLabel.setToolTipText(StartUpInfoRule);
+		String str=ruleInfoLabel.getToolTipText();
+		System.out.print(str);
+		
+		
+		
 		labelValuePane.add(StateView.getInstance().getPhaseLabel());		
 		labelValuePane.add(playerLabel);
 		labelValuePane.add(leftArmyLabel);
 		labelValuePane.add(infantrycardNumberLabel);
 		labelValuePane.add(cavalrycardNumberLabel);
 		labelValuePane.add(artillerycardNumberLabel);
-
+		labelValuePane.add(ruleInfoLabel);
 
 		JPanel mapPane = new JPanel(new GridLayout(0,1));
 		mapPane.add(mapPanel);
@@ -287,7 +303,20 @@ public class ReinforcementView{
 		infantrycardNumberLabel.setText(Integer.toString(player.cardTypeNumber()[0]));
 		cavalrycardNumberLabel.setText(Integer.toString(player.cardTypeNumber()[1]));
 		artillerycardNumberLabel.setText(Integer.toString(player.cardTypeNumber()[2]));
+		ruleInfoLabel.setText(StateView.getInstance().getRuleInfoLabel().getText());
 		
+		
+		String reinforcementInfoRule="<html>the player is given a number of armies that depends on the number of<br/>" + 
+		 		"countries he owns (# of countries owned divided by 3, rounded down). If the player owns all the countries of an\n" + 
+		 		"entire continent, the player is given an amount of armies corresponding to the continent’s control value. Finally, if\n" + 
+		 		"the player owns three cards of different sorts or the same sorts, he can exchange them for armies. The number of\n" + 
+		 		"armies a player will get for cards is first 5, then increases by 5 every time any player does so (i.e. 5, 10, 15, …). In\n" + 
+		 		"any case, the minimal number of reinforcement armies is 3. Once the total number of reinforcements is\n" + 
+		 		"determined for the player’s turn, the player may place the armies on any country he owns, divided as he wants</html>";
+		
+		ruleInfoLabel.setToolTipText(reinforcementInfoRule);
+		String str=ruleInfoLabel.getToolTipText();
+		System.out.print(str);
 	}
 /**
  * This method is called in setup phase when next player is given the term
