@@ -37,7 +37,7 @@ public class AttackViewTest {
 	public void setUp(){
 		GameState.reset();
 		
-		GameState.getInstance().assignInitialPlayers(2);
+		GameState.getInstance().assignInitialPlayers(2,null);
 		Player player0 = GameState.getInstance().getPlayerList().get(0);
 		Player player1 = GameState.getInstance().getPlayerList().get(1);
 		

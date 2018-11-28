@@ -1,15 +1,21 @@
 package test.controllers.game;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 
+import controllers.game.AttackController;
 import models.game.GameState;
+import models.game.GameState.Phase;
 import models.game.Player;
 import models.map.Country;
+import views.game.AttackView;
 
 /**
  * This class tests attack view of the game
@@ -53,11 +59,19 @@ public class AttackControllerTest {
 		
 		attackerCountry.setName("attackerCountryStr");
 		defenderCountry.setName("defenderCountryStr");
+		
+		GameState.getInstance().setPhase(Phase.ATTACK);
 	}
 
 	@Ignore
 	public void test() {
+		GameState.getInstance().getMap().mapOwner(player0);
+		Phase expectedResult = GameState.getInstance().getPhase();
 		
+		AttackController controller = new AttackController(new AttackView(new JPanel()));
+		controller.checkNextStep();
+		
+		assertEquals(expectedResult, GameState.getInstance().getPhase());
 	}
 
 }

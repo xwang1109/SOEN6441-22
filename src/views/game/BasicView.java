@@ -3,6 +3,8 @@ package views.game;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -39,6 +41,23 @@ public class BasicView {
 		newGameButton.addActionListener(new PlayerSetupController());
 		
 		controlPanel.add(newGameButton);
+
+		JButton newTurnamentButton = new JButton("New Turnament");
+		newTurnamentButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				TournamentSetupView tns=new TournamentSetupView();
+				tns.setVisible(true);
+			}
+			
+		});
+		
+		
+		
+		controlPanel.add(newTurnamentButton);
 		
 		JButton openMapEditorButton = new JButton("Open Map Editor");
 		openMapEditorButton.addActionListener(new MapEditorStartController());

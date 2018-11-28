@@ -3,19 +3,28 @@ package models.game;
 public class Human implements Strategy{
 
 	@Override
+	public String toString() {
+		return "Human";
+	}
+	
+	@Override
 	public void reinforcementPhase(Player player) {
 		// TODO Auto-generated method stub
 		player.addReinforcementArmy(player.CalculateReinforcementArmyNumber());
 	}
 
 	@Override
-	public int attackPhase(Player player) {
+	public void attackPhase(Player player) {
 		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
 	public void fortificationPhase(Player player) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setupPhase(Player player) {
 		// TODO Auto-generated method stub
 		
 	}

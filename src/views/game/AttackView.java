@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import controllers.game.AttackController;
 import controllers.game.FortificationController;
 import models.game.GameState;
+import models.game.Human;
 import models.game.Player;
 import models.game.GameState.Phase;
 import models.map.Country;
@@ -35,9 +36,7 @@ public class AttackView {
 	 */
 	public final static String EndAttackPhaseStr =  "End Attack Phase";
 	public final static String RollDiceStr =  "ROLL THE DICE!";
-	//public final static String RollAgainStr =  "Roll Dice Again";
 	public final static String MoveArmiesStr =  "Move Armies";
-	//public final static String MoreAttackStr =  "More Attack";
 	public final static String StopAttackStr =  "Stop Attack";
 	public final static String ContinueStr =  "Continue!";
 	public final static String AllOutStr =  "All Out Mode";
@@ -104,24 +103,52 @@ public class AttackView {
 	 * @param controlPanel
 	 */
 	public AttackView(JPanel controlPanel) {
-		// Prepare this view layout ; info, middle panel that changes, end phase button
-		controlPanel.setLayout(new GridLayout(0,3));
+		//do strategy first, may not need to create the view if not human
+		GameState.getInstance().setPhase(Phase.ATTACK);
+		Player currentPlayer= GameState.getInstance().getCurrentPlayer();
+		currentPlayer.doStrategyAttack();
 		
-		//prepare the three panels
-		prepareInformationPanel(controlPanel);
+		if(!(currentPlayer.getStrategy() instanceof Human))	{//if not human, directly jump to attack, other wise wait
+			
+			if (GameState.getInstance().getMap().mapOwner(GameState.getInstance().getCurrentPlayer())) {
+				GameState.getInstance().setPhase(Phase.FINISHED);
+				StateView.getInstance().showEndGameView();
+			}
+			else if(GameState.getInstance().getCurrentPlayer().getArmyNumber() == 0) {
+				// current player ended his/her turn.
+				GameState.getInstance().endPlayerTurn();
+				GameState.getInstance().setPhase(Phase.REINFORCEMENT);
+				StateView.getInstance().showReinforcementView();					
+			}
+			else {
+			GameState.getInstance().setPhase(Phase.FORTIFICATION);
+			StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+			StateView.getInstance().showFortificationView();
+			}
+		}	
+		else//if human, show the view
+		{
+			// Prepare this view layout ; info, middle panel that changes, end phase button
+			controlPanel.setLayout(new GridLayout(0,3));
+			
+			//prepare the three panels
+			prepareInformationPanel(controlPanel);
+			
+			actionPanel = new JPanel();
+			controlPanel.add(actionPanel);
+			actionPanel.setLayout(new GridLayout(3, 1));
+			
+			JPanel rightPanel = new JPanel();
+			endAttBtn = new JButton(EndAttackPhaseStr);
+			endAttBtn.setVerticalAlignment(SwingConstants.BOTTOM);
+			endAttBtn.addActionListener(new AttackController(this));
+			//rightPanel.add(endAttBtn);
+			controlPanel.add(rightPanel);
+	
+			showSelectionState();
 		
-		actionPanel = new JPanel();
-		controlPanel.add(actionPanel);
-		actionPanel.setLayout(new GridLayout(3, 1));
+		}
 		
-		JPanel rightPanel = new JPanel();
-		endAttBtn = new JButton(EndAttackPhaseStr);
-		endAttBtn.setVerticalAlignment(SwingConstants.BOTTOM);
-		endAttBtn.addActionListener(new AttackController(this));
-		//rightPanel.add(endAttBtn);
-		controlPanel.add(rightPanel);
-
-		showSelectionState();
 		
 	}
 	
@@ -227,8 +254,8 @@ public class AttackView {
 		endAttBtn.setEnabled(true);
 		
 		
-		JComboBox attackerDiceNumberDropBox = new JComboBox();
-		JComboBox defenderDiceNumberDropBox = new JComboBox();		
+		final JComboBox attackerDiceNumberDropBox = new JComboBox();
+		final JComboBox defenderDiceNumberDropBox = new JComboBox();		
 		
 
 		JPanel actionInforPanel = new JPanel();

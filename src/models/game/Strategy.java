@@ -6,6 +6,15 @@ package models.game;
 */
 public interface Strategy {
 
+
+	
+	/**
+	 * Setup phase should be implemented in different behaviors
+	 * @param player current player who is in setup phase
+	 */
+	public void setupPhase(Player player);
+	
+	
 	
 	/**
 	 * Reinforcement phase should be implemented in different behaviors
@@ -19,7 +28,7 @@ public interface Strategy {
 	 * @param player current player who is in attack phase
 	 * @return 
 	 */
-	public int attackPhase(Player player);
+	public void attackPhase(Player player);
 	
 	
 	/**

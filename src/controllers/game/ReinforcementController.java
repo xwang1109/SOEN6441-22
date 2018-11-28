@@ -2,14 +2,18 @@ package controllers.game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Random;
 
 import javax.swing.JComboBox;
 
+import views.game.CardExchangeView;
 import views.game.ReinforcementView;
 import views.game.StateView;
 import models.game.GameState;
 import models.game.Player;
 import models.game.GameState.Phase;
+import models.game.Human;
 import models.map.Country;
 
 /**
@@ -22,6 +26,8 @@ import models.map.Country;
 public class ReinforcementController implements ActionListener {
 
 	private ReinforcementView starUpView;
+	private CardExchangeView exchangeview;
+	private Player player;
 /**
  * Constructor of the class which initialize the view  	
  * @param view ReinforcementView
@@ -53,18 +59,22 @@ public class ReinforcementController implements ActionListener {
 		Country selectedCoutnry = starUpView.getSelectedCountry();
 		selectedCoutnry.AddArmy();	
 		if (GameState.getInstance().getPhase().equals(Phase.SETUP)) {		
-			if(starUpView.decreaseLeftArmies() == 0) {
-				if (!GameState.getInstance().setUpRoundRobin()) {
+			if(starUpView.decreaseLeftArmies() == 0) {//finish setup	
+				Boolean isLastPlayer=!GameState.getInstance().setUpRoundRobin();
+				
+				if (isLastPlayer) {//if this is the last player to setup, directly jump to reinforcement
 					GameState.getInstance().setPhase(Phase.REINFORCEMENT);
 					GameState.getInstance().setFirstPlayer();
-					GameState.getInstance().getCurrentPlayer().addReinforcementArmy(GameState.getInstance().getCurrentPlayer().CalculateReinforcementArmyNumber());
-					//starUpView.changeToReinforcement();
-					starUpView.showPlayer();
-					if(GameState.getInstance().getCurrentPlayer().getCardList().size() > 4) { //if there are more or equal to 5 cards, force to change card
-						starUpView.exchangeCard();
-					}
+					//starUpView.showPlayer();
+					StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());		
+					StateView.getInstance().showReinforcementView();		
+					
 				}
-				starUpView.showPlayer();
+				else//if this is not the last player, check if next player is human
+				{
+					starUpView.showPlayer();
+				}
+				
 			} else {
 				starUpView.showLeftArmies();
 			}

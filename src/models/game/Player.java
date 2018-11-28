@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Observable;
 
 import javax.swing.JFrame;
 
 import models.map.Continent;
 import models.map.Country;
-import views.game.BaseObserverFrame;
+
 
 
 /**
@@ -19,7 +20,7 @@ import views.game.BaseObserverFrame;
  * @author Bingyang Yu ,Parisa khazaei
  * @version 2.0
  */
-public class Player {
+public class Player extends Observable {
 	
 	/** The id. */
 	private int id;
@@ -37,15 +38,36 @@ public class Player {
 	private int getArmyforCards = 0; //number of times player is given army for cards
 	//the number of looser 
 	
+private Strategy strategy;
 	
-	private List<BaseObserverFrame> observerList=new ArrayList<BaseObserverFrame>();
-	
-	
-
-	public void attachObserver(BaseObserverFrame frame)
-	{
-		observerList.add(frame);
+	public Player(Strategy strategy) {
+		this.strategy=strategy;
 	}
+	
+	public Player() {
+		this.strategy=new Human();
+	}
+	
+	public void doStrategySetup()
+	{
+		strategy.setupPhase(this);
+	}
+	
+	public void doStrategyAttack()
+	{
+		strategy.attackPhase(this);
+	}
+	
+	public void doStrategyReinforcement()
+	{
+		strategy.reinforcementPhase(this);
+	}
+
+	public void doStrategyfortification()
+	{
+		strategy.fortificationPhase(this);
+	}
+
 	
 	/**
 	 * Gets the id.
@@ -128,9 +150,9 @@ public class Player {
 	}
 	
 	/**
-	 * Sets the armyfor cards.
+	 * Sets the army for cards.
 	 *
-	 * @param i the new armyfor cards
+	 * @param i the new army for cards
 	 */
 	public void setArmyforCards(int i) {
 		getArmyforCards = i;
@@ -216,7 +238,36 @@ public class Player {
 		}
 		return cardTypeNumber;
 	}
-	
+	/**
+	 * This method automatically exchange 3 cards for army
+	 */
+	public void autoExchangeCardforArmy() {
+		
+		if(this.getCardList().size()<=4){//if with less than 5 cards, don't do this
+			return;
+		}
+		
+		//first give them the army
+		int armyForCard = (getArmyforCards += 1) * 5;
+		
+		for(int i=0; i<armyForCard; i++) {
+			Army army = new Army(this);
+			armyList.add(army);
+		}
+		//now remove the cards, either remove 3 of them with the same type, or remove one of each
+		int[] cardTypeNumber = cardTypeNumber();
+		for (int counter=0; counter<3; counter++) {
+			if (cardTypeNumber[counter]>=3){
+				for (int i=0; i<3; i++){
+					removeCard(counter);
+				}
+				return;
+			}
+		}
+		removeCard(0);removeCard(1);removeCard(2);
+		
+		
+	}
 		
 	/**
 	 * This method exchange 3 cards for army.
@@ -245,7 +296,9 @@ public class Player {
 		for(Card card: cardList){
 			if (card.getCardType().getCardTypeCode() == cardTypeCode) {
 				cardList.remove(card);	
-				notifyObservers();
+				
+				setChanged();
+				notifyObservers(this);
 				return;
 			}
 		}
@@ -260,7 +313,8 @@ public class Player {
 		
 		cardList.removeAll(toremovecards);
 		
-		notifyObservers();
+		setChanged();
+		notifyObservers(this);
 
 	}
 	
@@ -274,7 +328,9 @@ public class Player {
 	{
 		Card c=new Card(this);
 		this.cardList.add(c);
-		notifyObservers();
+		
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	/**
@@ -282,14 +338,14 @@ public class Player {
 	 *
 	 * 
 	 */
-	private void notifyObservers()
+	/*private void notifyObservers()
 	{
 		for(BaseObserverFrame frame:this.observerList)
 		{
 			frame.update();
 		}
 	}
-	
+	*/
 	/**
 	 * Execute the fortification move
 	 * return true if the fortification order was executed
@@ -382,8 +438,9 @@ public class Player {
 	 * @return it returns an array with value of number of looser army for both players
 	 */
 
-	public int[] attack(int[] attackerDice,int[] defenderDice) {
 	
+	public int[] attack(int[] attackerDice,int[] defenderDice) {
+		
     	int numberAttacerLoser=0;
     	int numberDefenderLoser=0;
     	
@@ -430,10 +487,28 @@ public class Player {
 	 */
 	public boolean conquer(Country country) {
 		if (country.getNumOfArmies() == 0) {
+			Player originalOwner = country.getOwner();
+			originalOwner.getCountryList().remove(country);
 			country.setOwner(this);
+			this.countryList.add(country);
 			return true;
 		}
 		else return false;
-	}	
+	}
 	
+	public void cheaterConquer(Country country) {
+		Player originalOwner = country.getOwner();
+		originalOwner.getCountryList().remove(country);
+		country.setOwner(this);
+		this.countryList.add(country);
+	}
+
+	public Strategy getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(Strategy strategy) {
+		this.strategy = strategy;
+	}
+
 }

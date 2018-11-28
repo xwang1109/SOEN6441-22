@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JComboBox;
+
 import models.map.Continent;
 import models.map.Country;
 import models.map.Map;
@@ -19,15 +21,28 @@ import models.map.Map;
 public class GameState extends Observable {
 
 	private File selectedFile;
-	private  Map map;
+	private Map map;
 	
 	private int currentPlayer;
-	private ArrayList<Player> playerList = new ArrayList<Player>();	// hold players
-
-	private ArrayList<Country> destinationCountryList;	// hold phase to switch between map info and current state
+	private List<Player> playerList = new ArrayList<Player>();	// hold players
+	private List<Country> destinationCountryList;	// hold phase to switch between map info and current state
+	
+	private int turns=1;
+	 private int MAX_TURNS;
 
 	
-	
+	public int getTurns() {
+		return turns;
+	}
+
+	public void setTurns(int turns) {
+		this.turns = turns;
+	}
+
+	public int getMAX_TURNS() {
+		return MAX_TURNS;
+	}
+
 	public enum Phase
 	{
 		SETUP,
@@ -99,6 +114,7 @@ public class GameState extends Observable {
 	 * @param phase
 	 */
 	public void setPhase(Phase phase) { 
+		System.out.println("Player "+this.getCurrentPlayer().getId()+":"+this.getCurrentPlayer().getStrategy()+" changed to Phase "+ phase.name());
 		phaseState.setPhase(phase);	
 	}
 
@@ -161,20 +177,24 @@ public class GameState extends Observable {
 		this.selectedFile = selectedFile;
 	}
 	
+	public void setMap(Map map) {
+		this.map = map;
+	}
+
 	/**
 	 * Public method to get the array list of players
 	 * @return ArrayList
 	 */
-	public ArrayList<Player> getPlayerList() {
+	public List<Player> getPlayerList() {
 		return playerList;
 	}
 	
 	/**
 	 * Public method to set the array list of players
-	 * @param playerList
+	 * @param players
 	 */
-	public void setPlayerList(ArrayList<Player> playerList) {
-		this.playerList = playerList;
+	public void setPlayerList(List<Player> players) {
+		this.playerList = players;
 		this.currentPlayer = 0;
 	}
 	
@@ -266,13 +286,31 @@ public class GameState extends Observable {
 	 * Take user selection, set number of players
 	 * @param num
 	 */
-	public void assignInitialPlayers(int num) {
+	public void assignInitialPlayers(int num, List<JComboBox> playerTypeComboBoxList) {
 		assert(playerList.size() == 0); // shouldn't be called with an initialized player list, for future debug
 		
 		playerList.clear(); // clear player list to make sure no previous record is there
 		for(int i = 0; i < num; i++) {
 			Player p = new Player();
 			p.setId(i);
+			JComboBox comboBox=playerTypeComboBoxList.get(i);
+			String type=(String)comboBox.getSelectedItem();
+			switch (type){
+				case "Human":
+					p.setStrategy(new Human());
+					break;
+				case "Aggressive":
+					p.setStrategy(new Aggressive());
+					break;
+				case "Benevolent":
+					p.setStrategy(new Benevolent());
+					break;
+				case "Random":
+					p.setStrategy(new Random());
+					break;
+				case "Cheater":
+					p.setStrategy(new Cheater());
+			}
 			playerList.add(p);
 		}
 		setChanged();
@@ -298,8 +336,13 @@ public class GameState extends Observable {
 	 * End turn for current player, and set the "currentPlayer" to next player
 	 */
 	public void endPlayerTurn() {
-	
+		
+		Player p=GameState.getInstance().getCurrentPlayer();
+		System.out.println("Player "+currentPlayer+" finishes turn "+turns+" with "+
+		p.getArmyNumber()+" army and "+p.getCountryList().size()+" country"
+		);
 		currentPlayer = ++currentPlayer % playerList.size();
+		turns++;
 		setChanged();
 		notifyObservers();
 	}
