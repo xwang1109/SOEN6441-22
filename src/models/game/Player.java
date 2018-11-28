@@ -38,7 +38,7 @@ public class Player extends Observable {
 	private int getArmyforCards = 0; //number of times player is given army for cards
 	//the number of looser 
 	
-private Strategy strategy;
+	private Strategy strategy;
 	
 	public Player(Strategy strategy) {
 		this.strategy=strategy;
