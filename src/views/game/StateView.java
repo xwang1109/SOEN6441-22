@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import models.game.GameState;
+import models.game.GameState.Phase;
 import views.map.MapCountryPanel;
 
 /**
@@ -118,9 +119,11 @@ public class StateView extends JFrame {
 	public void showReinforcementView() {
 		clear();
 		new ReinforcementView(controlPanel);
-		getContentPane().add(controlPanel, BorderLayout.CENTER);
-		getContentPane().add(panel, BorderLayout.EAST);
-		setVisible(true);
+		if(!GameState.getInstance().getPhase().equals(Phase.FINISHED)){
+			getContentPane().add(controlPanel, BorderLayout.CENTER);
+			getContentPane().add(panel, BorderLayout.EAST);
+			setVisible(true);
+		}
 		
 		
 	}
