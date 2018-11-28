@@ -56,7 +56,7 @@ public class Aggressive implements Strategy{
 		if(country!=null) {
 			while(country.getNumOfArmies()>1 && country.hasAdjacentControlledByOthers()
 					&& country.getOwner().getId() == player.getId()) {
-				int numAttackDice = Math.max(3, country.getNumOfArmies());
+				int numAttackDice = Math.min(3, country.getNumOfArmies());
 				ArrayList<Country> defenseCountryList = country.getAdjacentCountryList();
 				Country defenseCountry = null;
 				for(Country c:defenseCountryList) {
@@ -74,6 +74,17 @@ public class Aggressive implements Strategy{
 					int[] attackResult = player.attack(attackerDice, defenderDice);
 					country.removeArmies(attackResult[0]);
 					defenseCountry.removeArmies(attackResult[1]);
+					if(defenseCountry.getNumOfArmies()==0) {
+						break;
+					}
+					
+					if(country.getNumOfArmies()<=1) {
+						break;
+					}
+					System.out.println("Player "+player.getId()+" Country "+country.getName()+" attack country "+defenseCountry.getName());
+					System.out.println("Attack Country "+country.getName()+": "+country.getNumOfArmies()+", "+country.getOwner().getId());
+					System.out.println("Defense Country "+defenseCountry.getName()+": "+defenseCountry.getNumOfArmies()+", "+defenseCountry.getOwner().getId());
+					
 				}
 				if(country.getNumOfArmies()<=0) {
 					defenseCountry.getOwner().conquer(country);
