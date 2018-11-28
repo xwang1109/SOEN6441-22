@@ -84,8 +84,16 @@ public class Random implements Strategy{
 		
 		if(connectedCountryList.size()>0) {
 			int randomFromCountry =  (int) (Math.random()*connectedCountryList.size());
-			Country[] fromCountryList = (Country[]) connectedCountryList.keySet().toArray();
-			Country fromCountry = fromCountryList[randomFromCountry];
+			Set<Country> fromCountryList =connectedCountryList.keySet();
+			Country fromCountry=null;
+			int i = 0;
+			for(Country c : fromCountryList)
+			{
+			    if (i == randomFromCountry) {
+			    	 fromCountry=c;
+			    }
+			    i++;
+			}
 			ArrayList<Country> destination = connectedCountryList.get(fromCountry);
 			
 			if (destination.size()>0) {

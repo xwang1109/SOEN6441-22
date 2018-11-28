@@ -489,10 +489,20 @@ private Strategy strategy;
 	 */
 	public boolean conquer(Country country) {
 		if (country.getNumOfArmies() == 0) {
+			Player originalOwner = country.getOwner();
+			originalOwner.getCountryList().remove(country);
 			country.setOwner(this);
+			this.countryList.add(country);
 			return true;
 		}
 		else return false;
+	}
+	
+	public void cheaterConquer(Country country) {
+		Player originalOwner = country.getOwner();
+		originalOwner.getCountryList().remove(country);
+		country.setOwner(this);
+		this.countryList.add(country);
 	}
 
 	public Strategy getStrategy() {

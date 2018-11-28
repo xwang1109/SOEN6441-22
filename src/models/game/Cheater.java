@@ -1,5 +1,6 @@
 package models.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,13 +26,20 @@ public class Cheater implements Strategy{
 
 	@Override
 	public void attackPhase(Player player) {
+		ArrayList<Country> conqueredCountryList = new ArrayList<Country>();
+		
 		for(Country c:player.getCountryList()) {
 			for(Country adjCountry: c.getAdjacentCountryList()) {
 				 if(adjCountry.getOwner().getId()!=player.getId()) {
+					 adjCountry.getOwner().getCountryList().remove(adjCountry);
 					 adjCountry.setOwner(player);
+					 
+					 conqueredCountryList.add(adjCountry);
 				 }
 			}			
 		}
+		
+		player.getCountryList().addAll(conqueredCountryList);
 	}
 
 	@Override
