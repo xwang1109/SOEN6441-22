@@ -55,7 +55,7 @@ public class Aggressive implements Strategy{
 	@Override
 	public void attackPhase(Player player) {
 		Country country = getStrongestCountry(player);
-		if(country!=null) {
+		if(country != null) {
 			while(country.getNumOfArmies()>1 && country.hasAdjacentControlledByOthers()
 					&& country.getOwner().getId() == player.getId()) {
 				int numAttackDice = Math.min(3, country.getNumOfArmies());
@@ -76,16 +76,18 @@ public class Aggressive implements Strategy{
 					int[] attackResult = player.attack(attackerDice, defenderDice);
 					country.removeArmies(attackResult[0]);
 					defenseCountry.removeArmies(attackResult[1]);
-					if(defenseCountry.getNumOfArmies()==0) {
-						break;
-					}
 					
-					if(country.getNumOfArmies()<=1) {
-						break;
-					}
 					System.out.println("Player "+player.getId()+" Country "+country.getName()+" attack country "+defenseCountry.getName());
 					System.out.println("Attack Country "+country.getName()+": "+country.getNumOfArmies()+", "+country.getOwner().getId());
 					System.out.println("Defense Country "+defenseCountry.getName()+": "+defenseCountry.getNumOfArmies()+", "+defenseCountry.getOwner().getId());
+					
+					
+					if(defenseCountry.getNumOfArmies()==0) {
+						break;
+					}
+					if(country.getNumOfArmies()<=1) {
+						break;
+					}
 					
 				}
 				if(country.getNumOfArmies()<=0) {
@@ -96,8 +98,9 @@ public class Aggressive implements Strategy{
 				}
 				if(defenseCountry.getNumOfArmies() == 0) {
 					country.decreaseArmy();
-					defenseCountry.increaseArmy();
 					player.conquer(defenseCountry);
+					defenseCountry.increaseArmy();
+					
 				}
 			}
 		}
@@ -159,6 +162,10 @@ public class Aggressive implements Strategy{
 				}
 			}
 		}
+		if(country.getNumOfArmies()<2) {
+			return null;
+		}
+		
 		return country;
 	}
 

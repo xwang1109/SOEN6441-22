@@ -38,7 +38,9 @@ public class Player extends Observable {
 	private int getArmyforCards = 0; //number of times player is given army for cards
 	//the number of looser 
 	
-private Strategy strategy;
+	private Strategy strategy;
+	
+	private boolean conqueredCountryInThisTurn = false;
 	
 	public Player(Strategy strategy) {
 		this.strategy=strategy;
@@ -460,10 +462,10 @@ private Strategy strategy;
     		
     		//this step defines which player will lose his army.
     		if (maxValueDefender>=maxValueAttacker) {
-    			numberAttacerLoser=numberAttacerLoser+1;
+    			numberAttacerLoser++;
     		}
     		else {
-    			numberDefenderLoser=numberDefenderLoser+1;
+    			numberDefenderLoser++;
     		}
     		  	     	   
     	}
@@ -491,9 +493,18 @@ private Strategy strategy;
 			originalOwner.getCountryList().remove(country);
 			country.setOwner(this);
 			this.countryList.add(country);
+			this.conqueredCountryInThisTurn = true;
 			return true;
 		}
 		else return false;
+	}
+	
+	public void resetConqueredCountryInThisTurn() {
+		this.conqueredCountryInThisTurn = false;
+	}
+	
+	public boolean getConqueredCountryInThisTurn() {
+		return this.conqueredCountryInThisTurn;
 	}
 	
 	public void cheaterConquer(Country country) {

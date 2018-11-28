@@ -337,7 +337,9 @@ public class GameState extends Observable {
 	 */
 	public void endPlayerTurn() {
 		Player p=GameState.getInstance().getCurrentPlayer();
-		p.getNewCard();
+		if(p.getConqueredCountryInThisTurn()) {
+			p.getNewCard();
+		}
 		System.out.println("Player "+currentPlayer+" finishes turn "+turns+" with "+
 		p.getArmyNumber()+" army and "+p.getCountryList().size()+" country"
 		);
