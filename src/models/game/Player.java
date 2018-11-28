@@ -496,7 +496,7 @@ public class Player extends Observable {
 			this.conqueredCountryInThisTurn = true;
 			return true;
 		}
-		else return false;
+		return false;
 	}
 	
 	public void resetConqueredCountryInThisTurn() {
