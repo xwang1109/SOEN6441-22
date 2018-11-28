@@ -74,29 +74,29 @@ public class TournamentSetupView extends JFrame {
 		//select #games
 		
 		JLabel selectNoOfGames = new JLabel("Select Number of Games:");
-		JComboBox numberOfGames = new JComboBox();
+		JComboBox numberOfGamesCombobox = new JComboBox();
 		for (int i = 1; i < 6; i++) {
-			numberOfGames.addItem(i);
+			numberOfGamesCombobox.addItem(i);
 		}
-		numberOfGames.setSelectedIndex(0);
+		numberOfGamesCombobox.setSelectedIndex(0);
 		
 		//selection #maxturns
 		
 		JLabel selectNoOfTurns = new JLabel("Select Number of Max Turns:");
-		JComboBox numberOfTurns = new JComboBox();
+		JComboBox numberOfTurnsCombobox = new JComboBox();
 		for (int i = 10; i < 51; i++) {
-			numberOfTurns.addItem(i);
+			numberOfTurnsCombobox.addItem(i);
 		}
-		numberOfTurns.setSelectedIndex(0);
+		numberOfTurnsCombobox.setSelectedIndex(0);
 		
 		basicinfoPanel.add(selectNoOfMaps);
 		basicinfoPanel.add(numberOfMapsCombobox);
 		basicinfoPanel.add(selectNoOfPlayers);
 		basicinfoPanel.add(numberOfPlayers);
 		basicinfoPanel.add(selectNoOfGames);
-		basicinfoPanel.add(numberOfGames);
+		basicinfoPanel.add(numberOfGamesCombobox);
 		basicinfoPanel.add(selectNoOfTurns);
-		basicinfoPanel.add(numberOfTurns);
+		basicinfoPanel.add(numberOfTurnsCombobox);
 		
 		///// deal with players
 		final JPanel playerPanel =new JPanel(new GridLayout(0,2));
@@ -125,8 +125,8 @@ public class TournamentSetupView extends JFrame {
 				playerPanel.revalidate();
 				playerPanel.repaint();
 				
+				players.clear();
 				playerTypeComboBoxList.clear();
-				
 				JComboBox comboBox=(JComboBox)e.getSource();
 				int i=comboBox.getSelectedIndex()+2;
 
@@ -142,6 +142,9 @@ public class TournamentSetupView extends JFrame {
 
 					playerType.setSelectedIndex(0);
 					playerTypeComboBoxList.add(playerType);
+					
+					
+					
 					playerPanel.add(playerNum);
 					playerPanel.add(playerType);
 				}
@@ -201,33 +204,10 @@ public class TournamentSetupView extends JFrame {
 		JButton startButton=new JButton("Start Tournament");
 
 		
-		int numOfPlayer=playerTypeComboBoxList.size();
-		for(int i = 0; i < numOfPlayer; i++) {
-			Player p = new Player();
-			p.setId(i);
-			JComboBox comboBox=playerTypeComboBoxList.get(i);
-			String type=(String)comboBox.getSelectedItem();
-			switch (type){
-				case "Human":
-					p.setStrategy(new Human());
-					break;
-				case "Aggressive":
-					p.setStrategy(new Aggressive());
-					break;
-				case "Benevolent":
-					p.setStrategy(new Benevolent());
-					break;
-				case "Random":
-					p.setStrategy(new Random());
-					break;
-				case "Cheater":
-					p.setStrategy(new Cheater());
-			}
-			players.add(p);
-		}
-		numOfGames=(Integer)numberOfGames.getSelectedItem();
-		turns=(Integer)numberOfTurns.getSelectedItem();
-		startButton.addActionListener(new StartTournamentListener(maps,players,numOfGames,turns,numberOfMaps) );
+		
+		numOfGames=(Integer)numberOfGamesCombobox.getSelectedItem();
+		turns=(Integer)numberOfTurnsCombobox.getSelectedItem();
+		startButton.addActionListener(new StartTournamentListener(maps,playerTypeComboBoxList,numberOfGamesCombobox,numberOfTurnsCombobox,numberOfMapsCombobox) );
 
 		
 		/////finally put everything there

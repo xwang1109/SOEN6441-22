@@ -441,8 +441,6 @@ private Strategy strategy;
 	
 	public int[] attack(int[] attackerDice,int[] defenderDice) {
 		
-		
-	
     	int numberAttacerLoser=0;
     	int numberDefenderLoser=0;
     	

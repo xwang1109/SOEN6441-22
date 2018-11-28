@@ -321,32 +321,33 @@ public class ReinforcementView{
 				GameState.getInstance().setPhase(Phase.ATTACK);
 				StateView.getInstance().showAttackView();
 			}	
-				
-				
 		}
-		
-		Player currentPlayer= GameState.getInstance().getCurrentPlayer();
-
-		if(!(currentPlayer.getStrategy() instanceof Human))	{//if next one not human, need to come back to this
-			showPlayer();
-		}
-		else//only human needs to see these
+		if(!GameState.getInstance().getPhase().equals(Phase.FINISHED))
 		{
-			player = GameState.getInstance().getCurrentPlayer();		
-			leftArmies = player.getLeftArmyNumber();
-			countryList = player.getCountryList();
-			mapPanel.addCountryTableForReinforcement(player);
-			updateLabels();
-			
-			isActionListenerActive = false;
-			comboBox.removeAllItems();
-			for (Country country:countryList) {
-				comboBox.addItem(country.getName());
+		//if(GameState.getInstance().getPhase().equals(Phase.REINFORCEMENT)) {
+			Player currentPlayer= GameState.getInstance().getCurrentPlayer();
+	
+			if(!(currentPlayer.getStrategy() instanceof Human))	{//if next one not human, need to come back to this
+				showPlayer();
 			}
-			comboBox.revalidate();
-			comboBox.repaint();
-			isActionListenerActive = true;
-			comboBox.setSelectedIndex(0);
+			else//only human needs to see these
+			{
+				player = GameState.getInstance().getCurrentPlayer();		
+				leftArmies = player.getLeftArmyNumber();
+				countryList = player.getCountryList();
+				mapPanel.addCountryTableForReinforcement(player);
+				updateLabels();
+				
+				isActionListenerActive = false;
+				comboBox.removeAllItems();
+				for (Country country:countryList) {
+					comboBox.addItem(country.getName());
+				}
+				comboBox.revalidate();
+				comboBox.repaint();
+				isActionListenerActive = true;
+				comboBox.setSelectedIndex(0);
+			}
 		}
 	}
 	public void disable()

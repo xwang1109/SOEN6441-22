@@ -29,8 +29,12 @@ public class Benevolent implements Strategy{
 		}
 		
 		player.addReinforcementArmy(reinforcementArmyNumber);
-		for (int i=0; i<reinforcementArmyNumber; i++)
-			country.AddArmy();
+		if(country!=null){
+			for (int i=0; i<reinforcementArmyNumber; i++) {
+				country.AddArmy();
+			}
+		}
+			
 	}
 
 	@Override
