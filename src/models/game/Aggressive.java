@@ -42,11 +42,13 @@ public class Aggressive implements Strategy{
 		
 		player.addReinforcementArmy(reinforcementArmyNumber);
 		if(countryCanAttack != null) {
+			//System.out.println("country seted");
 			country = countryCanAttack;
+			for (int i=0; i<reinforcementArmyNumber; i++)
+				country.AddArmy();	
 		}
 		
-		for (int i=0; i<reinforcementArmyNumber; i++)
-			country.AddArmy();		
+			
 	}
 
 	

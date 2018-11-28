@@ -1,8 +1,12 @@
 package models.game;
 import java.util.List;
 
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import models.game.GameState.Phase;
 import models.map.Map;
+import views.game.StateView;
 public class Tournament {
 
 	
@@ -10,6 +14,10 @@ public class Tournament {
 	List<Player> players;
 	int numOfGames;
 	int turns;
+	
+	String [][] results;
+	
+	
 	public List<Map> getMaps() {
 		return maps;
 	}
@@ -41,13 +49,14 @@ public class Tournament {
 		this.players = players;
 		this.numOfGames = numOfGames;
 		this.turns = turns;
+		results=new String[maps.size()][numOfGames];
 	}
 	
 	public void run()
 	{
-		//todo: run the games
-		for(Map map:maps)
-		{
+		for(int m=0;m<maps.size();m++)
+		{			
+			Map map=maps.get(m);
 			for(int i=0;i<this.numOfGames;i++)
 			{
 				GameState.getInstance().setPlayerList(players);  
@@ -58,31 +67,82 @@ public class Tournament {
 				
 				for(Player p:players){
 					GameState.getInstance().setPhase(Phase.SETUP);
-
+					
 					p.doStrategySetup();
+					GameState.getInstance().endPlayerTurn();
+
 				}
-				//todo check who wins
+				
+				boolean finished=false;
+				
 				for(int currentTurn=0;currentTurn<turns;currentTurn++)
 				{
-					for(Player p:players){
+					for(int j=0;j<players.size();j++){
+						Player p=players.get(j);
 						GameState.getInstance().setPhase(Phase.REINFORCEMENT);
 						p.doStrategyReinforcement();
 						GameState.getInstance().setPhase(Phase.ATTACK);
 						p.doStrategyAttack();
-						GameState.getInstance().setPhase(Phase.FORTIFICATION);
-						p.doStrategyfortification();
-						GameState.getInstance().endPlayerTurn();
+						if (GameState.getInstance().getMap().mapOwner(p)) {
+							GameState.getInstance().setPhase(Phase.FINISHED);
+							System.out.println("Player "+p.getId()+":"+p.getStrategy().toString()+" success");
+							results[m][i]="Player "+p.getId()+":"+p.getStrategy().toString();
+							finished=true;
+							break;
+						}
+						else{
+							GameState.getInstance().setPhase(Phase.FORTIFICATION);
+							p.doStrategyfortification();
+							GameState.getInstance().endPlayerTurn();
+						}
+					}
+					if(finished){
+						break;
 					}
 				}
+				results[m][i]="Draw";
 			}
 		}
 
 		report();
 	}
-	private String report()
+	private void report()
 	{
-		//todo
-		return null;
+		   StringBuilder sb = new StringBuilder();
+	        sb.append("<html><body><table border=1>");
+
+	        sb.append("<tr>");
+	        sb.append("<th>");
+            sb.append("");
+            sb.append("</th>");
+	        for(int i=0;i<numOfGames;i++) {
+	            sb.append("<th>");
+	            sb.append("Game "+(i+1));
+	            sb.append("</th>");
+	        }
+	        sb.append("</tr>");
+	        
+	        for(int m=0;m<maps.size();m++) {
+	        	sb.append("<tr>");
+	        	
+	        	 sb.append("<td>");
+	                sb.append("Map "+(m+1));
+	                sb.append("</td>");
+	                
+	                
+	            for (int j=0;j<numOfGames;j++) {
+	                sb.append("<td>");
+	                sb.append(results[m][j]);
+	                sb.append("</td>");
+
+	            }
+	            sb.append("</tr>");
+	        }
+	        sb.append("</table>");
+	        JLabel html = new JLabel(sb.toString());
+
+	        JOptionPane.showMessageDialog(null, html);
+	        
 	}
 	
 	
