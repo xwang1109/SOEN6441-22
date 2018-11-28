@@ -99,9 +99,8 @@ public class Tournament {
 					if(finished){
 						break;
 					}
-					results[m][i]="Draw";
+					
 				}
-//				results[m][i]="Draw";
 			}
 		}
 
