@@ -18,5 +18,4 @@ public class EndGameView {
 	public EndGameView(JPanel controlPanel) {
 		
 	}
-
 }
