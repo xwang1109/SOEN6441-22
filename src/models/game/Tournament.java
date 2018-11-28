@@ -99,17 +99,14 @@ public class Tournament {
 					if(finished){
 						break;
 					}
-					
 				}
-<<<<<<< HEAD
-=======
+				
+				
 				if(!finished){
 					results[m][i]="Draw";
 				}
->>>>>>> 4c7723cff32f665863b40abf7523dbedcd30e9f6
 			}
 		}
-
 		report();
 	}
 	private void report()
