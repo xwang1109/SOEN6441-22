@@ -230,7 +230,7 @@ public class ReinforcementView{
 			player = playerList.get(playerCounter);		
 			leftArmies = player.getLeftArmyNumber();	
 		}
-		showPlayer();//the strategy behaviour is in the showPlayer function
+		showPlayer();//the strategy behavior is in the showPlayer function
 
 		
 	}

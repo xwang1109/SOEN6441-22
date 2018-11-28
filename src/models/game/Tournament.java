@@ -100,10 +100,13 @@ public class Tournament {
 						break;
 					}
 				}
-				results[m][i]="Draw";
+				
+				
+				if(!finished){
+					results[m][i]="Draw";
+				}
 			}
 		}
-
 		report();
 	}
 	private void report()
