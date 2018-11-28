@@ -675,7 +675,7 @@ public class Map extends Observable {
 			pw.println("[Territories]");
 			for(Country country: this.countryList) {
 				String countryInfo = country.getName()+","+country.getLocationX()+","+
-							country.getLocationY()+country.getContinent().getName();
+							country.getLocationY()+","+country.getContinent().getName();
 				for(Country adjCountry: country.getAdjacentCountryList()) {
 					countryInfo+=","+adjCountry.getName();
 				}
