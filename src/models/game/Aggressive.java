@@ -16,12 +16,10 @@ import models.map.Country;
 
 public class Aggressive implements Strategy{
 
-	
 	@Override
 	public String toString() {
 		return "Aggressive";
 	}
-
 
 	/**
 	 * Reinforcement phase is implemented in Aggressive behavior
@@ -29,7 +27,6 @@ public class Aggressive implements Strategy{
 	 */
 	@Override
 	public void reinforcementPhase(Player player) {
-		// TODO Auto-generated method stub
 		int reinforcementArmyNumber = player.CalculateReinforcementArmyNumber();
 		int maxCountry = Integer.MIN_VALUE;
 		int maxCountryCanAttack = Integer.MIN_VALUE;
@@ -57,11 +54,8 @@ public class Aggressive implements Strategy{
 			country = countryCanAttack;
 			for (int i=0; i<reinforcementArmyNumber; i++)
 				country.AddArmy();	
-		}
-		
-			
+		}	
 	}
-
 	
 	/**
 	 * Attack phase is implemented in Aggressive behavior
@@ -96,14 +90,12 @@ public class Aggressive implements Strategy{
 					System.out.println("Attack Country "+country.getName()+": "+country.getNumOfArmies()+", "+country.getOwner().getId());
 					System.out.println("Defense Country "+defenseCountry.getName()+": "+defenseCountry.getNumOfArmies()+", "+defenseCountry.getOwner().getId());
 					
-					
 					if(defenseCountry.getNumOfArmies()==0) {
 						break;
 					}
 					if(country.getNumOfArmies()<=1) {
 						break;
 					}
-					
 				}
 				if(country.getNumOfArmies()<=0) {
 					defenseCountry.getOwner().conquer(country);
@@ -115,7 +107,6 @@ public class Aggressive implements Strategy{
 					country.decreaseArmy();
 					player.conquer(defenseCountry);
 					defenseCountry.increaseArmy();
-					
 				}
 			}
 		}
@@ -127,7 +118,6 @@ public class Aggressive implements Strategy{
 	 */	
 	@Override
 	public void fortificationPhase(Player player) {
-		// TODO Auto-generated method stub
 		HashMap <Country, ArrayList<Country>> connectedCountryList = new HashMap<Country, ArrayList<Country>>();
 		
 		for (Country c:player.getCountryList()) {
@@ -164,9 +154,7 @@ public class Aggressive implements Strategy{
 		
 		if (fromCountry != null) {
 			player.fortify(fromCountry.getName() , toCountry.getName(), fromCountry.getNumOfArmies()-1);
-		}			
-		
-		
+		}				
 	}
 	
 	/**
@@ -188,7 +176,6 @@ public class Aggressive implements Strategy{
 		if(country.getNumOfArmies()<2) {
 			return null;
 		}
-		
 		return country;
 	}
 

@@ -12,7 +12,6 @@ import views.map.BasicInfoView;
  * @version 1.0
  */
 public class BasicInfoController implements ActionListener{
-
 	/** The map. */
 	Map map;
 	
@@ -29,7 +28,6 @@ public class BasicInfoController implements ActionListener{
 		this.map = map;
 		this.view = view;
 	}
-	
 	
 	/** 
 	 * This is the method to pass the action to the updateBasicInfo method
@@ -52,5 +50,4 @@ public class BasicInfoController implements ActionListener{
 		map.setWarn(view.getWarnText());
 		this.view.setVisible(false);
 	}
-
 }

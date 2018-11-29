@@ -15,7 +15,6 @@ public enum CardType {
     
 	/**
 	 * Instantiates a new card type.
-	 *
 	 * @param cardTypeCode the card type code
 	 */
 	private CardType(int cardTypeCode) {
@@ -24,7 +23,6 @@ public enum CardType {
     
 	/**
 	 * Gets the card type code.
-	 *
 	 * @return the card type code
 	 */
 	public int getCardTypeCode(){
