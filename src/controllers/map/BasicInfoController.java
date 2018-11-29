@@ -19,7 +19,6 @@ public class BasicInfoController implements ActionListener{
 	/** The view. */
 	BasicInfoView view;
 	
-	
 	/**
 	 * Instantiates a new basic info controller.
 	 *
