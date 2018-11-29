@@ -3,6 +3,7 @@ package models.game;
 /**
  * interface Strategy implements the different player behaviors using the Strategy pattern
  * @author Mehrnaz
+ * @version 3.0
 */
 public interface Strategy {
 

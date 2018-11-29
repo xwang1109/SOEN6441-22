@@ -10,7 +10,8 @@ import models.map.Country;
  * this class implements Strategy interface for Random behavior
  * @author Mehrnaz
  * @author Xinyan
- */
+ * @version 3.0
+*/
 
 public class Random implements Strategy{
 

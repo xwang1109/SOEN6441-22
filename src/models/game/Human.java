@@ -4,6 +4,7 @@ package models.game;
  * this class implements Strategy interface for Human behavior
  * @author Mehrnaz
  * @author Xinyan
+ * @version 3.0
  */
 
 public class Human implements Strategy{
