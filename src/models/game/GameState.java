@@ -121,6 +121,7 @@ public class GameState extends Observable {
 		
 		System.out.println("Player "+this.getCurrentPlayer().getId()+":"+this.getCurrentPlayer().getStrategy()+" changed to Phase "+ phase.name());
 		phaseState.setPhase(phase);	
+		this.turns=1;
 	}
 
 	public void addPhaseObserver(Observer observer) {
@@ -582,6 +583,7 @@ public class GameState extends Observable {
 	    	}
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			System.out.println("error");
 			return false;
 		}
