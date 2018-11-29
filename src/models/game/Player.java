@@ -145,7 +145,6 @@ public class Player extends Observable {
 
 	/**
 	 * get the continent list
-	 * @return ArrayList<Continent>
 	 */
 	public ArrayList<Continent> getContinentList(){
 		return this.continentList;
@@ -361,8 +360,7 @@ public class Player extends Observable {
 
 	/**
 	 * To take input country, return which countries can be the valid destination of this country
-	 * @param Country selectedCountry
-	 * @return ArrayList<Country>
+	 * @param selectedCountry
 	 */
 	public ArrayList<Country> getValidDestination(Country selectedCountry) {
 		ArrayList<Country> valid = new ArrayList<Country>();
