@@ -12,7 +12,6 @@ import views.map.ConnectionView;
  * @version 1.0
  */
 public class ConnectionController implements ActionListener {
-	
 	/** The view. */
 	private ConnectionView view;
 	
@@ -21,7 +20,6 @@ public class ConnectionController implements ActionListener {
 	
 	/** The map. */
 	private Map map;
-	
 	
 	/**
 	 * Instantiates a new connection controller.
@@ -35,7 +33,6 @@ public class ConnectionController implements ActionListener {
 		this.map = map;
 		this.id = id;	
 	}
-	
 	
 	/**
 	 * Add action button to pass action to action listener
@@ -66,9 +63,7 @@ public class ConnectionController implements ActionListener {
 		
 		map.addConnection(id, newConnectedCountryID);
 		this.view.setVisible(false);
-		this.view.dispose();
-		
-		
+		this.view.dispose();	
 	}
 	
 	/**
@@ -83,6 +78,4 @@ public class ConnectionController implements ActionListener {
 		this.view.setVisible(false);
 		this.view.dispose();
 	}
-	
-
 }

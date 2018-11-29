@@ -5,11 +5,13 @@ import java.awt.event.ActionListener;
 import models.map.Map;
 import views.map.*;
 /**
- * The Class MapEditorStartController. 
+ * The Class MapEditorStartController
+ * @version  3.0
  */
 public class MapEditorStartController implements ActionListener{
 
 	/**
+	 * Action perform when edit map
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override
@@ -18,8 +20,6 @@ public class MapEditorStartController implements ActionListener{
 		Map map = new Map();
 		MapEditorView editorView = new MapEditorView(map);
 		map.addObserver(editorView);
-		editorView.setVisible(true);
-		
+		editorView.setVisible(true);	
 	}
-
 }
