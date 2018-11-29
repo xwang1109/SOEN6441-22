@@ -586,7 +586,7 @@ public class GameState extends Observable {
 			return false;
 		}
 		StateView.getInstance().addObserver();
-		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+		//StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 		
 
 		
@@ -599,7 +599,6 @@ public class GameState extends Observable {
 			StateView.getInstance().showReinforcementView();
 			break;
 		case ATTACK:
-			
 			StateView.getInstance().showAttackView();
 			break;
 		case FORTIFICATION:
