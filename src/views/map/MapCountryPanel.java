@@ -33,9 +33,7 @@ public class MapCountryPanel extends JScrollPane {
 	
 	/**
 	 * Adds the country table for map. needs to be call again to refresh in each phase.
-	 *
 	 * @param map 
-	 * @see models.map.Map.java
 	 */
 	public void addCountryTableForMap(Map map) {
 		ArrayList<Country> countryList = map.getCountryList();

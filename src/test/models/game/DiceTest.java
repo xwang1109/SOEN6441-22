@@ -6,7 +6,7 @@ import org.junit.Test;
 import models.game.Dice;
 
 /**
- * this is the test Case for checking dice value between 6 & 1
+ * this is the test Case for checking dice value 
  * @author Parisa
  * @version 2.0.0
  */

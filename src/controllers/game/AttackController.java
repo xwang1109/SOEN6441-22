@@ -29,15 +29,8 @@ public class AttackController implements ActionListener {
 	
 	/**
 	 * Instantiates a new attack controller.
-	 *
-	 * @param numberOfPlayer the number of player
-	 * @param attackView 
-	 * @param qtTextField 
-	 * @param destDropBox 
 	 */
-
 	public AttackController(AttackView attackView) {
-		
 		this.attackView = attackView;
 	}
 

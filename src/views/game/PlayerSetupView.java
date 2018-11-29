@@ -26,7 +26,6 @@ import javax.swing.JLabel;
 /**
  * Class PlayerSetupView is the view for player to start up by selecting number of players
  * @author Bingyang Yu
- * @see GameState.getInstance().getMap()
  * @version 3.0
  */
 public class PlayerSetupView {

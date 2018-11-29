@@ -243,6 +243,7 @@ public class Country {
 	
 	/**
 	 * Remove a number of Armies from this country.
+	 * @param armiesNo
 	 */
 	public void removeArmies(int armiesNo) {
 		int armiesNumber = armiesNo;
