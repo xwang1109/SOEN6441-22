@@ -124,7 +124,11 @@ public class GameState extends Observable {
 	public void setPhase(Phase phase) {
 		System.out.println("Player "+this.getCurrentPlayer().getId()+":"+this.getCurrentPlayer().getStrategy()+" changed to Phase "+ phase.name());
 		phaseState.setPhase(phase);	
-		this.turns=1;
+		if (phase.equals(Phase.FINISHED))
+		{
+			this.turns=1;
+
+		}
 	}
 
 	/**
