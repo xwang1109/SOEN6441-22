@@ -155,7 +155,4 @@ public class AttackController implements ActionListener {
 			}				
 		}		
 	}
-
-	
-	
 }

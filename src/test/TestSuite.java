@@ -12,8 +12,8 @@ import test.views.game.AttackViewTest;
 import test.models.game.*;
 @RunWith(Suite.class)
 @SuiteClasses({ContinentTest.class,CountryTests.class, MapTests.class,
-	DiceTest.class,AttackTest.class,FortificationTest.class,
-	PlayerTest.class,ReinforcementTests.class, TournamentTest.class, AttackViewTest.class
+	DiceTest.class,AttackTest.class,FortificationTest.class,StrategyTest.class,
+	PlayerTest.class,ReinforcementTests.class, TournamentTest.class, AttackViewTest.class, CardTest.class,
 	})
 /**
  * Test Suite for running all tests
