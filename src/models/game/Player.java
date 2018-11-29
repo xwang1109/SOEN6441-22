@@ -11,8 +11,6 @@ import javax.swing.JFrame;
 import models.map.Continent;
 import models.map.Country;
 
-
-
 /**
  * The Class Player. after a player was created ,
  * actions of assign and remove  all the countries, all the cards, all the armies to the player
@@ -21,7 +19,6 @@ import models.map.Country;
  * @version 2.0
  */
 public class Player extends Observable {
-
 	/** The id. */
 	private int id;
 
@@ -50,30 +47,24 @@ public class Player extends Observable {
 		this.strategy=new Human();
 	}
 
-	public void doStrategySetup()
-	{
+	public void doStrategySetup(){
 		strategy.setupPhase(this);
 	}
 
-	public void doStrategyAttack()
-	{
+	public void doStrategyAttack(){
 		strategy.attackPhase(this);
 	}
 
-	public void doStrategyReinforcement()
-	{
+	public void doStrategyReinforcement(){
 		strategy.reinforcementPhase(this);
 	}
 
-	public void doStrategyfortification()
-	{
+	public void doStrategyfortification(){
 		strategy.fortificationPhase(this);
 	}
 
-
 	/**
 	 * Gets the id.
-	 *
 	 * @return the id
 	 */
 	public int getId() {
@@ -82,7 +73,6 @@ public class Player extends Observable {
 
 	/**
 	 * Sets the id.
-	 *
 	 * @param id the new id
 	 */
 	public void setId(int id) {
@@ -91,7 +81,6 @@ public class Player extends Observable {
 
 	/**
 	 * Gets the army list.
-	 *
 	 * @return the army list
 	 */
 	public ArrayList<Army> getArmyList() {
@@ -100,7 +89,6 @@ public class Player extends Observable {
 
 	/**
 	 * Gets the army number.
-	 *
 	 * @return the army number
 	 */
 	public int getArmyNumber() {
@@ -113,7 +101,6 @@ public class Player extends Observable {
 
 	/**
 	 * Gets the left army number.
-	 *
 	 * @return the left army number
 	 */
 	public int getLeftArmyNumber() {
@@ -126,7 +113,6 @@ public class Player extends Observable {
 
 	/**
 	 * Sets the country list.
-	 *
 	 * @param countryList the new country list
 	 */
 	public void setCountryList(ArrayList<Country> countryList) {
@@ -135,7 +121,6 @@ public class Player extends Observable {
 
 	/**
 	 * Gets the country list.
-	 *
 	 * @return the country list
 	 */
 	public ArrayList<Country> getCountryList() {
@@ -144,7 +129,6 @@ public class Player extends Observable {
 
 	/**
 	 * Gets the card list.
-	 *
 	 * @return the card list
 	 */
 	public ArrayList<Card> getCardList() {
@@ -153,19 +137,21 @@ public class Player extends Observable {
 
 	/**
 	 * Sets the army for cards.
-	 *
 	 * @param i the new army for cards
 	 */
 	public void setArmyforCards(int i) {
 		getArmyforCards = i;
 	}
 
+	/**
+	 * get the continent list
+	 * @return ArrayList<Continent>
+	 */
 	public ArrayList<Continent> getContinentList(){
 		return this.continentList;
 	}
 	/**
-	 * Attack.
-	 *
+	 * Attack from attacker to defender
 	 * @param attacker the attacker
 	 * @param defender the defender
 	 * @return true, if successful
@@ -186,13 +172,11 @@ public class Player extends Observable {
 			Army army = new Army(this);
 			armyList.add(army);
 		}
-		//return CalculateReinforcementArmyNumber();
 	}
 
 	/**
 	 * This method is to calculate and give a number of armies
 	 * to the player at the beginning of reinforcements phase.
-	 *
 	 * @return the number of armies given to player
 	 */
 	public int CalculateReinforcementArmyNumber(){
@@ -210,7 +194,6 @@ public class Player extends Observable {
 
 	/**
 	 * This method activated exchange card phase.
-	 *
 	 * @return true if player has to exchange card for army
 	 */
 	public boolean enforceExchangeCard() {
@@ -219,7 +202,6 @@ public class Player extends Observable {
 
 	/**
 	 * This method check the possibility of performing card exchange action.
-	 *
 	 * @return true if player has to exchange card for army
 	 */
 	public boolean isPossibleExchangeCard() {
@@ -230,7 +212,6 @@ public class Player extends Observable {
 
 	/**
 	 * This method get the type of each card.
-	 *
 	 * @return number of each card type
 	 */
 	public int[] cardTypeNumber() {
@@ -240,6 +221,7 @@ public class Player extends Observable {
 		}
 		return cardTypeNumber;
 	}
+	
 	/**
 	 * This method automatically exchange 3 cards for army
 	 */
@@ -269,13 +251,10 @@ public class Player extends Observable {
 			}
 		}
 		removeCard(0);removeCard(1);removeCard(2);
-
-
 	}
 
 	/**
 	 * This method exchange 3 cards for army.
-	 *
 	 * @param toremovecards is the list of cards to be changed
 	 *@return the number of armies
 	 */
@@ -290,10 +269,8 @@ public class Player extends Observable {
 		return armyForCard;
 	}
 
-
 	/**
 	 * This method remove a card from cardList of player.
-	 *
 	 * @param cardTypeCode
 	 */
 	public void removeCard(int cardTypeCode) {
@@ -306,27 +283,19 @@ public class Player extends Observable {
 				return;
 			}
 		}
-
 	}
 	/**
 	 * This method remove multiple cards at the same time
-	 *
 	 * @param toremovecards is the list of cards to be removed for exchange
 	 */
 	public void removeCards(List<Card> toremovecards) {
-
 		cardList.removeAll(toremovecards);
-
 		setChanged();
 		notifyObservers(this);
-
 	}
-
 
 	/**
 	 * This method gets a random new card for the player
-	 *
-	 *
 	 */
 	public void getNewCard()
 	{
@@ -337,23 +306,20 @@ public class Player extends Observable {
 		notifyObservers(this);
 	}
 
-
-
 	/**
 	 * Execute the fortification move
-	 * return true if the fortification order was executed
-	 * false in case of error
+	 * @param from
+	 * @param to
+	 * @param qt
+	 * @return boolean, true if the fortification order was executed, false in case of error
 	 */
 	public boolean fortify(String from, String to, int qt) {
-
 		Country source = null, dest = null;
-
 		// validate that the player owns both countries
 		for(Country country: countryList){
 			if (country.getName() == from) {
 				source = country;
 			}
-
 			if (country.getName() == to) {
 				dest = country;
 			}
@@ -378,6 +344,9 @@ public class Player extends Observable {
 
 	/**
 	 * move armies during attack phase
+	 * @param from
+	 * @param to
+	 * @param qt
 	 */
 	public void moveArmies(Country from, Country to, int qt) {
 		Country source = from, dest = to;
@@ -423,17 +392,14 @@ public class Player extends Observable {
 		valid.remove(selectedCountry);
 		return valid;
 	}
-	/*
+	/**
 	 * this is the attack method. it compares the value of dice
-	 *and return the number of looser army for players
+	 * and return the number of looser army for players
 	 * @param attackerDice the number of attacker dice
 	 * @param defenderDice the number of defender dice
 	 * @return it returns an array with value of number of looser army for both players
 	 */
-
-
 	public int[] attack(int[] attackerDice,int[] defenderDice) {
-
     	int numberAttacerLoser=0;
     	int numberDefenderLoser=0;
 
@@ -444,7 +410,6 @@ public class Player extends Observable {
     	Arrays.sort(defenderDice);
 
     	int j=attackerDice.length;
-
 
     	for(int i=defenderDice.length-1; i>=0; i--) {
     		j=j-1;
@@ -458,14 +423,13 @@ public class Player extends Observable {
     		else {
     			numberDefenderLoser++;
     		}
-
     	}
     	 int[] result= {numberAttacerLoser,numberDefenderLoser};
     	 return result;
-
     }
 	/**
 	 * find out that if the player can attack
+	 * @return boolean
 	 */
 	public boolean isAttackPossible() {
 		for (Country c: countryList) {
@@ -477,6 +441,7 @@ public class Player extends Observable {
 
 	/**
 	 * find out that if the player can attack
+	 * @return boolean
 	 */
 	public boolean conquer(Country country) {
 		if (country.getNumOfArmies() == 0) {
@@ -490,14 +455,25 @@ public class Player extends Observable {
 		return false;
 	}
 
+	/**
+	 * reset the conquered country in this turn
+	 */
 	public void resetConqueredCountryInThisTurn() {
 		this.conqueredCountryInThisTurn = false;
 	}
 
+	/**
+	 * get conquered country in this turn
+	 * @return boolean
+	 */
 	public boolean getConqueredCountryInThisTurn() {
 		return this.conqueredCountryInThisTurn;
 	}
 
+	/**
+	 * cheater Conquer a country
+	 * @param country
+	 */
 	public void cheaterConquer(Country country) {
 		Player originalOwner = country.getOwner();
 		originalOwner.getCountryList().remove(country);
@@ -505,12 +481,19 @@ public class Player extends Observable {
 		this.countryList.add(country);
 	}
 
+	/**
+	 * get the strategy
+	 * @return
+	 */
 	public Strategy getStrategy() {
 		return strategy;
 	}
 
+	/**
+	 * 
+	 * @param strategy
+	 */
 	public void setStrategy(Strategy strategy) {
 		this.strategy = strategy;
 	}
-
 }

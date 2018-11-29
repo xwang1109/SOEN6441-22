@@ -400,11 +400,7 @@ public class GameState extends Observable {
 	public static void reset() {
 		instance = new GameState();
 	}
-	
-	/**
-	 * save game to a file
-	 * @param file saved file
-	 */
+
 	public void saveGameToFile(File file) {
 		PrintWriter pw = null;
 		try {
@@ -458,11 +454,7 @@ public class GameState extends Observable {
 	/**
 	 * load game from file
 	 * @param file
-<<<<<<< HEAD
-	 * @return
-=======
 	 * @return true if load successfully
->>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
 	 */
 	public boolean loadGameFromFile(File file) {
 		playerList.clear();

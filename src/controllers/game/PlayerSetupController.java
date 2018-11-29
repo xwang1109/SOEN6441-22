@@ -50,8 +50,13 @@ public class PlayerSetupController implements ActionListener{
 			File selectedFile = jfc.getSelectedFile();
 			GameState.getInstance().setSelectedFile(selectedFile);
 			System.out.println(selectedFile.getAbsolutePath());
-			
-			StateView.getInstance().showPlayerView();
+			boolean result = GameState.getInstance().loadMapFromFile(selectedFile);
+			if(result) {
+				StateView.getInstance().showPlayerView();
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Not a valid map!");
+			}
 		}		
 	}
 }
