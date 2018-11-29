@@ -24,9 +24,9 @@ public class FortificationController implements ActionListener {
 	
 	/**
 	 * Constructor of class FortificationController
-	 * @param JComboBox from
-	 * @param JComboBox to
-	 * @param JTextField quantity
+	 * @param from
+	 * @param to
+	 * @param quantity
 	 */
 	public FortificationController(JComboBox from, JComboBox to, JTextField quantity) {
 		this.from = from;

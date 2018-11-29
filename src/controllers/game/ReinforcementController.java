@@ -28,16 +28,18 @@ public class ReinforcementController implements ActionListener {
 	private ReinforcementView starUpView;
 	private CardExchangeView exchangeview;
 	private Player player;
-/**
- * Constructor of the class which initialize the view  	
- * @param view ReinforcementView
- */
+	
+	/**
+	 * Constructor of the class which initialize the view  	
+	 * @param view ReinforcementView
+	 */
 	public ReinforcementController(ReinforcementView view) {
 		starUpView = view;
 	}
-/**
- * Performs actions based on user inputs
- */
+	
+	/**
+	 * Performs actions based on user inputs
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -51,10 +53,10 @@ public class ReinforcementController implements ActionListener {
 			StateView.getInstance().showAttackView();
 		}
 	}
-/**
- * Perform actions when Add Army button clicked
- * 
- */
+	
+	/**
+	 * Perform actions when Add Army button clicked
+	 */
 	public void addArmy() {
 		Country selectedCoutnry = starUpView.getSelectedCountry();
 		selectedCoutnry.AddArmy();	
@@ -68,13 +70,10 @@ public class ReinforcementController implements ActionListener {
 					//starUpView.showPlayer();
 					StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());		
 					StateView.getInstance().showReinforcementView();		
-					
 				}
-				else//if this is not the last player, check if next player is human
-				{
+				else { //if this is not the last player, check if next player is human	
 					starUpView.showPlayer();
-				}
-				
+				}	
 			} else {
 				starUpView.showLeftArmies();
 			}
@@ -88,7 +87,6 @@ public class ReinforcementController implements ActionListener {
 		}
 
 		//refresh the table for map
-		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
-				
+		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());			
 	}
 }
