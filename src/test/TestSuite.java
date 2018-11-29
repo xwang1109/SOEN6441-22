@@ -14,7 +14,7 @@ import test.models.game.*;
 @SuiteClasses({ContinentTest.class, CountryTests.class, MapTests.class,
 	DiceTest.class, AttackTest.class, FortificationTest.class, StrategyTest.class,
 	PlayerTest.class, ReinforcementTests.class, TournamentTest.class, AttackViewTest.class, 
-	CardTest.class, LoadGameTest.class
+	CardTest.class, LoadGameTest.class, GameStateTest.class
 	})
 /**
  * Test Suite for running all tests

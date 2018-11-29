@@ -16,7 +16,7 @@ public class LoadGameTest {
 
 	@Before
 	public void setUp(){
-		
+		GameState.reset();
 		String currentPath=System.getProperty("user.dir");
 		fileGame=new File(currentPath+"\\save\\201811291348.save");
 		
