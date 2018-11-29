@@ -571,9 +571,10 @@ public class GameState extends Observable {
 		    			splitLine = line.split(",");
 		    			Phase phase = Phase.valueOf(splitLine[0]);
 		    			
-		    			this.setPhase(phase);
-		    			this.phaseState.setPhase(phase);
+		    			setPhase(phase);
+		    			phaseState.setPhase(phase);
 		    			currentPlayer = Integer.parseInt(splitLine[1]);
+		    			
 		    		}
 		    		
 		    	}
@@ -583,14 +584,22 @@ public class GameState extends Observable {
 		catch(Exception e) {
 			System.out.println("error");
 			return false;
-		}		
+		}
+		StateView.getInstance().addObserver();
 		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+		
 
+		
+		setChanged();
+		notifyObservers();
+		
+		phaseState.notifyObservers();
 		switch(getPhase()) {
 		case REINFORCEMENT:
 			StateView.getInstance().showReinforcementView();
 			break;
 		case ATTACK:
+			
 			StateView.getInstance().showAttackView();
 			break;
 		case FORTIFICATION:

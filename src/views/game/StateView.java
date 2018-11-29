@@ -141,6 +141,12 @@ public class StateView extends JFrame {
 	
 	static private StateView instance = new StateView();
 	
+	public void addObserver() {
+		GameState.getInstance().addPhaseObserver(phaseDisplay);
+		GameState.getInstance().addObserver(panel);
+		GameState.getInstance().addPhaseObserver(panel);
+	}
+	
 	/**
 	 * Get the instance of view state
 	 * @return ViewState
