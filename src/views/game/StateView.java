@@ -141,6 +141,12 @@ public class StateView extends JFrame {
 	
 	static private StateView instance = new StateView();
 	
+	public void addObserver() {
+		GameState.getInstance().addPhaseObserver(phaseDisplay);
+		GameState.getInstance().addObserver(panel);
+		GameState.getInstance().addPhaseObserver(panel);
+	}
+	
 	/**
 	 * Get the instance of view state
 	 * @return ViewState
@@ -173,6 +179,7 @@ public class StateView extends JFrame {
 	 */
 	public void showPlayerView() {
 		clear();
+		mapPanel.addCountryTableForMap(GameState.getInstance().getMap());
 		new PlayerSetupView(controlPanel,this);
 		getContentPane().add(controlPanel, BorderLayout.CENTER);
 		getContentPane().add(mapPanel, BorderLayout.SOUTH);
@@ -185,10 +192,13 @@ public class StateView extends JFrame {
 	 */
 	public void showReinforcementView() {
 		clear();
+
+		mapPanel.addCountryTableForMap(GameState.getInstance().getMap());
 		new ReinforcementView(controlPanel);
 		if(!GameState.getInstance().getPhase().equals(Phase.FINISHED)){
 			getContentPane().add(controlPanel, BorderLayout.CENTER);
 			getContentPane().add(panel, BorderLayout.EAST);
+			getContentPane().add(mapPanel, BorderLayout.SOUTH);
 			setVisible(true);
 		}
 		
@@ -200,9 +210,12 @@ public class StateView extends JFrame {
 	 */
 	public void showAttackView() {
 		clear();
+
+		mapPanel.addCountryTableForMap(GameState.getInstance().getMap());
 		new AttackView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		getContentPane().add(panel,  BorderLayout.EAST);
+		getContentPane().add(mapPanel, BorderLayout.SOUTH);
 		setVisible(true);
 	}
 	
@@ -211,9 +224,12 @@ public class StateView extends JFrame {
 	 */
 	public void showFortificationView() {
 		clear();
+
+		mapPanel.addCountryTableForMap(GameState.getInstance().getMap());
 		new FortificationView(controlPanel);
 		getContentPane().add(controlPanel, BorderLayout.NORTH);
 		getContentPane().add(panel, BorderLayout.EAST);
+		getContentPane().add(mapPanel, BorderLayout.SOUTH);
 		setVisible(true);
 	}
 

@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 import views.map.*;
 import models.map.*;
 
-
 /**
  * The Class ContinentController. To Create continents and edit continents. 
  * After that then showing the information of continents on map
@@ -17,8 +16,6 @@ import models.map.*;
  * @version 1.0
  */
 public class ContinentController implements ActionListener {
-
-	
 	/** The view. */
 	private ContinentView view;
 	
@@ -48,10 +45,8 @@ public class ContinentController implements ActionListener {
 	 */
 	public ContinentController(ContinentView view,  Map map, int continentID) {
 		this(view,map);
-		this.id = continentID;
-		
+		this.id = continentID;	
 	}
-
 	
 	/**
 	 * This method is to take action to create continents
@@ -73,8 +68,7 @@ public class ContinentController implements ActionListener {
 			break;
 		}
 	}
-	
-	
+		
 	/**
 	 * Creates the continent.
 	 */
@@ -96,17 +90,14 @@ public class ContinentController implements ActionListener {
 					Continent continent = new Continent(continentName,continentValue);
 					map.addContinent(continent);
 					this.view.setVisible(false);
-					view.dispose();
-					
+					view.dispose();				
 				}	
 			}
 		}
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(null, "Please enter a integer for cotinent value!");	
 		}
-		
 	}
-	
 	
 	/**
 	 * Edits the continent.
@@ -132,16 +123,11 @@ public class ContinentController implements ActionListener {
 					this.map.updateContinentByID(id, continentName, continentValue);
 					this.view.setVisible(false);
 					view.dispose();
-					
 				}	
 			}
 		}
 		catch(Exception e) {
 			JOptionPane.showMessageDialog(null, "Please enter a integer for cotinent value!");	
 		}
-		
-	}
-
-	
-	
+	}	
 }

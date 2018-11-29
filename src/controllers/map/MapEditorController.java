@@ -28,7 +28,6 @@ public class MapEditorController implements ActionListener {
 	
 	/**
 	 * Instantiates a new map editor controller.
-	 *
 	 * @param map the map
 	 * @param view the view
 	 */
@@ -36,7 +35,6 @@ public class MapEditorController implements ActionListener {
 		this.map = map;
 		this.view = view;
 	}
-	
 	
 	/**
 	 * This is the method for action performed
@@ -98,7 +96,6 @@ public class MapEditorController implements ActionListener {
 	 * Load map from file.
 	 */
 	public void loadMapFromFile() {
-		
 		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 		int returnValue = jfc.showOpenDialog(null);
 		
@@ -116,8 +113,6 @@ public class MapEditorController implements ActionListener {
 	 * Save map to file.
 	 */
 	public void saveMapToFile() {
-		
-
 		if(!this.map.isValid()) {
 			JOptionPane.showMessageDialog(null, "This map is not valid! You can not save it. Please check it again.");
 		}
@@ -131,11 +126,11 @@ public class MapEditorController implements ActionListener {
 					File file = new File(absoluteFilePath);
 					if(!file.createNewFile()) {
 						JOptionPane.showMessageDialog(null, "This map already exists! Please use another name.");
-					}
+					} 
 					else {
 						if(this.map.saveMapToFile(file)) {
 							JOptionPane.showMessageDialog(null, "Save successfully!");
-						}
+						} 
 						else {
 							JOptionPane.showMessageDialog(null, "Save failed, please try again later.");
 						}
@@ -146,11 +141,7 @@ public class MapEditorController implements ActionListener {
 				System.out.println("Save failed, please try again later.");
 			}
 		}
-		
-		
-
 	}
-	
 	
 	/**
 	 * Adds the country.
@@ -158,7 +149,6 @@ public class MapEditorController implements ActionListener {
 	public void addCountry() {
 		CountryView newCountryView = new CountryView(map);
 		newCountryView.setVisible(true);
-
 	}
 	
 	/**
@@ -169,12 +159,10 @@ public class MapEditorController implements ActionListener {
 		newContinentView.setVisible(true);
 	}
 	
-	
 	/**
 	 * Delete country.
 	 */
 	public void deleteCountry() {
-		
 		int id = this.view.getSelectedCountryID();
 		if(id == -1) {
 			JOptionPane.showMessageDialog(null, "Please select a country first!");
@@ -182,13 +170,12 @@ public class MapEditorController implements ActionListener {
 		else {
 			String msg = "Are you sure that you want to delete country "+
 					map.getCountryByID(id)+"?";
-		int option = JOptionPane.showConfirmDialog(null, msg);
-		if(option == JOptionPane.YES_OPTION) {
-			map.removeCountryByID(id);	
+			int option = JOptionPane.showConfirmDialog(null, msg);
+			if(option == JOptionPane.YES_OPTION) {
+				map.removeCountryByID(id);	
+			}
 		}
-		}
-	}
-	
+	}	
 	
 	/**
 	 * Delete continent.
@@ -205,14 +192,10 @@ public class MapEditorController implements ActionListener {
 						"? All countries in this continent will also be deleted.";
 			int option = JOptionPane.showConfirmDialog(null, msg);
 			if(option == JOptionPane.YES_OPTION) {
-				map.removeContinentByID(id);
-				
-				
-			}
-			
+				map.removeContinentByID(id);	
+			}	
 		}
 	}
-	
 	
 	/**
 	 * Edits the country.
@@ -225,9 +208,7 @@ public class MapEditorController implements ActionListener {
 		else {
 			CountryView editCountryView = new CountryView(map,id);
 			editCountryView.setVisible(true);
-		}
-		
-		
+		}	
 	}
 	
 	/**
@@ -238,14 +219,11 @@ public class MapEditorController implements ActionListener {
 		int id = this.view.getSelectedContinentID();
 		if(id == -1) {
 			JOptionPane.showMessageDialog(null, "Please select a continent first!");
-			
 		}
 		else {
 			ContinentView editContinentView = new ContinentView(map,id);
 			editContinentView.setVisible(true);
 		}
-		
-		
 	}
 	
 	/**
@@ -259,10 +237,8 @@ public class MapEditorController implements ActionListener {
 		else {
 			ConnectionView addConnectionView = new ConnectionView(map,id,ConnectionView.ADD_CONNECTION_OPTION);
 			addConnectionView.setVisible(true);
-		}
-		
+		}	
 	}
-	
 	
 	/**
 	 * Delete connection.
@@ -290,8 +266,5 @@ public class MapEditorController implements ActionListener {
 	public void editBasicInfo() {
 		BasicInfoView view = new BasicInfoView(map);
 		view.setVisible(true);
-	}
-	
-	
-	
+	}	
 }

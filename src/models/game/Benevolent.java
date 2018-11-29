@@ -101,8 +101,7 @@ public class Benevolent implements Strategy{
 		
 		if (fromCountry != null) {
 			player.fortify(fromCountry.getName() , toCountry.getName(), fromCountry.getNumOfArmies()-1);
-		}
-		
+		}	
 	}
 	
 	/**
@@ -121,5 +120,4 @@ public class Benevolent implements Strategy{
 			randomCountry.AddArmy();	
 		}
 	}
-	
 }

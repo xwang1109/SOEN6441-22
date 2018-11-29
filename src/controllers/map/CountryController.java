@@ -14,7 +14,6 @@ import views.map.CountryView;
  * @version 1.0
  */
 public class CountryController implements ActionListener {
-	
 	/** The map. */
 	Map map;
 	
@@ -47,9 +46,7 @@ public class CountryController implements ActionListener {
 		this.id = id;
 	}
 	
-	
-	
-	/* *
+	/**
 	 * This method is to pass action
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
@@ -67,10 +64,8 @@ public class CountryController implements ActionListener {
 		case "Delete":
 			deleteCountry();
 			break;
-		}
-		
+		}	
 	}
-	
 	
 	/**
 	 * Creates the country.
@@ -81,9 +76,7 @@ public class CountryController implements ActionListener {
 		
 		if(map.checkDuplicateCountryName(countryName,-1)) {
 			JOptionPane.showMessageDialog(null, "The country's name must be unique!");
-		}
-		
-		else {
+		} else {
 			Country country = new Country(countryName);
 			country.setContinent(map.getContinentByName(continentName));
 			map.addCountry(country);
@@ -91,7 +84,6 @@ public class CountryController implements ActionListener {
 			view.dispose();	
 		}
 	}
-
 	
 	/**
 	 * Edits the country.
@@ -102,9 +94,7 @@ public class CountryController implements ActionListener {
 		
 		if(map.checkDuplicateCountryName(countryName,id)) {
 			JOptionPane.showMessageDialog(null, "The country's name must be unique!");
-		}
-		
-		else {
+		} else {
 			map.updateCountryByID(id, countryName, continentName);
 			view.setVisible(false);
 			view.dispose();	
@@ -114,7 +104,7 @@ public class CountryController implements ActionListener {
 	/**
 	 * Delete country.
 	 */
-	public void deleteCountry() {
+	public void deleteCountry() {	
 		
 	}
 }

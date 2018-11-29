@@ -8,7 +8,6 @@ import models.map.Country;
  * @version 1.0
  */
 public class Army {
-	
 	/** The player. */
 	private Player player;
 	
@@ -17,7 +16,6 @@ public class Army {
 	
 	/**
 	 * Gets the player.
-	 *
 	 * @return the player
 	 */
 	public Player getPlayer() {
@@ -26,7 +24,6 @@ public class Army {
 	
 	/**
 	 * Sets the player.
-	 *
 	 * @param player the new player
 	 */
 	public void setPlayer(Player player) {
@@ -35,7 +32,6 @@ public class Army {
 	
 	/**
 	 * Gets the country.
-	 *
 	 * @return the country
 	 */
 	public Country getCountry() {
@@ -44,7 +40,6 @@ public class Army {
 	
 	/**
 	 * Sets the country.
-	 *
 	 * @param country the new country
 	 */
 	public void setCountry(Country country) {
@@ -53,13 +48,10 @@ public class Army {
 	
 	/**
 	 * Instantiates a new army.
-	 *
 	 * @param player the player
 	 */
 	public Army(Player player) {
 		super();
 		this.player = player;
 	}
-	
-
 }

@@ -39,7 +39,7 @@ public class PlayerWorldDomainView extends JScrollPane implements Observer {
 		
 		table = new JTable();
 		add(table);
-		addWorldDomainTable(GameState.getInstance());
+		addWorldDomainTable();
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class PlayerWorldDomainView extends JScrollPane implements Observer {
 		
 		this.remove(table);
 		this.add(table);
-		addWorldDomainTable(GameState.getInstance());
+		addWorldDomainTable();
 		
 		this.revalidate();
 		this.repaint();
@@ -67,14 +67,13 @@ public class PlayerWorldDomainView extends JScrollPane implements Observer {
 	 * this method will create a table to show player world domination info
 	 * @param gs
 	 */
-	public void addWorldDomainTable(GameState gs) {
+	public void addWorldDomainTable() {
 		
 		String[] columnNames = { "Player","Map Controll Percentage", "Continents Controlled", "Number of armies" }; 
 		
-		Map map = gs.getMap();
+		Map map = GameState.getInstance().getMap();
 		int totalCountries = map.getCountryNumber();
-		
-		List<Player> playerList = gs.getPlayerList();
+		List<Player> playerList = GameState.getInstance().getPlayerList();
 		String[][] mapData = new String[playerList.size()][4];
 		
 		for(int i=0;i<playerList.size();i++) {
@@ -85,7 +84,7 @@ public class PlayerWorldDomainView extends JScrollPane implements Observer {
 			DecimalFormat df = new DecimalFormat("#.##");
 			mapData[i][1] = df.format(controllP)+"%";
 			String controlledContinent = "";
-			for(Continent continent:gs.getMap().getContinentList()) {
+			for(Continent continent:GameState.getInstance().getMap().getContinentList()) {
 				if(continent.getOwner()!=null && continent.getOwner().getId() == player.getId()) {
 					controlledContinent += continent.getName()+", ";
 				}

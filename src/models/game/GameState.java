@@ -20,7 +20,7 @@ import views.game.StateView;
 /**
  * class GameState to store and pass the current state of the game
  * @author Lin Li, Parisa khazaei
- * @version 2.0
+ * @version 3.0
  */
 public class GameState extends Observable {
 
@@ -32,7 +32,7 @@ public class GameState extends Observable {
 	private List<Country> destinationCountryList;	// hold phase to switch between map info and current state
 	
 	private int turns=1;
-	 private int MAX_TURNS;
+	private int MAX_TURNS;
 	private String mapPath="";
 	
 	public int getTurns() {
@@ -47,8 +47,7 @@ public class GameState extends Observable {
 		return MAX_TURNS;
 	}
 
-	public enum Phase
-	{
+	public enum Phase {
 		SETUP,
 		REINFORCEMENT,
 		ATTACK,
@@ -101,6 +100,7 @@ public class GameState extends Observable {
 	}
 	
 	private PhaseState phaseState = new PhaseState();
+	
 	/**
 	 * Public method to return the current phase of game
 	 * @return Phase
@@ -109,6 +109,10 @@ public class GameState extends Observable {
 		return phaseState.getPhase(); 
 	}
 	
+	/**
+	 * Public method to return the current phase state of game
+	 * @return
+	 */
 	public PhaseState getPhaseState() {
 		return phaseState;
 	}
@@ -118,11 +122,19 @@ public class GameState extends Observable {
 	 * @param phase
 	 */
 	public void setPhase(Phase phase) {
-		
 		System.out.println("Player "+this.getCurrentPlayer().getId()+":"+this.getCurrentPlayer().getStrategy()+" changed to Phase "+ phase.name());
 		phaseState.setPhase(phase);	
+		if (phase.equals(Phase.FINISHED))
+		{
+			this.turns=1;
+
+		}
 	}
 
+	/**
+	 * add phase observer
+	 * @param observer
+	 */
 	public void addPhaseObserver(Observer observer) {
 		phaseState.addObserver(observer);
 	}
@@ -153,10 +165,8 @@ public class GameState extends Observable {
 		return map.isLoaded();
 	}	
 	
-	
 	/**
 	 * check if fortification succeed
-	 *
 	 * @param from the from
 	 * @param to the to
 	 * @param qt the qt
@@ -182,6 +192,10 @@ public class GameState extends Observable {
 		this.selectedFile = selectedFile;
 	}
 	
+	/**
+	 * set the map
+	 * @param map
+	 */
 	public void setMap(Map map) {
 		this.map = map;
 	}
@@ -223,48 +237,37 @@ public class GameState extends Observable {
 	public Map getMap() {
 		return map;
 	}
+	
 	/**
 	 * Randomly assign countries to players
 	 */
 	public void randomAssignCountry() {
 		int player_index=0;
-		
 		List<Continent> countinentList = this.map.getContinentList();
-		
-		
-		for(Continent continent: countinentList)//this is try to avoid one play takes over an entire continent in the first round
-		{
-			
+
+		for(Continent continent: countinentList) {//this is try to avoid one play takes over an entire continent in the first round
 			List<Country> countryList = continent.getCountryList();  //get all countries from each continent
 			
 			Collections.shuffle(countryList);
 
-			for(int i = 0; i < countryList.size(); i++)  
-			{
+			for(int i = 0; i < countryList.size(); i++) {
 				Country c = countryList.get(i);                // loop for get each country of the map
 				Player p = this.playerList.get(player_index);  // find the corresponding player by the order of the player
 				p.getCountryList().add(c);                     // assign country to each player
 				c.setOwner(p);
 				
-				if(player_index<this.playerList.size()-1)      //if not all players get a new country in this round
-				{
+				if(player_index<this.playerList.size()-1) {     //if not all players get a new country in this round
 					player_index++;
 				}
-				else                                           //if all players get a new counter in this round, start from player 1
-				{
+				else {                                         //if all players get a new counter in this round, start from player 1
 					player_index=0;
-				}
-				
-			}
-			
-		}
-			
+				}	
+			}	
+		}	
 		setChanged();
 		notifyObservers();
 	}
-	
 
-	
 	/**
 	 * Public method to get initial army number
 	 * @return initial number of armies
@@ -325,7 +328,6 @@ public class GameState extends Observable {
 		setChanged();
 		notifyObservers();
 		
-		// TODO Determine first player (0 can be good)
 		currentPlayer = 0;
 	}
 
@@ -392,13 +394,17 @@ public class GameState extends Observable {
 		return getCurrentPlayer().getValidDestination(selectedCountry);
 	}
 	
+	/**
+	 * reset the game state
+	 */
 	public static void reset() {
 		instance = new GameState();
 	}
 	
-	
-	
-	
+	/**
+	 * save game to a file
+	 * @param file saved file
+	 */
 	public void saveGameToFile(File file) {
 		PrintWriter pw = null;
 		try {
@@ -416,15 +422,11 @@ public class GameState extends Observable {
 				pw.print(","+player.getStrategy().toString());
 				for(Card card:player.getCardList()) {
 					pw.print(","+card.getCardType().toString());
-	
 				}
 				pw.println();
 			}
 			pw.println();
-						
-			
-			// write continent info
-			pw.println("[Continents]");
+			pw.println("[Continents]"); // write continent info
 			for(Continent continent: this.map.getContinentList()) {
 				if(continent.getOwner()!=null) {
 					// print the owner of continent
@@ -445,9 +447,7 @@ public class GameState extends Observable {
 			// write game state info
 			pw.println("[Phase]");
 			pw.println(this.getPhaseState().getPhase().toString()+","+this.currentPlayer);
-			pw.println();
-			
-			
+			pw.println();		
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -455,9 +455,16 @@ public class GameState extends Observable {
 		pw.close();	
 	}
 	
-	
+	/**
+	 * load game from file
+	 * @param file
+<<<<<<< HEAD
+	 * @return
+=======
+	 * @return true if load successfully
+>>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
+	 */
 	public boolean loadGameFromFile(File file) {
-		//GameState.reset();
 		playerList.clear();
 		map.clear();
 		String fileName = file.getName();
@@ -515,7 +522,6 @@ public class GameState extends Observable {
 		    	}
 		    	else {
 		    		if(playerBegin) {
-		    			
 		    			splitLine = line.split(",");
 		    			String strategy = splitLine[1];
 		    			Player player = new Player();
@@ -536,7 +542,6 @@ public class GameState extends Observable {
 							player.setStrategy(new Cheater());
 		    			}
 		    			
-		    			
 		    			player.setId(Integer.parseInt(splitLine[0]));
 		    			
 		    			for(int i=2;i<splitLine.length;i++) {
@@ -544,9 +549,7 @@ public class GameState extends Observable {
 		    				card.setCardType(CardType.valueOf(splitLine[i]));
 		    				player.getCardList().add(card);
 		    			}
-		    			
 		    			playerList.add(player);
-		    			
 		    		}
 		    		else if(continentBegin) {
 		    			if(!line.equals("")) {
@@ -571,21 +574,26 @@ public class GameState extends Observable {
 		    			splitLine = line.split(",");
 		    			Phase phase = Phase.valueOf(splitLine[0]);
 		    			
-		    			this.setPhase(phase);
-		    			this.phaseState.setPhase(phase);
+		    			setPhase(phase);
+		    			phaseState.setPhase(phase);
 		    			currentPlayer = Integer.parseInt(splitLine[1]);
 		    		}
-		    		
 		    	}
 		    	numLine++;
 	    	}
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			System.out.println("error");
 			return false;
-		}		
-		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
-
+		}
+		StateView.getInstance().addObserver();
+		//StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+		
+		setChanged();
+		notifyObservers();
+		
+		phaseState.notifyObservers();
 		switch(getPhase()) {
 		case REINFORCEMENT:
 			StateView.getInstance().showReinforcementView();
@@ -603,15 +611,28 @@ public class GameState extends Observable {
 		notifyObservers();
 		return true;
 	}
-	
+
+	/**
+	 * set path for the map file
+	 * @param path map file path
+	 */
 	public void setMapPath(String path) {
 		this.mapPath = path;
 	}
 	
+	/**
+	 * get the map file path
+	 * @return path of the map file
+	 */
 	public String getMapPath() {
 		return this.mapPath;
 	}
-	
+
+	/**
+	 * get player by the player's id
+	 * @param id given id
+	 * @return the target player, null if there is no player with this id
+	 */
 	public Player getPlayerByID(int id) {
 		for(Player p:this.playerList) {
 			if(p.getId() == id) {

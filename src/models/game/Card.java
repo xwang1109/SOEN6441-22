@@ -8,7 +8,6 @@ import java.util.Random;
  * @version 2.0
  */
 public class Card {
-	
 	/** The player. */
 	private Player player;
 	
@@ -26,7 +25,6 @@ public class Card {
 	
 	/**
 	 * Sets the player.
-	 *
 	 * @param player the new player
 	 */
 	public void setPlayer(Player player) {
@@ -35,7 +33,6 @@ public class Card {
 	
 	/**
 	 * Gets the card type.
-	 *
 	 * @return the card type
 	 */
 	public CardType getCardType() {
@@ -44,7 +41,6 @@ public class Card {
 	
 	/**
 	 * Sets the card type.
-	 *
 	 * @param cardType the new card type
 	 */
 	public void setCardType(CardType cardType) {
@@ -53,7 +49,6 @@ public class Card {
 	
 	/**
 	 * Instantiates a new card.
-	 *
 	 * @param player the player
 	 */
 	public Card(Player player) {
@@ -74,12 +69,4 @@ public class Card {
 			break;
 		}
 	}
-	
-
-	
-	
-	
-
-
 }
-
