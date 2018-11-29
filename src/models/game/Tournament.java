@@ -119,6 +119,7 @@ public class Tournament {
 		{			
 			Map map=maps.get(m);
 			for(int i=0;i<this.numOfGames;i++){
+				GameState.getInstance().setTurns(1);
 				GameState.getInstance().setPlayerList(players);  
 				GameState.getInstance().setMap(map);
 				
