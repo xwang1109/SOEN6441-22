@@ -15,7 +15,7 @@ import views.map.MapCountryPanel;
 /**
  * class ViewState to switching between different views of the game
  * @author Lin Li,Yanxin
- * @version 2.0
+ * @version 3.0
  * 
  */
 public class StateView extends JFrame {

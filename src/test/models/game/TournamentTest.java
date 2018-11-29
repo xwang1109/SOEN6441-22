@@ -13,7 +13,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import models.game.Aggressive;
-import models.game.Cheater;
 import models.game.Player;
 import models.game.Random;
 import models.game.Tournament;

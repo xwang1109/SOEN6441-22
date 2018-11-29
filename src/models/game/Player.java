@@ -337,19 +337,8 @@ public class Player extends Observable {
 		notifyObservers(this);
 	}
 
-	/**
-	 * This method is the notification for the observer pattern
-	 *
-	 *
-	 */
-	/*private void notifyObservers()
-	{
-		for(BaseObserverFrame frame:this.observerList)
-		{
-			frame.update();
-		}
-	}
-	*/
+
+
 	/**
 	 * Execute the fortification move
 	 * return true if the fortification order was executed

@@ -44,7 +44,7 @@ import javax.swing.border.EtchedBorder;
  * then reinforcement phase begins
  * @author Mehrnaz, Bingyang
  * @see controllers.game.ReinforcementController
- * @version 2.0
+ * @version 3.0
  */
 public class ReinforcementView{
 	private List<Player> playerList;
@@ -249,8 +249,6 @@ public class ReinforcementView{
 		CardExchangeView ccv=new CardExchangeView(player,this);
 		this.player.addObserver(ccv);
 		ccv.setVisible(true);
-		
-		
 		updateLabels();
 	}
 /**
@@ -325,10 +323,10 @@ public class ReinforcementView{
 			if(!(currentPlayer.getStrategy() instanceof Human))	{
 				Boolean isLastPlayer=!GameState.getInstance().setUpRoundRobin();
 			
-				if (isLastPlayer) {//if this is the last player to setup, directly jump to reinforcement
+				if (isLastPlayer) {  //if this is the last player to setup, directly jump to reinforcement
 					GameState.getInstance().setPhase(Phase.REINFORCEMENT);
 					GameState.getInstance().setFirstPlayer();
-					//starUpView.showPlayer();
+					
 					StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());		
 					StateView.getInstance().showReinforcementView();
 				}
@@ -357,7 +355,7 @@ public class ReinforcementView{
 		}
 		if(!GameState.getInstance().getPhase().equals(Phase.FINISHED))
 		{
-		//if(GameState.getInstance().getPhase().equals(Phase.REINFORCEMENT)) {
+		
 			Player currentPlayer= GameState.getInstance().getCurrentPlayer();
 	
 			if(!(currentPlayer.getStrategy() instanceof Human))	{//if next one not human, need to come back to this

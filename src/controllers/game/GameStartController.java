@@ -26,9 +26,9 @@ import views.game.StateView;
 
 
 /**
- * The Class GameStartController.
+ * The Class GameStartController. 
  * @author Bingyang Yu
- * @version 1.0
+ * @version 3.0
  */
 public class GameStartController implements ActionListener {
 	
@@ -74,8 +74,7 @@ public class GameStartController implements ActionListener {
    	        Image i;
    			try {
    				i = ImageIO.read(imageFile);
-   				//Image newImage = i.getScaledInstance(1000, 750,Image.SCALE_SMOOTH);
-   				//ImageIcon image = new ImageIcon(newImage);
+   				
    				ImageIcon image = new ImageIcon(i);
    		        JLabel imageLabel = new JLabel(image);
    		        frame.add(imageLabel);
@@ -86,7 +85,7 @@ public class GameStartController implements ActionListener {
    		        int height = i.getHeight(null);
    		        imageLabel.setSize(width, height);
    		        imageLabel.setVisible(true);
-   		        //frame.setVisible(true);
+
    		        frame.setSize(width, height+50);
    		       
    			} catch (IOException ex) {
@@ -120,6 +119,9 @@ public class GameStartController implements ActionListener {
 
 	}
 
+	/**This method is activate the Game start button to assign all players, countries, armies and maps. and move to reinforcement view.
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
