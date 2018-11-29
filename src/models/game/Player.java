@@ -248,6 +248,8 @@ public class Player extends Observable {
 		if(this.getCardList().size()<=4){//if with less than 5 cards, don't do this
 			return;
 		}
+		
+		System.out.println("sucessfully ecxchange card");
 
 		//first give them the army
 		int armyForCard = (getArmyforCards += 1) * 5;
