@@ -20,7 +20,6 @@ import models.map.Country;
  * Class ReinforcementController is the controller which is bound to ReinforcementView
  * and instructs the model to perform actions based on user inputs
  * @author Mehrnaz, Bingyang Yu
- * @see controllers.game.ReinforcementView
  * @version 2.0
  */
 public class ReinforcementController implements ActionListener {

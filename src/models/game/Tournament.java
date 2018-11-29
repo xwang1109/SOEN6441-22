@@ -17,7 +17,6 @@ public class Tournament {
 	
 	/**
 	 * get map
-	 * @return List<Map>
 	 */
 	public List<Map> getMaps() {
 		return maps;
@@ -48,7 +47,6 @@ public class Tournament {
 	
 	/**
 	 * get the player list
-	 * @return List<Player>
 	 */
 	public List<Player> getPlayers() {
 		return players;

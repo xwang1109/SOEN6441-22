@@ -65,7 +65,6 @@ public class PlayerWorldDomainView extends JScrollPane implements Observer {
 	}
 	/**
 	 * this method will create a table to show player world domination info
-	 * @param gs
 	 */
 	public void addWorldDomainTable() {
 		

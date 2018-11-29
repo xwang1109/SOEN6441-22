@@ -54,7 +54,7 @@ public class Map extends Observable {
 	
 	/**
 	 * This method sets the author's name by a given name
-	 * @param The author's name
+	 * @param author
 	 */
 	public void setAuthor(String author) {
 		this.author = author;
@@ -629,6 +629,7 @@ public class Map extends Observable {
 	
 	/**
 	 * Save the map to a .map file
+	 * @param file
 	 * @return True if the map successfully saved, false if it is not.
 	 */
 	public boolean saveMapToFile(File file) {

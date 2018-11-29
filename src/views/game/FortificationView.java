@@ -41,7 +41,6 @@ public class FortificationView {
 	
 	/**
 	 * Constructor of class FortificationView
-	 * @param JPanel controlPanel
 	 */
 	public FortificationView(JPanel controlPanel) {
 

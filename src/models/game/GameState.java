@@ -367,7 +367,6 @@ public class GameState extends Observable {
 
 	/**
 	 * Initial first Player for RoundRobin
-	 * @return Player
 	 */
 	public void setFirstPlayer() {
 		currentPlayer = 0;
