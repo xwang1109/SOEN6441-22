@@ -29,7 +29,7 @@ import java.awt.Insets;
 
 /**
  * class FortificationView is the view for fortification phase
- * @author Lin Li
+ * @author Lin Li,Parisa
  * @version 2.0
  * @see controllers.game.FortificationController
  */
