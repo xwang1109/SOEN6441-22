@@ -16,8 +16,6 @@ import java.io.*;
  */
 
 public class Map extends Observable {
-
-	
 	private final int FILE_HEAD_LINE_NUMBER = 7;
 
 	private String author;
@@ -34,7 +32,6 @@ public class Map extends Observable {
 	 * Constructor to create a map
 	 * It initializes the basic information of a map
 	 */
-	
 	public Map() {
 		loaded = false;
 		author="";
@@ -51,7 +48,6 @@ public class Map extends Observable {
 	 * This method gets the author's name of the map
 	 * @return The author's name
 	 */
-	
 	public String getAuthor() {
 		return author;
 	}
@@ -151,6 +147,7 @@ public class Map extends Observable {
 	public ArrayList<Country> getCountryList() {
 		return countryList;
 	}
+	
 	/**
 	 * Set the map's countries based on a given countries list
 	 * @param countryList A lists of countries
@@ -158,6 +155,7 @@ public class Map extends Observable {
 	public void setCountryList(ArrayList<Country> countryList) {
 		this.countryList = countryList;
 	}
+	
 	/**
 	 * Add a continent to the map, also notify the MapEditorView that the map has been changed.
 	 * @param continent The continent need to be added
@@ -213,6 +211,7 @@ public class Map extends Observable {
 		}
 		return null;
 	}
+	
 	/**
 	 * Get the country in this map based on the country's name
 	 * @param countryName The country's name need to be searched in the map
@@ -260,6 +259,7 @@ public class Map extends Observable {
 			}
 		}
 	}
+	
 	/**
 	 * Update a country's name and continent which the country belongs to in this map. 
 	 * In addition, notify the MapEditorView that the map has been changed.
@@ -285,6 +285,7 @@ public class Map extends Observable {
 			}
 		}
 	}
+	
 	/**
 	 * Get the number of continents in this map
 	 * @return The number of continents in this map
@@ -300,6 +301,7 @@ public class Map extends Observable {
 	public int getCountryNumber() {
 		return this.countryList.size();
 	}
+	
 	/**
 	 * Remove a continent from the map, and also remove all countries belong to this continent.
 	 * In addition, notify the MapEditorView that the map has been changed.
@@ -323,6 +325,7 @@ public class Map extends Observable {
 			}
 		}
 	}
+	
 	/**
 	 * Remove a country from the map, and also remove all connection relationships of this country.
 	 * In addition, notify the MapEditorView that the map has been changed.
@@ -351,6 +354,7 @@ public class Map extends Observable {
 			}
 		}
 	}
+	
 	/**
 	 * Add a connection between two countries.
 	 * In addition, notify the MapEditorView that the map has been changed.
@@ -366,6 +370,7 @@ public class Map extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+	
 	/**
 	 * Remove a connection between two countries.
 	 * In addition, notify the MapEditorView that the map has been changed.
@@ -382,6 +387,7 @@ public class Map extends Observable {
 		notifyObservers();
 		
 	}
+	
 	/**
 	 * Load and store map information from a .map file
 	 * @param mapFile The file's path
@@ -394,7 +400,6 @@ public class Map extends Observable {
 		boolean countryBegin = false;
 		
 		try {
-			
 			String fileName = mapFile.getName();
 
 			String fileType = "";
@@ -491,14 +496,10 @@ public class Map extends Observable {
 			    		}
 			    		this.warn = splitLine[1];
 			    		break;
-			    		
 			    	}
-		    		
 		    	}
 		    	
-		    	
 		    	else {
-		    		
 		    		if(!continentBegin && !countryBegin) {
 			    		if(!line.equals("[Continents]")) {
 			    			return false;
@@ -524,10 +525,8 @@ public class Map extends Observable {
 		    				}
 		    				continentList.add(new Continent(splitLine[0], value));
 		    			}
-		    			
 		    		}
 		    		else if(countryBegin && !continentBegin) {
-		    			
 		    			splitLine = line.split(",");
 		    			if(this.checkDuplicateCountryName(splitLine[0], -1)) {
 		    				return false;
@@ -553,7 +552,6 @@ public class Map extends Observable {
 		    			// the connectivity part begins
 		    			// first store the information in an ArrayList
 		    			// after finish reading the countries, add the connection relationship
-		    			
 		    			int numConnectedCountry = splitLine.length-4;
 		    			if(numConnectedCountry<=0) {
 		    				return false;
@@ -566,12 +564,8 @@ public class Map extends Observable {
 		    			this.countryList.add(country);
 		    		}
 		    	}
-		    	
-		    	
-		    	
 		    	lineNum++;
 		    }
-		    
 		    
 		    for(int i=0;i<this.countryList.size();i++) {
 		    	Country country = this.countryList.get(i);
@@ -587,29 +581,22 @@ public class Map extends Observable {
 		    		country.addAdjacentCountry(connectedCountry);
 		    	}
 		    }
-		    
-		    
 		}
 		catch (Exception e) {
 			return false;
 		}
 		
 		if(!this.isValid()) {
-			
 			return false;
 		}
 		loaded = true;
 		setChanged();
 		notifyObservers();
-		
 		return true;
 	}
 	
-	
-	
 	/**
 	 * Check if there is a continent has the same name except itself in the map
-	 * 
 	 * @param name The continent's name need to be checked
 	 * @param id The continent's id
 	 * @return True if there is a duplicate name, false if there is no duplicate name
@@ -630,7 +617,6 @@ public class Map extends Observable {
 	 * @param id The country's id
 	 * @return True if there is a duplicate name, false if there is no duplicate name
 	 */
-	
 	public boolean checkDuplicateCountryName(String name, int id) {
 		for(int i=0;i<this.countryList.size();i++) {
 			Country country = countryList.get(i);
@@ -645,7 +631,6 @@ public class Map extends Observable {
 	 * Save the map to a .map file
 	 * @return True if the map successfully saved, false if it is not.
 	 */
-	
 	public boolean saveMapToFile(File file) {
 		if(!this.isValid()) {
 			return false;
@@ -683,7 +668,6 @@ public class Map extends Observable {
 				pw.println(countryInfo);
 			}
 			pw.println();
-			
 		}
 		catch(Exception e) {
 			return false;
@@ -696,7 +680,6 @@ public class Map extends Observable {
 	 * To check if the map is a valid map
 	 * @return True if it is valid, false if not
 	 */
-	
 	public boolean isValid() {
 		// check basic info
 		if(this.author.equals("") || this.image.equals("") || 
@@ -748,7 +731,6 @@ public class Map extends Observable {
 	 * Check if the map is a connected graph
 	 * @return True if the map is connected, false if it is not
 	 */
-	
 	public boolean isConnected() {
     	if(countryList.size()<=1) {
     		return false;
@@ -764,12 +746,12 @@ public class Map extends Observable {
     	}
     	return true;
 	}
-    
 	
 	/**
 	 * dfs for country list
+	 * @param country
+	 * @param countryVisited
 	 */
-	
 	public void dfs(Country country, Hashtable<String,String> countryVisited){ 
 	    String name = country.getName();
 	    if(countryVisited.get(name).equals("visited")){
@@ -781,11 +763,12 @@ public class Map extends Observable {
 	    		dfs(c,countryVisited);
 	    	}
 	    }
-	    
 	}
 
 	/**
 	 * find out if player parameter is the owner of the whole map 
+	 * @param player
+	 * @return
 	 */
 	public boolean mapOwner(Player player) {
 		for(Country c: countryList) {
@@ -798,7 +781,6 @@ public class Map extends Observable {
 	/**
 	 * Clear all the information of the map.
 	 * In addition, notify the MapEditorView that the map has been changed.
-	 * 
 	 */
 	public void clear() {
 		this.author="";
