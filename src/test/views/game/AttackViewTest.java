@@ -19,6 +19,7 @@ import views.game.AttackView;
 /**
  * This class tests attack view of the game
  * @author Lin Li
+ * @author Mehrnaz
  *
  */
 
@@ -73,32 +74,28 @@ public class AttackViewTest {
 
 
 	/**
-	 * test for attack of defender validation
-	 */
-	@Ignore
-	public void testDefenderValidation(){
-		assertTrue(GameState.getInstance().getCurrentPlayer() == attackerCountry.getOwner());
-	}
-
-	/**
-	 * test for attack of attacker validation
+	 * test for defender validation
 	 */
 	@Test
-	public void testAttackNeighbour(){
+	public void testDefenderValidation(){
 		assertTrue(attackerCountry.getAdjacentCountryList().contains(defenderCountry));		
 	}
 	
 	/**
-	 * test for attack of attacker validation
+	 * test for validation of number of armies in attacher country
 	 */
-	@Ignore
+	@Test
 	public void testAttackerArmyNumberValidation(){
 		assertTrue(attackerCountry.getNumOfArmies()>1);
-		//assertTrue(attackerCountry.getAdjacentCountryList().contains(defenderCountry));
+
+	}
+
+	/**
+	 * test for validation of attacker country
+	 */
+	@Test
+	public void testAttackerCountryValidation(){
 		assertTrue(attackerCountry.hasAdjacentControlledByOthers());
 
-		// validate > 1 army on source
-		// validate > 1 army sent
-		
 	}
 }
