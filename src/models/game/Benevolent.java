@@ -11,6 +11,7 @@ import models.map.Country;
  * this class implements Strategy interface for Benevolent behavior
  * @author Mehrnaz
  * @author Xinyan
+ * @version 3.0
  */
 
 public class Benevolent implements Strategy{

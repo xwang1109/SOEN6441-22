@@ -10,6 +10,7 @@ import models.map.Country;
  * this class implements Strategy interface for Cheater behavior
  * @author Mehrnaz
  * @author Xinyan
+ * @version 3.0
  */
 
 public class Cheater implements Strategy{
