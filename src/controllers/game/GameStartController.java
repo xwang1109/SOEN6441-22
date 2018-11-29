@@ -74,8 +74,6 @@ public class GameStartController implements ActionListener {
    	        Image i;
    			try {
    				i = ImageIO.read(imageFile);
-   				//Image newImage = i.getScaledInstance(1000, 750,Image.SCALE_SMOOTH);
-   				//ImageIcon image = new ImageIcon(newImage);
    				ImageIcon image = new ImageIcon(i);
    		        JLabel imageLabel = new JLabel(image);
    		        frame.add(imageLabel);

@@ -52,7 +52,6 @@ public class Continent {
 		return this.id;
 	}
 	
-	
 	/**
 	 * Gets the name.
 	 *

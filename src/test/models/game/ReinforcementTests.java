@@ -11,7 +11,7 @@ import org.junit.Test;
 import models.game.Card;
 import models.game.GameState;
 import models.game.Player;
-import models.game.Card.CardType;
+import models.game.CardType;
 import models.map.Continent;
 import models.map.Country;
 /**

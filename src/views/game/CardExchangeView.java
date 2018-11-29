@@ -22,7 +22,7 @@ import javax.swing.event.ChangeListener;
 
 import models.game.Card;
 import models.game.Player;
-import models.game.Card.CardType;
+import models.game.CardType;
 import javax.swing.JFrame;
 
 /**
@@ -106,7 +106,6 @@ public class CardExchangeView extends JFrame implements Observer {
 		
 		exchangebutton.setVisible(false);
 		exchangebutton.addActionListener(new ActionListener() {
-        //应该写一个??
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
