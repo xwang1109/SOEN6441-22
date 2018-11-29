@@ -238,4 +238,8 @@ public class StateView extends JFrame {
 	public void setWorldPanel(PlayerWorldDomainView panel) {
 		this.panel = panel;
 	}
+	
+	public void reset() {
+		instance = new StateView();
+	}
 }

@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import models.map.Continent;
 import models.map.Country;
 import models.map.Map;
+import views.game.StateView;
 
 /**
  * class GameState to store and pass the current state of the game
@@ -116,7 +117,8 @@ public class GameState extends Observable {
 	 * Public method to set the current phase of game as parameter passed
 	 * @param phase
 	 */
-	public void setPhase(Phase phase) { 
+	public void setPhase(Phase phase) {
+		
 		System.out.println("Player "+this.getCurrentPlayer().getId()+":"+this.getCurrentPlayer().getStrategy()+" changed to Phase "+ phase.name());
 		phaseState.setPhase(phase);	
 	}
@@ -474,7 +476,6 @@ public class GameState extends Observable {
 		    String line;		    
 	    	String[] splitLine;
 	    	int numLine = 1;
-	    	System.out.println("1");
 	    	while ((line=bufferedReader.readLine())!=null) {
 		    	if(line.isEmpty()) {
 		    		continue;
@@ -483,7 +484,6 @@ public class GameState extends Observable {
 		    		String path=bufferedReader.readLine();
 		    		File mapFile = new File(path);
 		    		this.map.loadMapFromFile(mapFile);
-		    		System.out.println("2");
 		    	}
 		    	
 		    	else if(line.equals("[Continents]")){
@@ -533,7 +533,6 @@ public class GameState extends Observable {
 						case "Cheater":
 							player.setStrategy(new Cheater());
 		    			}
-		    			System.out.println("3");
 		    			
 		    			
 		    			player.setId(Integer.parseInt(splitLine[0]));
@@ -543,17 +542,17 @@ public class GameState extends Observable {
 		    				card.setCardType(CardType.valueOf(splitLine[i]));
 		    				player.getCardList().add(card);
 		    			}
-		    			System.out.println("4");
+		    			
+		    			this.playerList.add(player);
+		    			
 		    		}
 		    		else if(continentBegin) {
 		    			if(!line.equals("")) {
-		    				System.out.println("here");
 		    				splitLine = line.split("=");
 		    				Continent continent = this.map.getContinentByName(splitLine[0]);
 		    				Player player = getPlayerByID(Integer.parseInt(splitLine[1]));
 		    				continent.setOwner(player);
 		    			}
-		    			System.out.println("5");
 		    		}
 		    		else if(countryBegin) {
 		    			splitLine = line.split(",");
@@ -564,13 +563,12 @@ public class GameState extends Observable {
 		    			for(int i=0;i<numArmy;i++) {
 		    				country.increaseArmy();
 		    			}
-		    			System.out.println("6");
+		    			player.getCountryList().add(country);
 		    		}
 		    		else if(phaseBegin) {
 		    			splitLine = line.split(",");
-		    			this.phaseState.setPhase(Phase.valueOf(splitLine[0]));
+		    			this.setPhase(Phase.valueOf(splitLine[0]));
 		    			this.currentPlayer = Integer.parseInt(splitLine[1]);
-		    			System.out.println("7");
 		    		}
 		    		
 		    	}
@@ -580,6 +578,23 @@ public class GameState extends Observable {
 		catch(Exception e) {
 			System.out.println("error");
 			return false;
+		}
+		StateView.getInstance().reset();
+		
+		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+
+		switch(this.getPhase()) {
+		case REINFORCEMENT:
+			StateView.getInstance().showReinforcementView();
+			break;
+		case ATTACK:
+			StateView.getInstance().showAttackView();
+			
+		default:
+			break;
+			
+		
+		
 		}
 		setChanged();
 		notifyObservers();
