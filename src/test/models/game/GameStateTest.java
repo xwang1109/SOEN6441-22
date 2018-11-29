@@ -2,7 +2,11 @@ package test.models.game;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -36,23 +40,54 @@ public class GameStateTest {
 	public void tearDown() throws Exception {
 	}
 
+	
 	@Test
-	public void testRandomAssignCountry() {
-		List<Country> testCountryList = GameState.getInstance().getMap().getCountryList();
-		GameState.getInstance().assignInitialPlayers(2,null);
-		List<Player> testPlayerList = GameState.getInstance().getPlayerList();
+	public void testSaveGame() {
+		Player player1 = new Player();
+
+		Player player2 = new Player();
+		
+		GameState.getInstance().getPlayerList().add(player1);
+
+		GameState.getInstance().getPlayerList().add(player2);
+		GameState.getInstance().setFirstPlayer();
 		GameState.getInstance().randomAssignCountry();
-		for(int i = 0; i < testCountryList.size(); i++) {
-			Country countryID = testCountryList.get(i);
-			boolean find = false;
-			for(int j = 0; j< testPlayerList.size(); j++) {
-				Player testPlayer = testPlayerList.get(j);
-				if (testPlayer.getCountryList().contains(countryID)) {
-					find = true;
-					break;
-				}
-			}
-			assertTrue(find);
+		int numArmy = GameState.getInstance().getMap().getCountryList().get(0).getNumOfArmies();
+		String countryName = GameState.getInstance().getMap().getCountryList().get(0).getName();
+		
+		String fileName = new SimpleDateFormat("yyyyMMddHHmm'.save'").format(new Date());
+		String currentPath=System.getProperty("user.dir");
+    	String absoluteFilePath = currentPath+"\\save\\"+fileName;
+		File file = new File(absoluteFilePath);
+		GameState.getInstance().saveGameToFile(file);
+		
+		try {
+			boolean countryBegin=false;
+			FileReader reader = new FileReader(file);
+		    BufferedReader bufferedReader = new BufferedReader (reader);
+		    String line;		    
+	    	String[] splitLine;
+	    	int numLine = 1;
+	    	while ((line=bufferedReader.readLine())!=null) {
+		    	if(line.isEmpty()) {
+		    		continue;
+		    	}
+		    	if(line.equals("[Continents]")){
+		    		
+		    		countryBegin=true;
+		    		
+		    	}
+		    	else if(countryBegin) {
+		    		splitLine = line.split(",");
+		    		if(splitLine[0].equals(countryName)) {
+		    			assertTrue(Integer.parseInt(splitLine[2]) == numArmy);
+		    		}
+		    		
+		    	}
+	    	}
+		}
+		catch (Exception e) {
+			
 		}
 		
 	}
