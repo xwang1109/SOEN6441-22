@@ -393,12 +393,19 @@ public class GameState extends Observable {
 		return getCurrentPlayer().getValidDestination(selectedCountry);
 	}
 	
+	/**
+	 * reset the game state
+	 */
+	
 	public static void reset() {
 		instance = new GameState();
 	}
 	
 	
-	
+	/**
+	 * save game to a file
+	 * @param file saved file
+	 */
 	
 	public void saveGameToFile(File file) {
 		PrintWriter pw = null;
@@ -456,7 +463,11 @@ public class GameState extends Observable {
 		pw.close();	
 	}
 	
-	
+	/**
+	 * load game from file
+	 * @param file
+	 * @return true if load successfully
+	 */
 	public boolean loadGameFromFile(File file) {
 		//GameState.reset();
 		playerList.clear();
@@ -588,7 +599,7 @@ public class GameState extends Observable {
 			return false;
 		}
 		StateView.getInstance().addObserver();
-		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+		//StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 		
 
 		
@@ -601,7 +612,6 @@ public class GameState extends Observable {
 			StateView.getInstance().showReinforcementView();
 			break;
 		case ATTACK:
-			
 			StateView.getInstance().showAttackView();
 			break;
 		case FORTIFICATION:
@@ -614,15 +624,25 @@ public class GameState extends Observable {
 		notifyObservers();
 		return true;
 	}
-	
+	/**
+	 * set path for the map file
+	 * @param path map file path
+	 */
 	public void setMapPath(String path) {
 		this.mapPath = path;
 	}
-	
+	/**
+	 * get the map file path
+	 * @return path of the map file
+	 */
 	public String getMapPath() {
 		return this.mapPath;
 	}
-	
+	/**
+	 * get player by the player's id
+	 * @param id given id
+	 * @return the target player, null if there is no player with this id
+	 */
 	public Player getPlayerByID(int id) {
 		for(Player p:this.playerList) {
 			if(p.getId() == id) {
