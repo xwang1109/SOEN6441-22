@@ -20,7 +20,7 @@ import views.game.StateView;
 /**
  * class GameState to store and pass the current state of the game
  * @author Lin Li, Parisa khazaei
- * @version 2.0
+ * @version 3.0
  */
 public class GameState extends Observable {
 
@@ -400,12 +400,20 @@ public class GameState extends Observable {
 	public static void reset() {
 		instance = new GameState();
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 1b9561c413892abd03ee349154b1e7c663f48330
 	/**
 	 * save game to a file
 	 * @param file saved file
 	 */
+<<<<<<< HEAD
 		public void saveGameToFile(File file) {
+=======
+	public void saveGameToFile(File file) {
+>>>>>>> 1b9561c413892abd03ee349154b1e7c663f48330
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(file,"UTF-8");
@@ -611,46 +619,27 @@ public class GameState extends Observable {
 		notifyObservers();
 		return true;
 	}
-<<<<<<< HEAD
-	
-	/**
-	 * set path for map
-	 * @param path
-=======
+
 	/**
 	 * set path for the map file
 	 * @param path map file path
->>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
 	 */
 	public void setMapPath(String path) {
 		this.mapPath = path;
 	}
-<<<<<<< HEAD
 	
-	/**
-	 * get path of map
-	 * @return
-=======
 	/**
 	 * get the map file path
 	 * @return path of the map file
->>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
 	 */
 	public String getMapPath() {
 		return this.mapPath;
 	}
-<<<<<<< HEAD
-	
-	/**
-	 * get player by their ID
-	 * @param id
-	 * @return
-=======
+
 	/**
 	 * get player by the player's id
 	 * @param id given id
 	 * @return the target player, null if there is no player with this id
->>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
 	 */
 	public Player getPlayerByID(int id) {
 		for(Player p:this.playerList) {
