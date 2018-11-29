@@ -397,29 +397,15 @@ public class GameState extends Observable {
 	/**
 	 * reset the game state
 	 */
-<<<<<<< HEAD
 	public static void reset() {
 		instance = new GameState();
 	}
 
 	/**
-	 * save the game to file
-	 * @param file
-	 */
-=======
-	
-	public static void reset() {
-		instance = new GameState();
-	}
-	
-	
-	/**
 	 * save game to a file
 	 * @param file saved file
 	 */
-	
->>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
-	public void saveGameToFile(File file) {
+		public void saveGameToFile(File file) {
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(file,"UTF-8");
