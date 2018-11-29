@@ -354,8 +354,13 @@ public class GameState extends Observable {
 		System.out.println("Player "+currentPlayer+" finishes turn "+turns+" with "+
 		p.getArmyNumber()+" army and "+p.getCountryList().size()+" country"
 		);
+		if(currentPlayer==playerList.size()-1)
+		{
+			this.turns++;
+		}
 		currentPlayer = ++currentPlayer % playerList.size();
-		turns++;
+		
+		
 		setChanged();
 		notifyObservers();
 	}

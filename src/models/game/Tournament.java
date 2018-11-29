@@ -144,6 +144,7 @@ public class Tournament {
 						p.doStrategyAttack();
 						if (GameState.getInstance().getMap().mapOwner(p)) {
 							GameState.getInstance().setPhase(Phase.FINISHED);
+							GameState.getInstance().endPlayerTurn();
 							System.out.println("Player "+p.getId()+":"+p.getStrategy().toString()+" success");
 							results[m][i]="Player "+p.getId()+":"+p.getStrategy().toString();
 							finished=true;
