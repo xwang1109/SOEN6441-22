@@ -221,6 +221,7 @@ public class Map extends Observable {
 	public Country getCountryByName(String countryName) {
 		for(int i=0;i<this.countryList.size();i++) {
 			if(this.countryList.get(i).getName().equals(countryName)){
+				System.out.println(this.countryList.get(i).getName());
 				return this.countryList.get(i);
 			}
 		}

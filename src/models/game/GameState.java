@@ -124,6 +124,7 @@ public class GameState extends Observable {
 	public void setPhase(Phase phase) {
 		System.out.println("Player "+this.getCurrentPlayer().getId()+":"+this.getCurrentPlayer().getStrategy()+" changed to Phase "+ phase.name());
 		phaseState.setPhase(phase);	
+		this.turns=1;
 	}
 
 	/**
@@ -392,6 +393,7 @@ public class GameState extends Observable {
 	/**
 	 * reset the game state
 	 */
+<<<<<<< HEAD
 	public static void reset() {
 		instance = new GameState();
 	}
@@ -400,6 +402,19 @@ public class GameState extends Observable {
 	 * save the game to file
 	 * @param file
 	 */
+=======
+	
+	public static void reset() {
+		instance = new GameState();
+	}
+	
+	
+	/**
+	 * save game to a file
+	 * @param file saved file
+	 */
+	
+>>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
 	public void saveGameToFile(File file) {
 		PrintWriter pw = null;
 		try {
@@ -453,7 +468,11 @@ public class GameState extends Observable {
 	/**
 	 * load game from file
 	 * @param file
+<<<<<<< HEAD
 	 * @return
+=======
+	 * @return true if load successfully
+>>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
 	 */
 	public boolean loadGameFromFile(File file) {
 		playerList.clear();
@@ -574,11 +593,12 @@ public class GameState extends Observable {
 	    	}
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			System.out.println("error");
 			return false;
 		}
 		StateView.getInstance().addObserver();
-		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
+		//StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 		
 		setChanged();
 		notifyObservers();
@@ -589,7 +609,6 @@ public class GameState extends Observable {
 			StateView.getInstance().showReinforcementView();
 			break;
 		case ATTACK:
-			
 			StateView.getInstance().showAttackView();
 			break;
 		case FORTIFICATION:
@@ -602,27 +621,46 @@ public class GameState extends Observable {
 		notifyObservers();
 		return true;
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * set path for map
 	 * @param path
+=======
+	/**
+	 * set path for the map file
+	 * @param path map file path
+>>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
 	 */
 	public void setMapPath(String path) {
 		this.mapPath = path;
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * get path of map
 	 * @return
+=======
+	/**
+	 * get the map file path
+	 * @return path of the map file
+>>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
 	 */
 	public String getMapPath() {
 		return this.mapPath;
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * get player by their ID
 	 * @param id
 	 * @return
+=======
+	/**
+	 * get player by the player's id
+	 * @param id given id
+	 * @return the target player, null if there is no player with this id
+>>>>>>> 75fce62bfba1a2e488e002b405e99f8c5a8d5f24
 	 */
 	public Player getPlayerByID(int id) {
 		for(Player p:this.playerList) {
