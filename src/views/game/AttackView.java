@@ -28,6 +28,7 @@ import models.map.Country;
  * @author Mehrnaz
  * @author Lin Li
  * @version 3.0
+ * @author Parisa
 */
 public class AttackView {
 	

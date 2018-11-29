@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.Set;
 import models.map.Country;
 
+/**
+ * this class implements Strategy interface for Random behavior
+ * @author Mehrnaz
+ * @author Xinyan
+ */
+
 public class Random implements Strategy{
 
 	@Override
@@ -13,6 +19,10 @@ public class Random implements Strategy{
 		return "Random";
 	}
 	
+	/**
+	 * Reinforcement phase is implemented in Random behavior
+	 * @param player current player who is in reinforcement phase
+	 */
 	@Override
 	public void reinforcementPhase(Player player) {
 		int reinforcementArmyNumber = (int) (1 + (Math.random() * player.CalculateReinforcementArmyNumber()));
@@ -23,6 +33,10 @@ public class Random implements Strategy{
 			player.getCountryList().get(randomCountry).AddArmy();
 		}
 
+	/**
+	 * Attack phase is implemented in Random behavior
+	 * @param player current player who is in attack phase
+	 */
 	@Override
 	public void attackPhase(Player player) {
 		ArrayList<Country> attackCountryList = new ArrayList<Country>();
@@ -92,6 +106,10 @@ public class Random implements Strategy{
 		}
 	}
 
+	/**
+	 * Fortification phase is implemented in Random behavior
+	 * @param player current player who is in fortification phase
+	 */	
 	@Override
 	public void fortificationPhase(Player player) {
 		// TODO Auto-generated method stub
@@ -131,6 +149,11 @@ public class Random implements Strategy{
 		}
 		
 	}
+
+	/**
+	 * Setup phase is implemented in Random behavior
+	 * @param player current player who is in setup phase
+	 */
 	@Override
 	public void setupPhase(Player player) {
 		// TODO Auto-generated method stub

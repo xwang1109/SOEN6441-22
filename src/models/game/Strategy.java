@@ -26,7 +26,6 @@ public interface Strategy {
 	/**
 	 * Attack phase should be implemented in different behaviors
 	 * @param player current player who is in attack phase
-	 * @return 
 	 */
 	public void attackPhase(Player player);
 	

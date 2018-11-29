@@ -6,6 +6,12 @@ import java.util.Random;
 
 import models.map.Country;
 
+/**
+ * this class implements Strategy interface for Cheater behavior
+ * @author Mehrnaz
+ * @author Xinyan
+ */
+
 public class Cheater implements Strategy{
 
 	@Override
@@ -13,6 +19,10 @@ public class Cheater implements Strategy{
 		return "Cheater";
 	}
 	
+	/**
+	 * Reinforcement phase is implemented in Cheater behavior
+	 * @param player current player who is in reinforcement phase
+	 */
 	@Override
 	public void reinforcementPhase(Player player) {
 		// TODO Auto-generated method stub
@@ -24,6 +34,10 @@ public class Cheater implements Strategy{
 		}	
 	}
 
+	/**
+	 * Attack phase is implemented in Cheater behavior
+	 * @param player current player who is in attack phase
+	 */
 	@Override
 	public void attackPhase(Player player) {
 		ArrayList<Country> conqueredCountryList = new ArrayList<Country>();
@@ -42,6 +56,10 @@ public class Cheater implements Strategy{
 		player.getCountryList().addAll(conqueredCountryList);
 	}
 
+	/**
+	 * Fortification phase is implemented in Cheater behavior
+	 * @param player current player who is in fortification phase
+	 */	
 	@Override
 	public void fortificationPhase(Player player) {
 		// TODO Auto-generated method stub
@@ -54,6 +72,11 @@ public class Cheater implements Strategy{
 			}
 		}			
 	}
+
+	/**
+	 * Setup phase is implemented in Cheater behavior
+	 * @param player current player who is in setup phase
+	 */
 	@Override
 	public void setupPhase(Player player) {
 		// TODO Auto-generated method stub
