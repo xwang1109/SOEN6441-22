@@ -290,7 +290,7 @@ public class GameState extends Observable {
 	}
 
 	/**
-	 * Take user selection, set number of players
+	 * Take user selection, set number of players, set strategy to player.
 	 * @param num
 	 */
 	public void assignInitialPlayers(int num, List<JComboBox> playerTypeComboBoxList) {

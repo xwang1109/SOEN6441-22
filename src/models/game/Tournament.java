@@ -24,6 +24,12 @@ public class Tournament {
 	public void setMaps(List<Map> maps) {
 		this.maps = maps;
 	}
+	public String[][] getResults() {
+		return results;
+	}
+	public void setResults(String[][] results) {
+		this.results = results;
+	}
 	public List<Player> getPlayers() {
 		return players;
 	}

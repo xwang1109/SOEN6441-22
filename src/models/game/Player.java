@@ -248,6 +248,8 @@ public class Player extends Observable {
 		if(this.getCardList().size()<=4){//if with less than 5 cards, don't do this
 			return;
 		}
+		
+		System.out.println("sucessfully ecxchange card");
 
 		//first give them the army
 		int armyForCard = (getArmyforCards += 1) * 5;
@@ -335,19 +337,8 @@ public class Player extends Observable {
 		notifyObservers(this);
 	}
 
-	/**
-	 * This method is the notification for the observer pattern
-	 *
-	 *
-	 */
-	/*private void notifyObservers()
-	{
-		for(BaseObserverFrame frame:this.observerList)
-		{
-			frame.update();
-		}
-	}
-	*/
+
+
 	/**
 	 * Execute the fortification move
 	 * return true if the fortification order was executed

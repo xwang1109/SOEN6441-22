@@ -19,6 +19,7 @@ import views.game.AttackView;
 /**
  * This class tests attack view of the game
  * @author Lin Li
+ * @author Mehrnaz
  *
  */
 
@@ -28,7 +29,6 @@ public class AttackViewTest {
 	Player player1 = new Player();
 	Country attackerCountry = new Country("attackerCountryStr");
 	Country defenderCountry = new Country("defenderCountryStr");
-
 	
 	/**
 	 * Set up before test
@@ -37,9 +37,8 @@ public class AttackViewTest {
 	public void setUp(){
 		GameState.reset();
 		
-		GameState.getInstance().assignInitialPlayers(2,null);
-		Player player0 = GameState.getInstance().getPlayerList().get(0);
-		Player player1 = GameState.getInstance().getPlayerList().get(1);
+		GameState.getInstance().getPlayerList().add(player0);
+		GameState.getInstance().getPlayerList().add(player1);
 		
 		attackerCountry.setOwner(player0);
 		defenderCountry.setOwner(player1);
@@ -75,30 +74,28 @@ public class AttackViewTest {
 
 
 	/**
-	 * test for attack of defender validation
-	 */
-	@Ignore
-	public void testDefenderValidation(){
-		assertTrue(GameState.getInstance().getCurrentPlayer() == attackerCountry.getOwner());
-	}
-
-	/**
-	 * test for attack of attacker validation
+	 * test for defender validation
 	 */
 	@Test
-	public void testAttackNeighbour(){
+	public void testDefenderValidation(){
 		assertTrue(attackerCountry.getAdjacentCountryList().contains(defenderCountry));		
 	}
 	
 	/**
-	 * test for attack of attacker validation
+	 * test for validation of number of armies in attacher country
 	 */
-	@Ignore
+	@Test
 	public void testAttackerArmyNumberValidation(){
-		assertTrue(attackerCountry.getAdjacentCountryList().contains(defenderCountry));
+		assertTrue(attackerCountry.getNumOfArmies()>1);
 
-		// validate > 1 army on source
-		// validate > 1 army sent
-		
+	}
+
+	/**
+	 * test for validation of attacker country
+	 */
+	@Test
+	public void testAttackerCountryValidation(){
+		assertTrue(attackerCountry.hasAdjacentControlledByOthers());
+
 	}
 }
