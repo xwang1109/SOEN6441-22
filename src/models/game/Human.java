@@ -48,8 +48,6 @@ public class Human implements Strategy{
 	 */
 	@Override
 	public void setupPhase(Player player) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
-
 }
