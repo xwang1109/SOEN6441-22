@@ -68,10 +68,14 @@ public class StrategyTest {
 		countryList.add(defenderCountry);
 		GameState.getInstance().getMap().setCountryList(countryList);
 
-		attackerCountry1.setAdjacentCountryList(countryList);
-		attackerCountry2.setAdjacentCountryList(countryList);
-		defenderCountry.setAdjacentCountryList(countryList);
-
+		attackerCountry1.addAdjacentCountry(attackerCountry2);
+		attackerCountry1.addAdjacentCountry(defenderCountry);
+		
+		attackerCountry2.addAdjacentCountry(attackerCountry1);
+		attackerCountry2.addAdjacentCountry(defenderCountry);
+		
+		defenderCountry.addAdjacentCountry(attackerCountry1);
+		defenderCountry.addAdjacentCountry(attackerCountry2);
 	}
 	
 	/**
@@ -101,13 +105,13 @@ public class StrategyTest {
 	/**
 	 * test fortification phase for Aggressive strategy 
 	 */
-	@Ignore
+	@Test
 	public void testAggressiveFortificationPhase(){
 		
-		int expectedResult = 11;
-		aggressiveStrategy.fortificationPhase(player0);
+		int expectedResult = 10;
+		aggressiveStrategy.fortificationPhase(player1);
 		
-		assertEquals(expectedResult, attackerCountry2.getNumOfArmies());
+		assertEquals(expectedResult, defenderCountry.getNumOfArmies());
 	}
 
 	/**
@@ -167,13 +171,12 @@ public class StrategyTest {
 	/**
 	 * test attack phase for Cheater strategy 
 	 */
-	@Ignore
+	@Test
 	public void testCheaterAttackPhase(){
 		
 		cheaterStrategy.attackPhase(player0);
-		
-		Player c = defenderCountry.getOwner();
-		assertEquals(c, player0);
+		System.out.println(defenderCountry.getOwner().getId());
+		assertEquals(defenderCountry.getOwner().getId(),player0.getId());
 	}
 	
 }
