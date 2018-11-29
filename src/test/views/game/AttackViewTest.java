@@ -28,7 +28,6 @@ public class AttackViewTest {
 	Player player1 = new Player();
 	Country attackerCountry = new Country("attackerCountryStr");
 	Country defenderCountry = new Country("defenderCountryStr");
-
 	
 	/**
 	 * Set up before test
@@ -37,9 +36,8 @@ public class AttackViewTest {
 	public void setUp(){
 		GameState.reset();
 		
-		GameState.getInstance().assignInitialPlayers(2,null);
-		Player player0 = GameState.getInstance().getPlayerList().get(0);
-		Player player1 = GameState.getInstance().getPlayerList().get(1);
+		GameState.getInstance().getPlayerList().add(player0);
+		GameState.getInstance().getPlayerList().add(player1);
 		
 		attackerCountry.setOwner(player0);
 		defenderCountry.setOwner(player1);
@@ -95,7 +93,9 @@ public class AttackViewTest {
 	 */
 	@Ignore
 	public void testAttackerArmyNumberValidation(){
-		assertTrue(attackerCountry.getAdjacentCountryList().contains(defenderCountry));
+		assertTrue(attackerCountry.getNumOfArmies()>1);
+		//assertTrue(attackerCountry.getAdjacentCountryList().contains(defenderCountry));
+		assertTrue(attackerCountry.hasAdjacentControlledByOthers());
 
 		// validate > 1 army on source
 		// validate > 1 army sent

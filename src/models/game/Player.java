@@ -15,49 +15,51 @@ import models.map.Country;
 
 /**
  * The Class Player. after a player was created ,
- * actions of assign and remove  all the countries, all the cards, all the armies to the player  
+ * actions of assign and remove  all the countries, all the cards, all the armies to the player
  * is possible to do.
  * @author Bingyang Yu ,Parisa khazaei
  * @version 2.0
  */
 public class Player extends Observable {
-	
+
 	/** The id. */
 	private int id;
-	
+
 	/** The country list. */
 	private ArrayList<Country> countryList = new ArrayList<Country>();
 	private ArrayList<Continent> continentList = new ArrayList<Continent>();
 	/** The card list. */
 	private ArrayList<Card> cardList = new ArrayList<Card>();
-	
+
 	/** The army list. */
 	private ArrayList<Army> armyList = new ArrayList<Army>();
-	
+
 	/** The get army for cards. */
 	private int getArmyforCards = 0; //number of times player is given army for cards
-	//the number of looser 
-	
-private Strategy strategy;
-	
+	//the number of looser
+
+	private Strategy strategy;
+
+	private boolean conqueredCountryInThisTurn = false;
+
 	public Player(Strategy strategy) {
 		this.strategy=strategy;
 	}
-	
+
 	public Player() {
 		this.strategy=new Human();
 	}
-	
+
 	public void doStrategySetup()
 	{
 		strategy.setupPhase(this);
 	}
-	
+
 	public void doStrategyAttack()
 	{
 		strategy.attackPhase(this);
 	}
-	
+
 	public void doStrategyReinforcement()
 	{
 		strategy.reinforcementPhase(this);
@@ -68,7 +70,7 @@ private Strategy strategy;
 		strategy.fortificationPhase(this);
 	}
 
-	
+
 	/**
 	 * Gets the id.
 	 *
@@ -77,7 +79,7 @@ private Strategy strategy;
 	public int getId() {
 		return id;
 	}
-	
+
 	/**
 	 * Sets the id.
 	 *
@@ -86,7 +88,7 @@ private Strategy strategy;
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * Gets the army list.
 	 *
@@ -95,7 +97,7 @@ private Strategy strategy;
 	public ArrayList<Army> getArmyList() {
 		return armyList;
 	}
-	
+
 	/**
 	 * Gets the army number.
 	 *
@@ -108,7 +110,7 @@ private Strategy strategy;
 		}
 		return num;
 	}
-	
+
 	/**
 	 * Gets the left army number.
 	 *
@@ -121,7 +123,7 @@ private Strategy strategy;
 				left++;
 		return left;
 	}
-	
+
 	/**
 	 * Sets the country list.
 	 *
@@ -130,7 +132,7 @@ private Strategy strategy;
 	public void setCountryList(ArrayList<Country> countryList) {
 		this.countryList = countryList;
 	}
-	
+
 	/**
 	 * Gets the country list.
 	 *
@@ -139,7 +141,7 @@ private Strategy strategy;
 	public ArrayList<Country> getCountryList() {
 		return countryList;
 	}
-	
+
 	/**
 	 * Gets the card list.
 	 *
@@ -148,7 +150,7 @@ private Strategy strategy;
 	public ArrayList<Card> getCardList() {
 		return cardList;
 	}
-	
+
 	/**
 	 * Sets the army for cards.
 	 *
@@ -157,7 +159,7 @@ private Strategy strategy;
 	public void setArmyforCards(int i) {
 		getArmyforCards = i;
 	}
-	
+
 	public ArrayList<Continent> getContinentList(){
 		return this.continentList;
 	}
@@ -173,7 +175,7 @@ private Strategy strategy;
 		//reassign country and armies
 		return false;
 	}
-	
+
 	/**
 	 * This method add armies to the player according to the reinforcement rules.
 	 * @param reinforcementArmyNumber TODO
@@ -188,15 +190,15 @@ private Strategy strategy;
 	}
 
 	/**
-	 * This method is to calculate and give a number of armies 
+	 * This method is to calculate and give a number of armies
 	 * to the player at the beginning of reinforcements phase.
 	 *
 	 * @return the number of armies given to player
 	 */
 	public int CalculateReinforcementArmyNumber(){
 		int armyNumber = Math.floorDiv(countryList.size(),3);
-		
-		ArrayList<Continent> ContinentList = GameState.getInstance().getMap().getContinentList();		
+
+		ArrayList<Continent> ContinentList = GameState.getInstance().getMap().getContinentList();
 		for(Continent continent: ContinentList){
 			if(continent.getOwner() != null && continent.getOwner().equals(this)){
 				armyNumber += continent.getControlValue();
@@ -205,7 +207,7 @@ private Strategy strategy;
 		armyNumber = Math.max(armyNumber, 3);
 		return armyNumber;
 	}
-	
+
 	/**
 	 * This method activated exchange card phase.
 	 *
@@ -214,7 +216,7 @@ private Strategy strategy;
 	public boolean enforceExchangeCard() {
 		return (cardList.size()>=5);
 	}
-	
+
 	/**
 	 * This method check the possibility of performing card exchange action.
 	 *
@@ -225,7 +227,7 @@ private Strategy strategy;
 		return (Math.max(cardTypeNumber[0], Math.max(cardTypeNumber[1], cardTypeNumber[2])) >= 3)
 				|| (Math.min(cardTypeNumber[0], Math.min(cardTypeNumber[1], cardTypeNumber[2])) >= 1);
 	}
-	
+
 	/**
 	 * This method get the type of each card.
 	 *
@@ -242,14 +244,16 @@ private Strategy strategy;
 	 * This method automatically exchange 3 cards for army
 	 */
 	public void autoExchangeCardforArmy() {
-		
+
 		if(this.getCardList().size()<=4){//if with less than 5 cards, don't do this
 			return;
 		}
 		
+		System.out.println("sucessfully ecxchange card");
+
 		//first give them the army
 		int armyForCard = (getArmyforCards += 1) * 5;
-		
+
 		for(int i=0; i<armyForCard; i++) {
 			Army army = new Army(this);
 			armyList.add(army);
@@ -265,44 +269,44 @@ private Strategy strategy;
 			}
 		}
 		removeCard(0);removeCard(1);removeCard(2);
-		
-		
+
+
 	}
-		
+
 	/**
 	 * This method exchange 3 cards for army.
-	 * 	 
+	 *
 	 * @param toremovecards is the list of cards to be changed
 	 *@return the number of armies
 	 */
 	public int exchangeCardforArmy(List<Card> toremovecards) {
 		removeCards(toremovecards);
 		int armyForCard = (getArmyforCards += 1) * 5;
-		
+
 		for(int i=0; i<armyForCard; i++) {
 			Army army = new Army(this);
 			armyList.add(army);
 		}
 		return armyForCard;
 	}
-	
-	
+
+
 	/**
 	 * This method remove a card from cardList of player.
 	 *
-	 * @param cardTypeCode 
+	 * @param cardTypeCode
 	 */
 	public void removeCard(int cardTypeCode) {
 		for(Card card: cardList){
 			if (card.getCardType().getCardTypeCode() == cardTypeCode) {
-				cardList.remove(card);	
-				
+				cardList.remove(card);
+
 				setChanged();
 				notifyObservers(this);
 				return;
 			}
 		}
-		
+
 	}
 	/**
 	 * This method remove multiple cards at the same time
@@ -310,33 +314,33 @@ private Strategy strategy;
 	 * @param toremovecards is the list of cards to be removed for exchange
 	 */
 	public void removeCards(List<Card> toremovecards) {
-		
+
 		cardList.removeAll(toremovecards);
-		
+
 		setChanged();
 		notifyObservers(this);
 
 	}
-	
-	
+
+
 	/**
 	 * This method gets a random new card for the player
 	 *
-	 * 
+	 *
 	 */
 	public void getNewCard()
 	{
 		Card c=new Card(this);
 		this.cardList.add(c);
-		
+
 		setChanged();
 		notifyObservers(this);
 	}
-	
+
 	/**
 	 * This method is the notification for the observer pattern
 	 *
-	 * 
+	 *
 	 */
 	/*private void notifyObservers()
 	{
@@ -352,33 +356,33 @@ private Strategy strategy;
 	 * false in case of error
 	 */
 	public boolean fortify(String from, String to, int qt) {
-		
+
 		Country source = null, dest = null;
-		
+
 		// validate that the player owns both countries
 		for(Country country: countryList){
 			if (country.getName() == from) {
 				source = country;
-			} 
-			
+			}
+
 			if (country.getName() == to) {
 				dest = country;
 			}
 		}
-	 
+
 		if (source == null || dest == null) {
 			return false;
 		}
-		
+
 		// Make sure there's enough armies to move
 		int realQt = Math.min( source.getNumOfArmies()-1, qt );
-				
+
 		// Move armies
 		for(int i = 0; i<realQt; i++){
 			source.decreaseArmy();
 			dest.increaseArmy();
 		}
-		
+
 		// error if move was invalid, made the biggest move
 		return realQt == qt;
 	}
@@ -389,14 +393,14 @@ private Strategy strategy;
 	public void moveArmies(Country from, Country to, int qt) {
 		Country source = from, dest = to;
 		int realQt = Math.min( source.getNumOfArmies()-1, qt );
-				
+
 		// Move armies
 		for(int i = 0; i<realQt; i++){
 			source.decreaseArmy();
 			dest.increaseArmy();
 		}
 	}
-	
+
 	/**
 	 * To take input country, return which countries can be the valid destination of this country
 	 * @param Country selectedCountry
@@ -407,17 +411,17 @@ private Strategy strategy;
 		if ( selectedCountry.getOwner() != this) return valid;
 		ArrayList<Country> toIterate = new ArrayList<Country>();
 		toIterate.add(selectedCountry);
-		
+
 		while(!toIterate.isEmpty()) {
 			// remove first element
 			Country current = toIterate.get(0);
 			toIterate.remove(0);
-			
+
 			// if it's a valid country
 			if (current.getOwner() == this && valid.indexOf(current) == -1 ) {
 				// keep it
 				valid.add(current);
-				
+
 				// flag nei for validation
 				for( Country nei : current.getAdjacentCountryList()) {
 					if ( toIterate.indexOf(nei) == -1 && valid.indexOf(nei) == -1) {
@@ -428,48 +432,48 @@ private Strategy strategy;
 		}
 
 		valid.remove(selectedCountry);
-		return valid;		
-	}	
+		return valid;
+	}
 	/*
-	 * this is the attack method. it compares the value of dice 
+	 * this is the attack method. it compares the value of dice
 	 *and return the number of looser army for players
-	 * @param attackerDice the number of attacker dice 
+	 * @param attackerDice the number of attacker dice
 	 * @param defenderDice the number of defender dice
 	 * @return it returns an array with value of number of looser army for both players
 	 */
 
-	
+
 	public int[] attack(int[] attackerDice,int[] defenderDice) {
-		
+
     	int numberAttacerLoser=0;
     	int numberDefenderLoser=0;
-    	
+
     	int maxValueAttacker=0;
     	int maxValueDefender=0;
-    	
+
     	Arrays.sort(attackerDice);
     	Arrays.sort(defenderDice);
-    	
+
     	int j=attackerDice.length;
-    	
-   
+
+
     	for(int i=defenderDice.length-1; i>=0; i--) {
-    		j=j-1; 
+    		j=j-1;
     		maxValueAttacker=attackerDice[j];
     		maxValueDefender=defenderDice[i];
-    		
+
     		//this step defines which player will lose his army.
     		if (maxValueDefender>=maxValueAttacker) {
-    			numberAttacerLoser=numberAttacerLoser+1;
+    			numberAttacerLoser++;
     		}
     		else {
-    			numberDefenderLoser=numberDefenderLoser+1;
+    			numberDefenderLoser++;
     		}
-    		  	     	   
+
     	}
     	 int[] result= {numberAttacerLoser,numberDefenderLoser};
     	 return result;
- 
+
     }
 	/**
 	 * find out that if the player can attack
@@ -480,7 +484,7 @@ private Strategy strategy;
 				return true;
 		}
 		return false;
-	}	
+	}
 
 	/**
 	 * find out that if the player can attack
@@ -491,11 +495,20 @@ private Strategy strategy;
 			originalOwner.getCountryList().remove(country);
 			country.setOwner(this);
 			this.countryList.add(country);
+			this.conqueredCountryInThisTurn = true;
 			return true;
 		}
-		else return false;
+		return false;
 	}
-	
+
+	public void resetConqueredCountryInThisTurn() {
+		this.conqueredCountryInThisTurn = false;
+	}
+
+	public boolean getConqueredCountryInThisTurn() {
+		return this.conqueredCountryInThisTurn;
+	}
+
 	public void cheaterConquer(Country country) {
 		Player originalOwner = country.getOwner();
 		originalOwner.getCountryList().remove(country);
