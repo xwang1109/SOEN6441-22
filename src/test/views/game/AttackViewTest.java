@@ -95,7 +95,9 @@ public class AttackViewTest {
 	 */
 	@Ignore
 	public void testAttackerArmyNumberValidation(){
-		assertTrue(attackerCountry.getAdjacentCountryList().contains(defenderCountry));
+		assertTrue(attackerCountry.getNumOfArmies()>1);
+		//assertTrue(attackerCountry.getAdjacentCountryList().contains(defenderCountry));
+		assertTrue(attackerCountry.hasAdjacentControlledByOthers());
 
 		// validate > 1 army on source
 		// validate > 1 army sent
