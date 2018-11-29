@@ -12,11 +12,17 @@ import javax.swing.filechooser.FileSystemView;
 
 import models.game.GameState;
 
+/**
+ * Class MenuController for load and save game controller
+ * @version 3.0
+ */
 public class MenuController implements ActionListener {
 
+	/**
+	 * Action perform when clicking Load and Save game
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		String actionCommand = e.getActionCommand();
 		switch(actionCommand) {
 		case "Load":
@@ -28,6 +34,9 @@ public class MenuController implements ActionListener {
 		}	
 	}
 	
+	/**
+	 * Class to save game
+	 */
 	public void saveGame() {
 		String fileName = new SimpleDateFormat("yyyyMMddHHmm'.save'").format(new Date());
 		String currentPath=System.getProperty("user.dir");
@@ -36,6 +45,9 @@ public class MenuController implements ActionListener {
 		GameState.getInstance().saveGameToFile(file);
 	}
 	
+	/**
+	 * Class to load game
+	 */
 	public void loadGame() {
 		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir"));
 		int returnValue = jfc.showOpenDialog(null);
@@ -44,8 +56,6 @@ public class MenuController implements ActionListener {
 			GameState.reset();
 			File selectedFile = jfc.getSelectedFile();
 			GameState.getInstance().loadGameFromFile(selectedFile);
-		}
-		
+		}	
 	}
-
 }

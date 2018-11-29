@@ -20,12 +20,11 @@ import models.game.GameState;
 import models.map.Map;
 import views.game.StateView;
 
-
 /**
  * The Class PlayerSetupController. 
  * @see views.game.PlayerSetupView
  * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
- * @version 2.0
+ * @version 3.0
  */
 public class PlayerSetupController implements ActionListener{
 	
@@ -36,7 +35,6 @@ public class PlayerSetupController implements ActionListener{
 		
 	}
 	
-
 	/**
 	 * This method is triggered by "NEW GAME" button. 
 	 * It opens up a new dialog and allows player to choose map file. 
@@ -44,25 +42,16 @@ public class PlayerSetupController implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		
-		
-		
 		JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
 		int returnValue = jfc.showOpenDialog(null);
 		
-
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = jfc.getSelectedFile();
 			GameState.getInstance().setSelectedFile(selectedFile);
 			System.out.println(selectedFile.getAbsolutePath());
 			
 			StateView.getInstance().showPlayerView();
-		}
-
-		
+		}		
 	}
-	
-
 }
