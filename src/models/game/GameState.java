@@ -62,8 +62,8 @@ public class GameState extends Observable {
 		public Phase getPhase() { 
 			return phase; 
 		}
-		public void setPhase(Phase phase) { 
-			this.phase = phase; 
+		public void setPhase(Phase p) { 
+			phase = p; 
 			setChanged();
 			notifyObservers();		
 		}
@@ -457,7 +457,9 @@ public class GameState extends Observable {
 	
 	
 	public boolean loadGameFromFile(File file) {
-		GameState.reset();
+		//GameState.reset();
+		playerList.clear();
+		map.clear();
 		String fileName = file.getName();
 		
 		String fileType = "";
@@ -483,7 +485,7 @@ public class GameState extends Observable {
 		    	if(line.equals("[Map]")) {
 		    		String path=bufferedReader.readLine();
 		    		File mapFile = new File(path);
-		    		this.map.loadMapFromFile(mapFile);
+		    		loadMapFromFile(mapFile);
 		    	}
 		    	
 		    	else if(line.equals("[Continents]")){
@@ -543,7 +545,7 @@ public class GameState extends Observable {
 		    				player.getCardList().add(card);
 		    			}
 		    			
-		    			this.playerList.add(player);
+		    			playerList.add(player);
 		    			
 		    		}
 		    		else if(continentBegin) {
@@ -567,8 +569,11 @@ public class GameState extends Observable {
 		    		}
 		    		else if(phaseBegin) {
 		    			splitLine = line.split(",");
-		    			this.setPhase(Phase.valueOf(splitLine[0]));
-		    			this.currentPlayer = Integer.parseInt(splitLine[1]);
+		    			Phase phase = Phase.valueOf(splitLine[0]);
+		    			
+		    			this.setPhase(phase);
+		    			this.phaseState.setPhase(phase);
+		    			currentPlayer = Integer.parseInt(splitLine[1]);
 		    		}
 		    		
 		    	}
@@ -578,23 +583,21 @@ public class GameState extends Observable {
 		catch(Exception e) {
 			System.out.println("error");
 			return false;
-		}
-		StateView.getInstance().reset();
-		
+		}		
 		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
 
-		switch(this.getPhase()) {
+		switch(getPhase()) {
 		case REINFORCEMENT:
 			StateView.getInstance().showReinforcementView();
 			break;
 		case ATTACK:
 			StateView.getInstance().showAttackView();
-			
+			break;
+		case FORTIFICATION:
+			StateView.getInstance().showFortificationView();
+			break;
 		default:
 			break;
-			
-		
-		
 		}
 		setChanged();
 		notifyObservers();
