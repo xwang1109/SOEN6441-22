@@ -26,30 +26,30 @@ import views.game.StateView;
 
 
 /**
- * The Class GameStartController. 
+ * The Class GameStartController.
  * @author Bingyang Yu
  * @version 3.0
  */
 public class GameStartController implements ActionListener {
-	
+
 	/** The number of player. */
 	private JComboBox numberOfPlayer;
-	
+
 
 	/** Strategy of eachplayer. */
 	private List<JComboBox> playerTypeComboBoxList ;
-	
-	
-	
+
+
+
 	/** The selected file. */
 	private File selectedFile;
-	
+
 	/** The frame. */
 	private JFrame frame;
-	
+
 	/** The map. */
 	private Map map;
-	
+
 	/**
 	 * Instantiates a new game start controller. Load map into the controller. Display the map on the frame.
 	 *  If map is not valid, show an error message.
@@ -59,12 +59,12 @@ public class GameStartController implements ActionListener {
 	 * @param frame the frame of the entire program.
 	 */
 	public GameStartController(JComboBox numberOfPlayer,List<JComboBox> playerTypeComboBoxList, File selectedFile,JFrame frame) {
-		
+
            this.numberOfPlayer = numberOfPlayer;
            this.playerTypeComboBoxList=playerTypeComboBoxList;
            this.selectedFile = selectedFile;
            this.frame = frame;
-           
+
            map = new Map();
            boolean result = map.loadMapFromFile(selectedFile);
    		   if(result) {
@@ -74,12 +74,11 @@ public class GameStartController implements ActionListener {
    	        Image i;
    			try {
    				i = ImageIO.read(imageFile);
-   				
    				ImageIcon image = new ImageIcon(i);
    		        JLabel imageLabel = new JLabel(image);
    		        frame.add(imageLabel);
    		        frame.setLayout(null);
-   		      
+
    		        imageLabel.setLocation(0, 50);
    		        int width = i.getWidth(null);
    		        int height = i.getHeight(null);
@@ -87,18 +86,18 @@ public class GameStartController implements ActionListener {
    		        imageLabel.setVisible(true);
 
    		        frame.setSize(width, height+50);
-   		       
+
    			} catch (IOException ex) {
-   				
+
    				ex.printStackTrace();
    			}
    		}
    		else {
    			JOptionPane.showMessageDialog(frame, "not a valid map");
    		}
-   		
+
 	}
-    
+
 	/**
 	 * this method is triggered by "Start" button. Players are created and countries are randomly assigned.
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
@@ -111,7 +110,7 @@ public class GameStartController implements ActionListener {
 		boolean result = GameState.getInstance().loadMapFromFile(selectedFile);
 
 		if(result) {
-			
+
 		}
 		else {
 			JOptionPane.showMessageDialog(StateView.getInstance(), "not a valid map");
@@ -126,21 +125,21 @@ public class GameStartController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		int num = (Integer)numberOfPlayer.getSelectedItem();
-	
-		
-		GameState.getInstance().assignInitialPlayers(num,playerTypeComboBoxList);  
-		
+
+
+		GameState.getInstance().assignInitialPlayers(num,playerTypeComboBoxList);
+
 		GameState.getInstance().randomAssignCountry();
-		
+
 		GameState.getInstance().assignInitialArmy();
 
 		//refresh the table for map of all players
 		StateView.getInstance().getMapPanel().addCountryTableForMap(GameState.getInstance().getMap());
-		
-		
+
+
 		StateView.getInstance().showReinforcementView();
 
-		
+
 	}
 
 

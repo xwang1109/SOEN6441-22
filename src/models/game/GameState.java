@@ -1,6 +1,9 @@
 package models.game;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +32,7 @@ public class GameState extends Observable {
 	
 	private int turns=1;
 	 private int MAX_TURNS;
-
+	private String mapPath="";
 	
 	public int getTurns() {
 		return turns;
@@ -204,7 +207,11 @@ public class GameState extends Observable {
 	 * @return boolean
 	 */
 	public boolean loadMapFromFile(File selectedFile2) {
-		return map.loadMapFromFile(selectedFile2);
+		if(map.loadMapFromFile(selectedFile2)) {
+			this.mapPath = selectedFile2.getAbsolutePath();
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -287,7 +294,7 @@ public class GameState extends Observable {
 	 * @param num
 	 */
 	public void assignInitialPlayers(int num, List<JComboBox> playerTypeComboBoxList) {
-		assert(playerList.size() == 0); // shouldn't be called with an initialized player list, for future debug
+		assert(playerList.size() == 0); //shouldn't be called with an initialized player list, for future debug
 		
 		playerList.clear(); // clear player list to make sure no previous record is there
 		for(int i = 0; i < num; i++) {
@@ -387,4 +394,212 @@ public class GameState extends Observable {
 		instance = new GameState();
 	}
 	
+	
+	
+	
+	public void saveGameToFile(File file) {
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter(file,"UTF-8");
+
+			// write map info
+			pw.println("[Map]");
+			pw.println(this.mapPath);
+			pw.println();
+			
+			// write player info
+			pw.println("[Players]");
+			for(Player player:this.playerList) {
+				pw.print(player.getId());
+				pw.print(","+player.getStrategy().toString());
+				for(Card card:player.getCardList()) {
+					pw.print(","+card.getCardType().toString());
+	
+				}
+				pw.println();
+			}
+			pw.println();
+						
+			
+			// write continent info
+			pw.println("[Continents]");
+			for(Continent continent: this.map.getContinentList()) {
+				if(continent.getOwner()!=null) {
+					// print the owner of continent
+					pw.println(continent.getName()+"="+continent.getOwner().getId());
+				}
+			}
+			pw.println();
+			
+			// write country info
+			pw.println("[Territories]");
+			for(Country country: this.map.getCountryList()) {
+				String countryInfo = country.getName()+","+country.getOwner().getId()+","+
+							country.getNumOfArmies();
+				pw.println(countryInfo);
+			}
+			pw.println();
+			
+			// write game state info
+			pw.println("[Phase]");
+			pw.println(this.getPhaseState().getPhase().toString()+","+this.currentPlayer);
+			pw.println();
+			
+			
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		pw.close();	
+	}
+	
+	
+	public boolean loadGameFromFile(File file) {
+		GameState.reset();
+		String fileName = file.getName();
+		
+		String fileType = "";
+		String[] nameArray = fileName.split("\\.");
+		fileType = nameArray[nameArray.length-1];
+		boolean continentBegin=false;
+		boolean countryBegin=false;
+		boolean playerBegin=false;
+		boolean phaseBegin=false;
+		if(!fileType.equals("save")) {
+			return false;
+		}
+		try {
+			FileReader reader = new FileReader(file);
+		    BufferedReader bufferedReader = new BufferedReader (reader);
+		    String line;		    
+	    	String[] splitLine;
+	    	int numLine = 1;
+	    	System.out.println("1");
+	    	while ((line=bufferedReader.readLine())!=null) {
+		    	if(line.isEmpty()) {
+		    		continue;
+		    	}
+		    	if(line.equals("[Map]")) {
+		    		String path=bufferedReader.readLine();
+		    		File mapFile = new File(path);
+		    		this.map.loadMapFromFile(mapFile);
+		    		System.out.println("2");
+		    	}
+		    	
+		    	else if(line.equals("[Continents]")){
+		    		continentBegin = true;
+		    		countryBegin=false;
+		    		playerBegin=false;
+		    		phaseBegin=false;
+		    	}
+		    	else if(line.equals("[Territories]")) {
+		    		countryBegin = true;
+		    		continentBegin = false;
+		    		playerBegin=false;
+		    		phaseBegin=false;
+		    	}
+		    	else if(line.equals("[Players]")) {
+		    		playerBegin=true;
+		    		countryBegin = false;
+		    		continentBegin = false;
+		    		phaseBegin=false;
+		    		
+		    	}
+		    	else if(line.equals("[Phase]")) {
+		    		phaseBegin=true;
+		    		playerBegin=false;
+		    		countryBegin = false;
+		    		continentBegin = false;
+		    	}
+		    	else {
+		    		if(playerBegin) {
+		    			
+		    			splitLine = line.split(",");
+		    			String strategy = splitLine[1];
+		    			Player player = new Player();
+		    			switch (strategy){
+						case "Human":
+							player.setStrategy(new Human());
+							break;
+						case "Aggressive":
+							player.setStrategy(new Aggressive());
+							break;
+						case "Benevolent":
+							player.setStrategy(new Benevolent());
+							break;
+						case "Random":
+							player.setStrategy(new Random());
+							break;
+						case "Cheater":
+							player.setStrategy(new Cheater());
+		    			}
+		    			System.out.println("3");
+		    			
+		    			
+		    			player.setId(Integer.parseInt(splitLine[0]));
+		    			
+		    			for(int i=2;i<splitLine.length;i++) {
+		    				Card card = new Card(player);
+		    				card.setCardType(CardType.valueOf(splitLine[i]));
+		    				player.getCardList().add(card);
+		    			}
+		    			System.out.println("4");
+		    		}
+		    		else if(continentBegin) {
+		    			if(!line.equals("")) {
+		    				System.out.println("here");
+		    				splitLine = line.split("=");
+		    				Continent continent = this.map.getContinentByName(splitLine[0]);
+		    				Player player = getPlayerByID(Integer.parseInt(splitLine[1]));
+		    				continent.setOwner(player);
+		    			}
+		    			System.out.println("5");
+		    		}
+		    		else if(countryBegin) {
+		    			splitLine = line.split(",");
+		    			Country country = this.map.getCountryByName(splitLine[0]);
+		    			Player player = getPlayerByID(Integer.parseInt(splitLine[1]));
+		    			country.setOwner(player);
+		    			int numArmy = Integer.parseInt(splitLine[2]);
+		    			for(int i=0;i<numArmy;i++) {
+		    				country.increaseArmy();
+		    			}
+		    			System.out.println("6");
+		    		}
+		    		else if(phaseBegin) {
+		    			splitLine = line.split(",");
+		    			this.phaseState.setPhase(Phase.valueOf(splitLine[0]));
+		    			this.currentPlayer = Integer.parseInt(splitLine[1]);
+		    			System.out.println("7");
+		    		}
+		    		
+		    	}
+		    	numLine++;
+	    	}
+		}
+		catch(Exception e) {
+			System.out.println("error");
+			return false;
+		}
+		setChanged();
+		notifyObservers();
+		return true;
+	}
+	
+	public void setMapPath(String path) {
+		this.mapPath = path;
+	}
+	
+	public String getMapPath() {
+		return this.mapPath;
+	}
+	
+	public Player getPlayerByID(int id) {
+		for(Player p:this.playerList) {
+			if(p.getId() == id) {
+				return p;
+			}
+		}
+		return null;
+	}
 }
