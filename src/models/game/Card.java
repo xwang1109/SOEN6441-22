@@ -16,42 +16,6 @@ public class Card {
 	private CardType cardType;
 	
 	/**
-	 * The Enum CardType.
-	 */
-	public enum CardType {
-		
-		/** The infantry. */
-		INFANTRY(0),
-		
-		/** The cavalry. */
-		CAVALRY(1),
-		
-		/** The artillery. */
-		ARTILLERY(2);
-	    
-    	/** The card type code. */
-    	private final int cardTypeCode;
-	    
-    	/**
-    	 * Instantiates a new card type.
-    	 *
-    	 * @param cardTypeCode the card type code
-    	 */
-    	private CardType(int cardTypeCode) {
-	        this.cardTypeCode = cardTypeCode;
-	    }
-	    
-    	/**
-    	 * Gets the card type code.
-    	 *
-    	 * @return the card type code
-    	 */
-    	public int getCardTypeCode(){
-	    	return cardTypeCode;
-	    }
-	}
-	
-	/**
 	 * Gets the player.
 	 *
 	 * @return the player
@@ -95,18 +59,19 @@ public class Card {
 	public Card(Player player) {
 		this.player = player;
 		Random randomizer = new Random();
-
-		
 		int rand = randomizer.nextInt(3);
 		switch(rand) {
 		case 0: 
 			cardType = CardType.INFANTRY;
 			break;
 		case 1:
-			cardType = cardType.CAVALRY;
+			cardType = CardType.CAVALRY;
+			break;
+		case 2:
+			cardType = CardType.ARTILLERY;
 			break;
 		default:
-			cardType = cardType.ARTILLERY;
+			break;
 		}
 	}
 	

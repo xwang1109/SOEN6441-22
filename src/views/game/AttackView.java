@@ -27,8 +27,8 @@ import models.map.Country;
  * @author Bingyang Yu
  * @author Mehrnaz
  * @author Lin Li
+ * @version 3.0
  * @author Parisa
- * @version 2.0
 */
 public class AttackView {
 	
@@ -100,7 +100,7 @@ public class AttackView {
 	}
 	
 	/**
-	 * Constructor of class AttackView
+	 * Constructor of class AttackView. 
 	 * @param controlPanel
 	 */
 	public AttackView(JPanel controlPanel) {
@@ -143,7 +143,7 @@ public class AttackView {
 			endAttBtn = new JButton(EndAttackPhaseStr);
 			endAttBtn.setVerticalAlignment(SwingConstants.BOTTOM);
 			endAttBtn.addActionListener(new AttackController(this));
-			//rightPanel.add(endAttBtn);
+			
 			controlPanel.add(rightPanel);
 	
 			showSelectionState();

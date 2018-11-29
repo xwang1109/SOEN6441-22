@@ -29,8 +29,8 @@ import java.awt.Insets;
 
 /**
  * class FortificationView is the view for fortification phase
+ * @version 3.0
  * @author Lin Li,Parisa
- * @version 2.0
  * @see controllers.game.FortificationController
  */
 public class FortificationView {
@@ -60,62 +60,7 @@ public class FortificationView {
 		}
 		else// if this is human, draw the tables to do fortification
 		{
-			/*
-			controlPanel.setLayout(new GridLayout(0, 2));
-			JPanel informationPanel = new JPanel();
-			controlPanel.add(informationPanel);
 			
-			JPanel labelColumn = new JPanel();
-			informationPanel.add(labelColumn);
-			labelColumn.setLayout(new GridLayout(0, 1));
-			
-			JLabel phaseTextLabel = new JLabel("Phase: ");
-			labelColumn.add(phaseTextLabel);
-			
-			JLabel currentPlayerTextLabel = new JLabel("Current Player: ");
-			labelColumn.add(currentPlayerTextLabel);
-			
-			JPanel dataColumn = new JPanel();
-			informationPanel.add(dataColumn);
-			dataColumn.setLayout(new GridLayout(0, 1));
-			dataColumn.add(StateView.getInstance().getPhaseLabel());
-			
-			JLabel currentPlayerIndicator = new JLabel(String.valueOf(GameState.getInstance().getCurrentPlayer().getId()));
-			dataColumn.add(currentPlayerIndicator);
-			
-			JPanel fortificationPanel = new JPanel();
-			controlPanel.add(fortificationPanel);
-			fortificationPanel.setLayout(new GridLayout(0, 3, 0, 0));
-			
-			JPanel fortificationInfoPanel = new JPanel();
-			fortificationPanel.add(fortificationInfoPanel);
-			fortificationInfoPanel.setLayout(new GridLayout(0, 1, 0, 0));
-			
-			// text shown to guide user to select from which country the armies should go out
-			JTextArea textFrom = new JTextArea("From Country:");
-			fortificationInfoPanel.add(textFrom);
-			
-			// text shown to guide user to select destination country
-			JTextArea textTo = new JTextArea("To Country:");
-			fortificationInfoPanel.add(textTo);
-			
-			// declare quantity fields
-			JTextArea textQuantity = new JTextArea("Number of Armies:");
-			fortificationInfoPanel.add(textQuantity);
-			
-			JPanel fortificationPanel_1 = new JPanel();
-			fortificationPanel.add(fortificationPanel_1);
-			fortificationPanel_1.setLayout(new GridLayout(3, 1, 0, 0));
-			
-			// initialized before handler
-			fortificationPanel_1.add(fromDropDown);
-			fortificationPanel_1.add(toDropDown);
-			
-			quantity = new JTextField(5);
-			fortificationPanel_1.add(quantity);
-			quantity.setColumns(10);
-			*/
-			//controlPanel.setLayout(new GridLayout(0, 2));
 			JPanel informationPanel = new JPanel();
 			controlPanel.add(informationPanel);
 			informationPanel.setLayout(new GridLayout(0, 2));

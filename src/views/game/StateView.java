@@ -8,15 +8,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controllers.game.MenuController;
 import models.game.GameState;
 import models.game.GameState.Phase;
 import views.map.MapCountryPanel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 /**
  * class ViewState to switching between different views of the game
+ * @author Lin Li,Yanxin
+ * @version 3.0
  * @author Lin Li,Yanxin,Parisa
- * @version 2.0
- * 
  */
 public class StateView extends JFrame {
 	private static final long serialVersionUID = 7243006502142830314L;
@@ -115,6 +119,20 @@ public class StateView extends JFrame {
 	private StateView() {
 		controlPanel = new JPanel();
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu menu = new JMenu("File");
+		menuBar.add(menu);
+		
+		JMenuItem saveButton = new JMenuItem("Save");
+		menu.add(saveButton);
+		
+		JMenuItem loadButton = new JMenuItem("Load");
+		menu.add(loadButton);
+		saveButton.addActionListener(new MenuController());
+		loadButton.addActionListener(new MenuController());
 		GameState.getInstance().addPhaseObserver(phaseDisplay);
 		panel = new PlayerWorldDomainView();
 		GameState.getInstance().addObserver(panel);
@@ -219,5 +237,9 @@ public class StateView extends JFrame {
 	
 	public void setWorldPanel(PlayerWorldDomainView panel) {
 		this.panel = panel;
+	}
+	
+	public void reset() {
+		instance = new StateView();
 	}
 }
