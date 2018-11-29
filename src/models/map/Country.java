@@ -186,20 +186,19 @@ public class Country {
 	}
 	
 	/**
-	 * 
+	 * check if the country has adjacent country which belongs to other players
+	 * @return boolean
 	 */
 	public boolean hasAdjacentControlledByOthers() {
 		for(Country c:adjacentCountryList) {
 			if (!c.getOwner().equals(owner))
 				return true;
 		}
-		return false;
-			
+		return false;	
 	}
 	
 	/**
 	 * Removes the adjacent country by ID.
-	 *
 	 * @param countryID the country ID
 	 */
 	public void removeAdjacentCountryByID(int countryID) {

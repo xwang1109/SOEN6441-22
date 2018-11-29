@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import models.game.*;
 
-
 /**
  * The Class Continent. To create, remove, add the continents to the continent list
  * @author Yan
@@ -32,7 +31,6 @@ public class Continent {
 	
 	/**
 	 * Instantiates a new continent.
-	 *
 	 * @param name the name
 	 * @param controlValue the control value
 	 */
@@ -45,7 +43,6 @@ public class Continent {
 	
 	/**
 	 * Gets the id.
-	 *
 	 * @return the id
 	 */
 	public int getID() {
@@ -54,7 +51,6 @@ public class Continent {
 	
 	/**
 	 * Gets the name.
-	 *
 	 * @return the name
 	 */
 	public String getName() {
@@ -63,7 +59,6 @@ public class Continent {
 	
 	/**
 	 * Sets the name.
-	 *
 	 * @param name the new name
 	 */
 	public void setName(String name) {
@@ -72,7 +67,6 @@ public class Continent {
 	
 	/**
 	 * Gets the country list.
-	 *
 	 * @return the country list
 	 */
 	public ArrayList<Country> getCountryList() {
@@ -81,7 +75,6 @@ public class Continent {
 	
 	/**
 	 * Sets the country list.
-	 *
 	 * @param countryList the new country list
 	 */
 	public void setCountryList(ArrayList<Country> countryList) {
@@ -90,7 +83,6 @@ public class Continent {
 	
 	/**
 	 * Gets the control value.
-	 *
 	 * @return the control value
 	 */
 	public int getControlValue() {
@@ -99,7 +91,6 @@ public class Continent {
 	
 	/**
 	 * Sets the control value.
-	 *
 	 * @param value the new control value
 	 */
 	public void setControlValue(int value) {
@@ -108,7 +99,6 @@ public class Continent {
 	
 	/**
 	 * Gets the owner.
-	 *
 	 * @return the owner
 	 */
 	public Player getOwner() {
@@ -117,7 +107,6 @@ public class Continent {
 	
 	/**
 	 * Sets the owner.
-	 *
 	 * @param owner the new owner
 	 */
 	public void setOwner(Player owner) {
@@ -126,7 +115,6 @@ public class Continent {
 	
 	/**
 	 * Adds the country.
-	 *
 	 * @param country the country
 	 */
 	public void addCountry(Country country) {
@@ -135,7 +123,6 @@ public class Continent {
 	
 	/**
 	 * Removes the country by ID.
-	 *
 	 * @param countryID the country ID
 	 */
 	public void removeCountryByID(int countryID) {
@@ -149,7 +136,6 @@ public class Continent {
 
 	/**
 	 * Check ownership.
-	 *
 	 * @return the player
 	 */
 	public Player checkOwnership() {
